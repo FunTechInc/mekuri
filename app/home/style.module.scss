@@ -1,0 +1,21 @@
+.wrapper {
+   width: 100%;
+   padding: 120px 80px;
+   margin: 0 auto;
+   background-color: #fff;
+}
+
+.box {
+   background-color: #f7f7f7;
+   padding: 80px 40px;
+   &:not(:first-child) {
+      margin-top: 40px;
+   }
+   h1 {
+      font-size: 2rem;
+   }
+   p {
+      font-size: 16px;
+      margin-top: 8px;
+   }
+}
