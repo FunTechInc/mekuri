@@ -2,7 +2,7 @@
 
 import { useLayoutEffect, useEffect, useRef, useReducer, memo } from "react";
 import { usePathname } from "next/navigation";
-import { TPageMekuriDuration } from "@/app/_context/use-app-store";
+import { TPageMekuriDuration } from "@/app/_context/usePageMekuriStore";
 
 /*===============================================
 types
@@ -28,13 +28,13 @@ interface IState {
 }
 
 /**
- * PageTransitionLayout
+ * PageMekuriLayout
  * @param props
  */
 const useIsomorphicLayoutEffect =
    typeof document !== "undefined" ? useLayoutEffect : useEffect;
 
-const PageTransitionLayout = ({
+const PageMekuriLayout = ({
    componentArr,
    mode,
    children,
@@ -227,4 +227,4 @@ const PageTransitionLayout = ({
    );
 };
 
-export default memo(PageTransitionLayout);
+export default memo(PageMekuriLayout);

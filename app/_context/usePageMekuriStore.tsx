@@ -7,38 +7,41 @@ import { subscribeWithSelector } from "zustand/middleware";
 /********************
 const
 ********************/
-export type TPageMekuriDuration = 1000;
-export type TPageMekuriStateName = "pageTransitionTrigger";
+export type TPageMekuriDuration = 800;
+export type TPageMekuriStateName = "pageMekuriTrigger";
 export const PAGEMEKURISTATE: { mekuri: TState } = {
    mekuri: {
-      duration: 1000,
-      name: "pageTransitionTrigger",
+      duration: 800,
+      second: function () {
+         return this.duration / 1000;
+      },
+      name: "pageMekuriTrigger",
    },
 };
 interface IPageMekuriStore {
-   pageTransitionTrigger: IPageMekuriProps;
-   setPageTransitionTrigger: (props: IPageMekuriProps) => void;
+   pageMekuriTrigger: IPageMekuriProps;
+   setPageMekuriTrigger: (props: IPageMekuriProps) => void;
 }
 
 /********************
 create store
 ********************/
-export const useAppStore = create<
+export const usePageMekuriStore = create<
    IPageMekuriStore,
    [["zustand/subscribeWithSelector", never]]
 >(
    subscribeWithSelector((set) => ({
-      pageTransitionTrigger: {
+      pageMekuriTrigger: {
          path: null,
          phase: null,
          duration: PAGEMEKURISTATE.mekuri.duration,
-         second: PAGEMEKURISTATE.mekuri.duration / 1000,
+         second: PAGEMEKURISTATE.mekuri.second(),
       },
-      setPageTransitionTrigger: (props) =>
+      setPageMekuriTrigger: (props) =>
          set((state) => ({
             ...state,
-            pageTransitionTrigger: {
-               ...state.pageTransitionTrigger,
+            pageMekuriTrigger: {
+               ...state.pageMekuriTrigger,
                ...props,
             },
          })),
@@ -56,5 +59,6 @@ export interface IPageMekuriProps {
 }
 type TState = {
    duration: TPageMekuriDuration;
+   second: () => number;
    name: TPageMekuriStateName;
 };

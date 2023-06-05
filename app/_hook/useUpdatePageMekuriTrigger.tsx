@@ -1,8 +1,8 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
-import { IPageMekuriProps } from "../_context/use-app-store";
+import { IPageMekuriProps } from "../_context/usePageMekuriStore";
 
-export const useUpdatePageTransitionTrigger = ({
+export const useUpdatePageMekuriTrigger = ({
    state,
    dispatcher,
 }: {

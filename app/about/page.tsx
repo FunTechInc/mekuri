@@ -2,9 +2,9 @@
 
 import { useRef, memo } from "react";
 import styles from "./style.module.scss";
-import { usePageTransitionAnimation } from "../_hook/usePageTransitionAnimation";
+import { usePageMekuriAnimation } from "../_hook/usePageMekuriAnimation";
 import { gsap } from "gsap";
-import { PAGEMEKURISTATE } from "../_context/use-app-store";
+import { PAGEMEKURISTATE } from "../_context/usePageMekuriStore";
 
 interface IBox {
    title: string;
@@ -22,14 +22,14 @@ const Box = ({ title, color, className }: IBox) => {
 
 function About() {
    const ref = useRef(null);
-   usePageTransitionAnimation({
+   usePageMekuriAnimation({
       isReRender: true,
       stateName: PAGEMEKURISTATE.mekuri.name,
       leave: () => {
          gsap.context(() => {
             gsap.to(".fadein", {
                y: 80,
-               duration: 1,
+               duration: PAGEMEKURISTATE.mekuri.second(),
                ease: "power3.out",
                stagger: {
                   each: 0.05,
@@ -45,7 +45,7 @@ function About() {
             },
             {
                y: 0,
-               duration: 1,
+               duration: PAGEMEKURISTATE.mekuri.second(),
                ease: "power3.out",
                stagger: {
                   each: 0.05,

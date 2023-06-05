@@ -1,9 +1,9 @@
 "use client";
 import { gsap } from "gsap";
 import styles from "./style.module.scss";
-import { usePageTransitionAnimation } from "../_hook/usePageTransitionAnimation";
+import { usePageMekuriAnimation } from "../_hook/usePageMekuriAnimation";
 import { useRef } from "react";
-import { PAGEMEKURISTATE } from "../_context/use-app-store";
+import { PAGEMEKURISTATE } from "../_context/usePageMekuriStore";
 
 const Box = ({ className }: { className: string }) => {
    return (
@@ -23,14 +23,14 @@ Box.displayName = "Box";
 
 export const HomeContent = () => {
    const ref = useRef<HTMLDivElement>(null);
-   usePageTransitionAnimation({
+   usePageMekuriAnimation({
       isReRender: true,
       stateName: PAGEMEKURISTATE.mekuri.name,
       leave: () => {
          gsap.context(() => {
             gsap.to(".hoge", {
                x: -100,
-               duration: 1,
+               duration: PAGEMEKURISTATE.mekuri.second(),
                ease: "power3.out",
                stagger: {
                   each: 0.05,
@@ -47,7 +47,7 @@ export const HomeContent = () => {
                },
                {
                   x: 0,
-                  duration: 1,
+                  duration: PAGEMEKURISTATE.mekuri.second(),
                   ease: "power2.out",
                   stagger: {
                      each: 0.05,

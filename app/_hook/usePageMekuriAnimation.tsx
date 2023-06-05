@@ -1,5 +1,8 @@
 import { useEffect } from "react";
-import { TPageMekuriStateName, useAppStore } from "../_context/use-app-store";
+import {
+   TPageMekuriStateName,
+   usePageMekuriStore,
+} from "../_context/usePageMekuriStore";
 
 interface IProps {
    isReRender: boolean;
@@ -9,11 +12,11 @@ interface IProps {
 }
 
 /**
- * usePageTransitionAnimation
+ * usePageMekuriAnimation
  * @param props
  */
 
-export const usePageTransitionAnimation = ({
+export const usePageMekuriAnimation = ({
    isReRender = true,
    leave,
    enter,
@@ -21,7 +24,7 @@ export const usePageTransitionAnimation = ({
 }: IProps) => {
    useEffect(() => {
       let pathName = location.pathname;
-      const unsubscribe = useAppStore.subscribe(
+      const unsubscribe = usePageMekuriStore.subscribe(
          (state) => state[stateName],
          (state) => {
             if (state.path === null) return;

@@ -1,12 +1,12 @@
 "use client";
 
-import { useAppStore } from "./_context/use-app-store";
-import { useUpdatePageTransitionTrigger } from "./_hook/useUpdatePageTransitionTrigger";
+import { usePageMekuriStore } from "./_context/usePageMekuriStore";
+import { useUpdatePageMekuriTrigger } from "./_hook/useUpdatePageMekuriTrigger";
 
 export const AppHooks = () => {
-   useUpdatePageTransitionTrigger({
-      state: useAppStore((state) => state.pageTransitionTrigger),
-      dispatcher: useAppStore((state) => state.setPageTransitionTrigger),
+   useUpdatePageMekuriTrigger({
+      state: usePageMekuriStore((state) => state.pageMekuriTrigger),
+      dispatcher: usePageMekuriStore((state) => state.setPageMekuriTrigger),
    });
    return null;
 };

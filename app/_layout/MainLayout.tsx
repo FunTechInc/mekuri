@@ -1,16 +1,16 @@
 "use client";
 
 import { useRef } from "react";
-import PageTransitionLayout from "../_component/PageTransition/PageTransitionLayout";
-import { usePageTransitionAnimation } from "../_hook/usePageTransitionAnimation";
+import PageMekuriLayout from "../_component/PageMekuri/PageMekuriLayout";
+import { usePageMekuriAnimation } from "../_hook/usePageMekuriAnimation";
 import { gsap } from "gsap";
+import { PAGEMEKURISTATE } from "../_context/usePageMekuriStore";
 
 /*===============================================
-pagetransitionLayoutに渡すコンポーネントの配列
+pageMekuriLayoutに渡すコンポーネントの配列
 ===============================================*/
 import About from "../about/page";
 import Home from "../page";
-import { PAGEMEKURISTATE } from "../_context/use-app-store";
 
 const componentArr = [
    { path: "/about", component: <About /> },
@@ -19,30 +19,31 @@ const componentArr = [
 
 export const MainLayout = ({ children }: { children: React.ReactNode }) => {
    const ref = useRef(null);
-   usePageTransitionAnimation({
+   const state = PAGEMEKURISTATE.mekuri;
+   usePageMekuriAnimation({
       isReRender: false,
-      stateName: PAGEMEKURISTATE.mekuri.name,
+      stateName: state.name,
       leave: () => {
          gsap.to(ref.current, {
             opacity: 0,
-            duration: 1,
+            duration: state.second(),
          });
       },
       enter: () => {
          gsap.to(ref.current, {
             opacity: 1,
-            duration: 1,
+            duration: state.second(),
          });
       },
    });
    return (
       <main ref={ref} className="layoutWrapper">
-         <PageTransitionLayout
-            duration={PAGEMEKURISTATE.mekuri.duration}
+         <PageMekuriLayout
+            duration={state.duration}
             componentArr={componentArr}
             mode="wait">
             {children}
-         </PageTransitionLayout>
+         </PageMekuriLayout>
       </main>
    );
 };
