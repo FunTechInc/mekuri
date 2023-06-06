@@ -1,10 +1,13 @@
-import "./globals.css";
-import { Inter } from "next/font/google";
+import "./global.scss";
+import "the-new-css-reset/css/reset.css";
+import { DotGothic16 } from "next/font/google";
 import { Nav } from "./_component/Nav";
 import { AppHooks } from "./app-hooks";
-import { MainLayout } from "./_layout/MainLayout";
+// import { FadeInOutLayout } from "./_layout/FadeInOutLayout";
+import { SyncLayout } from "./_layout/SyncLayout";
+import { Footer } from "./_component/Footer";
 
-const inter = Inter({ subsets: ["latin"] });
+const dotGothic = DotGothic16({ weight: ["400"], subsets: ["latin"] });
 
 export const metadata = {
    title: "Next13 PageTransition Demo",
@@ -18,9 +21,12 @@ export default function RootLayout({
 }) {
    return (
       <html lang="en">
-         <body className={inter.className}>
+         <body className={dotGothic.className}>
             <Nav />
-            <MainLayout>{children}</MainLayout>
+            <div className="ly_wrapper is_hidden">
+               <SyncLayout>{children}</SyncLayout>
+            </div>
+            <Footer />
             <AppHooks />
          </body>
       </html>

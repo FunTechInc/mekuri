@@ -1,0 +1,178 @@
+/*===============================================
+html body
+===============================================*/
+body {
+   background: {
+      color: #000;
+   }
+
+   color: #fff;
+
+   font: {
+      style: normal;
+      weight: normal;
+   }
+
+   letter-spacing: 0.03em;
+   line-height: 1.5;
+   //改行
+   overflow-wrap: break-word;
+   //kerning
+   font-feature-settings: "palt";
+   text-size-adjust: 100%;
+}
+
+html {
+   font-size: 16px;
+   //scroll behavior
+   scroll-behavior: initial;
+   //スクロールバーによるレイアウトシフトを回避する
+   scrollbar-gutter: stable;
+}
+
+html,
+body {
+   width: 100%;
+   min-height: 100%;
+}
+
+/*===============================================
+ボタン周り
+===============================================*/
+a,
+button {
+   border: none;
+   color: #fff;
+   cursor: pointer;
+   outline: none;
+   text-decoration: none;
+   pointer-events: auto;
+   z-index: 100;
+   transition: 0s;
+   display: block;
+   background: none;
+   > * {
+      // 要素の子要素のpointereventを無効にする
+      pointer-events: none;
+   }
+
+   //prevent
+   &.__prevent {
+      pointer-events: none;
+   }
+
+   &:link,
+   &:visited,
+   &:hover,
+   &:active {
+      color: inherit;
+   }
+
+   /* タブ移動時 */
+   &:focus-visible {
+      outline: -webkit-focus-ring-color auto 1px;
+
+      @media screen and (max-width: 960px) {
+         outline: none;
+      }
+   }
+
+   /* マウスクリック時 */
+   &:focus:not(:fous-visible) {
+      outline: none;
+   }
+
+   //スマホのとき一瞬うつるタッチハイライトを消す
+   @media (hover: none) {
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+   }
+
+   img {
+      border: none;
+   }
+}
+
+/*===============================================
+reset
+===============================================*/
+
+* {
+   //Safari clamp関数対策
+   min-height: 0vw;
+}
+
+html {
+   -webkit-tap-highlight-color: transparent;
+}
+
+body {
+   padding: env(safe-area-inset-top, 20px) env(safe-area-inset-right, 20px)
+      env(safe-area-inset-bottom, 20px) env(safe-area-inset-left, 20px);
+}
+
+img {
+   border: 0;
+   height: auto;
+   pointer-events: none;
+   vertical-align: middle;
+   width: 100%;
+   image-rendering: -webkit-optimize-contrast;
+   image-rendering: crisp-edges;
+   backface-visibility: hidden;
+}
+
+picture {
+   display: block;
+}
+
+iframe {
+   width: 100%;
+}
+
+ul,
+ol,
+li {
+   font-size: 0;
+   list-style: none;
+}
+
+form {
+   label,
+   span,
+   input {
+      //スマホのとき一瞬うつるタッチハイライトを消す
+      @media (hover: none) {
+         -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      }
+   }
+}
+
+svg {
+   overflow: visible;
+}
+
+/*===============================================
+reCAPTCHAのバッジを非表示にする
+===============================================*/
+.grecaptcha-badge {
+   opacity: 0;
+   pointer-events: none;
+   visibility: hidden;
+}
+
+/*===============================================
+common
+===============================================*/
+//コンテンツの高さが画面に満たない場合フッターを画面下部に固定する
+.ly_wrapper {
+   flex-direction: column;
+   display: flex;
+   min-height: 100vh;
+   &.is_hidden {
+      overflow: hidden;
+   }
+
+   .ly_main {
+      flex: 1;
+   }
+}

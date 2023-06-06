@@ -1,22 +1,40 @@
 "use client";
 
-import { useRef, memo } from "react";
+import { useRef, memo, useEffect } from "react";
 import styles from "./style.module.scss";
 import { usePageMekuriAnimation } from "../_hook/usePageMekuriAnimation";
 import { gsap } from "gsap";
 import { PAGEMEKURISTATE } from "../_context/usePageMekuriStore";
+import { InfinitSlider } from "../_utils/InfinitTxt";
+
+import Image from "next/image";
+import Link from "next/link";
 
 interface IBox {
    title: string;
-   color: string;
    className: string;
+   dir: 1 | -1;
 }
 
-const Box = ({ title, color, className }: IBox) => {
+const Box = ({ title, className, dir }: IBox) => {
+   const ref = useRef(null);
+   useEffect(() => {
+      const infinit = new InfinitSlider(ref.current!, "slideText", {
+         duration: 80,
+         dir: dir,
+      }).init();
+      infinit.play();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, []);
    return (
-      <div className={`${styles.box} ${styles[color]} ${className}`}>
-         <h1>{title}</h1>
-      </div>
+      <Link
+         href="https://twitter.com/tkm_hmng8"
+         target="_blank"
+         ref={ref}
+         className={`${styles.box} ${className}`}>
+         <h1 className="slideText">{title}</h1>
+         <h1 className="slideText">{title}</h1>
+      </Link>
    );
 };
 
@@ -28,37 +46,102 @@ function About() {
       leave: () => {
          gsap.context(() => {
             gsap.to(".fadein", {
-               y: 80,
+               x: function (index) {
+                  if (index % 2 === 0) {
+                     return -80;
+                  } else {
+                     return 80;
+                  }
+               },
                duration: PAGEMEKURISTATE.mekuri.second(),
                ease: "power3.out",
                stagger: {
                   each: 0.05,
                },
             });
-         }, ref.current!);
-      },
-      enter: () => {
-         gsap.fromTo(
-            ".fadein",
-            {
-               y: 80,
-            },
-            {
-               y: 0,
+            gsap.to(".titleSpan", {
+               y: -64,
+               opacity: 0,
                duration: PAGEMEKURISTATE.mekuri.second(),
                ease: "power3.out",
                stagger: {
-                  each: 0.05,
+                  each: 0.08,
                },
-            }
-         );
+            });
+         }, ref.current!);
+      },
+      enter: () => {
+         gsap.context(() => {
+            gsap.fromTo(
+               ".fadein",
+               {
+                  x: function (index) {
+                     if (index % 2 === 0) {
+                        return -80;
+                     } else {
+                        return 80;
+                     }
+                  },
+               },
+               {
+                  x: 0,
+                  duration: PAGEMEKURISTATE.mekuri.second(),
+                  ease: "power3.out",
+                  stagger: {
+                     each: 0.05,
+                  },
+               }
+            );
+            gsap.fromTo(
+               ".titleSpan",
+               {
+                  y: 64,
+                  opacity: 0,
+               },
+               {
+                  y: 0,
+                  opacity: 1,
+                  duration: PAGEMEKURISTATE.mekuri.second(),
+                  ease: "power3.out",
+                  stagger: {
+                     each: 0.08,
+                  },
+               }
+            );
+         }, ref.current!);
       },
    });
+
    return (
-      <div ref={ref}>
-         <Box title="ABOUT" color="blue" className="fadein" />
-         <Box title="HOGEHOGE" color="green" className="fadein" />
-         <Box title="POYOPOYO" color="red" className="fadein" />
+      <div className={styles.wrapper} ref={ref}>
+         <div className={styles.mv}>
+            <div className={styles.titleWrapper}>
+               <h2>
+                  <span className="titleSpan">Creativity</span>
+                  <span className="titleSpan">is</span>
+                  <span className="titleSpan">ロマン</span>
+               </h2>
+            </div>
+            <Image
+               src="/camp.jpg"
+               width={1200}
+               height={630}
+               alt="キャンプにみんなでいきました"
+            />
+         </div>
+         <div>
+            <Box
+               title="ファンテックハファンテックハ"
+               className="fadein"
+               dir={1}
+            />
+            <Box title="エンジニアヲエンジニアヲ" className="fadein" dir={-1} />
+            <Box
+               title="ボシュウチュウボシュウチュウ"
+               className="fadein"
+               dir={1}
+            />
+         </div>
       </div>
    );
 }
