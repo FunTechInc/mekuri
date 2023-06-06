@@ -16,8 +16,8 @@ export const Nav = () => {
             alt="FunTech"
          />
          <nav className={styles.nav}>
-            <Link href="/">ホーム</Link>
-            <Link href="/about">アバウト</Link>
+            <Link href="/sync/">ホーム</Link>
+            <Link href="/sync/about/">アバウト</Link>
          </nav>
       </header>
    );

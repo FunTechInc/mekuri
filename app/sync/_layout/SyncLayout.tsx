@@ -13,8 +13,8 @@ import About from "../about/page";
 import Home from "../page";
 
 const componentArr = [
-   { path: "/about", component: <About /> },
-   { path: "/", component: <Home /> },
+   { path: "/sync/about/", component: <About /> },
+   { path: "/sync/", component: <Home /> },
 ];
 
 export const SyncLayout = ({ children }: { children: React.ReactNode }) => {

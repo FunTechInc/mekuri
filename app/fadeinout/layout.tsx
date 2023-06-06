@@ -1,5 +1,5 @@
 import { Nav } from "../_component/Nav";
-import { SyncLayout } from "./_layout/SyncLayout";
+import { FadeInOutLayout } from "./_layout/FadeInOutLayout";
 
 export default function RootLayout({
    children,
@@ -10,7 +10,7 @@ export default function RootLayout({
       <>
          <Nav />
          <div className="ly_wrapper is_hidden">
-            <SyncLayout>{children}</SyncLayout>
+            <FadeInOutLayout>{children}</FadeInOutLayout>
          </div>
       </>
    );
