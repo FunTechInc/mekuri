@@ -1,9 +1,9 @@
 "use client";
 import { gsap } from "gsap";
 import styles from "./style.module.scss";
-import { usePageMekuriAnimation } from "../_hook/usePageMekuriAnimation";
+import { usePageMekuriAnimation } from "../../_hook/usePageMekuriAnimation";
 import { useRef } from "react";
-import { PAGEMEKURISTATE } from "../_context/usePageMekuriStore";
+import { PAGEMEKURISTATE } from "../../_context/usePageMekuriStore";
 import Image from "next/image";
 import Link from "next/link";
 

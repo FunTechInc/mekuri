@@ -2,10 +2,10 @@
 
 import { useRef, memo, useEffect } from "react";
 import styles from "./style.module.scss";
-import { usePageMekuriAnimation } from "../_hook/usePageMekuriAnimation";
+import { usePageMekuriAnimation } from "../../_hook/usePageMekuriAnimation";
 import { gsap } from "gsap";
-import { PAGEMEKURISTATE } from "../_context/usePageMekuriStore";
-import { InfinitSlider } from "../_utils/InfinitTxt";
+import { PAGEMEKURISTATE } from "../../_context/usePageMekuriStore";
+import { InfinitSlider } from "../../_utils/InfinitTxt";
 
 import Image from "next/image";
 import Link from "next/link";
