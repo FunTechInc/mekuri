@@ -15,6 +15,10 @@ export const useUpdatePageMekuriTrigger = ({
    useEffect(() => {
       if (firstRender.current) {
          firstRender.current = false;
+         dispatcher({
+            //初回renderでprevを現在地に更新する
+            prev: pathName,
+         });
          return;
       }
       dispatcher({
@@ -23,6 +27,7 @@ export const useUpdatePageMekuriTrigger = ({
       });
       timeoutID.current = setTimeout(() => {
          dispatcher({
+            prev: pathName,
             phase: "enter",
          });
       }, state.duration!);

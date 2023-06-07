@@ -10,11 +10,13 @@ import { PAGEMEKURISTATE } from "../../_context/usePageMekuriStore";
 pageMekuriLayoutに渡すコンポーネントの配列
 ===============================================*/
 import About from "../about/page";
-import Home from "../../page";
+import Child from "../about/[id]/page";
+import Home from "../page";
 
 const componentArr = [
-   { path: "/about", component: <About /> },
-   { path: "/", component: <Home /> },
+   { path: "/fadeinout/about/★", component: <Child /> },
+   { path: "/fadeinout/about", component: <About /> },
+   { path: "/fadeinout", component: <Home /> },
 ];
 
 export const FadeInOutLayout = ({
@@ -27,13 +29,15 @@ export const FadeInOutLayout = ({
    usePageMekuriAnimation({
       isReRender: false,
       stateName: state.name,
-      leave: () => {
+      leave: ({ prev }) => {
+         if (prev === "/") return;
          gsap.to(ref.current, {
             opacity: 0,
             duration: state.second(),
          });
       },
-      enter: () => {
+      enter: ({ prev }) => {
+         if (prev === "/") return;
          gsap.to(ref.current, {
             opacity: 1,
             duration: state.second(),

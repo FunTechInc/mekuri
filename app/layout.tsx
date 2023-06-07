@@ -7,8 +7,8 @@ import { Footer } from "./_component/Footer";
 const dotGothic = DotGothic16({ weight: ["400"], subsets: ["latin"] });
 
 export const metadata = {
-   title: "Next13 PageTransition Demo",
-   description: "Page transition demo with Next13",
+   title: "Page Mekuri",
+   description: "Page Mekuri Demo",
 };
 
 export default function RootLayout({
@@ -19,8 +19,10 @@ export default function RootLayout({
    return (
       <html lang="ja">
          <body className={dotGothic.className}>
-            {children}
-            <Footer />
+            <div className="ly_wrapper is_hidden">
+               {children}
+               <Footer />
+            </div>
             <AppHooks />
          </body>
       </html>

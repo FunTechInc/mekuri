@@ -8,10 +8,8 @@ export default function RootLayout({
 }) {
    return (
       <>
-         <Nav />
-         <div className="ly_wrapper is_hidden">
-            <FadeInOutLayout>{children}</FadeInOutLayout>
-         </div>
+         <Nav pathName="fadeinout" />
+         <FadeInOutLayout>{children}</FadeInOutLayout>
       </>
    );
 }

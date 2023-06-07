@@ -28,8 +28,7 @@ const Box = ({ title, className, dir }: IBox) => {
    }, []);
    return (
       <Link
-         href="https://twitter.com/tkm_hmng8"
-         target="_blank"
+         href="/fadeinout/about/recruit"
          ref={ref}
          className={`${styles.box} ${className}`}>
          <h1 className="slideText">{title}</h1>
@@ -43,7 +42,7 @@ function About() {
    usePageMekuriAnimation({
       isReRender: true,
       stateName: PAGEMEKURISTATE.mekuri.name,
-      leave: () => {
+      leave: ({ next }) => {
          gsap.context(() => {
             gsap.to(".fadein", {
                x: function (index) {
@@ -52,6 +51,9 @@ function About() {
                   } else {
                      return 80;
                   }
+               },
+               scale: function () {
+                  return next === "/fadeinout/about/recruit" ? 2 : 1;
                },
                duration: PAGEMEKURISTATE.mekuri.second(),
                ease: "power3.out",
@@ -85,6 +87,7 @@ function About() {
                },
                {
                   x: 0,
+                  scale: 1,
                   duration: PAGEMEKURISTATE.mekuri.second(),
                   ease: "power3.out",
                   stagger: {

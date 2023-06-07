@@ -9,9 +9,7 @@ export default function RootLayout({
    return (
       <>
          <Nav />
-         <div className="ly_wrapper is_hidden">
-            <SyncLayout>{children}</SyncLayout>
-         </div>
+         <SyncLayout>{children}</SyncLayout>
       </>
    );
 }

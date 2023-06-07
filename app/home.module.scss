@@ -1,0 +1,16 @@
+.main {
+   display: flex;
+   align-items: center;
+}
+
+.linkWrapper {
+   padding-left: 80px;
+   a {
+      color: #fff;
+      font-size: 40px;
+      text-decoration: underline;
+      &:not(:first-child) {
+         margin-top: 16px;
+      }
+   }
+}

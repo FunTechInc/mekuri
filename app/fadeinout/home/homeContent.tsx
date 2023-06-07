@@ -27,11 +27,14 @@ const Box = ({ className, title, description, eng }: IBox) => {
 Box.displayName = "Box";
 
 export const HomeContent = () => {
+   console.log("render");
    const ref = useRef<HTMLDivElement>(null);
    usePageMekuriAnimation({
       isReRender: true,
       stateName: PAGEMEKURISTATE.mekuri.name,
-      leave: () => {
+      leave: ({ prev, next }) => {
+         console.log(next);
+         if (prev === "/") return;
          gsap.context(() => {
             gsap.to(".fadeIn", {
                y: -80,
@@ -43,14 +46,17 @@ export const HomeContent = () => {
             });
          }, ref.current!);
       },
-      enter: () => {
+      enter: ({ prev }) => {
+         if (prev === "/") return;
          gsap.context(() => {
             gsap.fromTo(
                ".fadeIn",
                {
+                  opacity: 0,
                   y: 80,
                },
                {
+                  opacity: 1,
                   y: 0,
                   duration: PAGEMEKURISTATE.mekuri.second(),
                   ease: "power2.out",
