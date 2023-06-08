@@ -1,0 +1,12 @@
+.wrapper {
+   position: relative;
+   width: 100%;
+   overflow: hidden;
+}
+
+.syncInner {
+   width: 100%;
+   z-index: 10000;
+   width: min(100% - 64px, 1200px);
+   margin: 136px auto 0;
+}

@@ -1,15 +1,20 @@
 import { IState, ComponentItem } from "../types";
 
 /********************
-componentArrのpathを正規表現に変換する
+Convert the path of componentArr into regular expressions. 
+If isStrict is set to true, a more stringent normalization judgment is performed.
 ********************/
-const changeRegExp = (string: string) => {
+export const changeRegExp = (string: string, isStrict: boolean = false) => {
+   const prefix = isStrict ? "^" : "";
+   const suffix = isStrict ? "(?:[\\/#\\?]|$)$" : "(?:[\\/#\\?]|$)";
    const regexp =
+      prefix +
       string
          .replace(/\//g, "\\/")
          .replace(/\?/g, "\\?")
          .replace(/\#/g, "\\#")
-         .replace(/★/g, ".*") + "[\\/#\\?]?.*";
+         .replace(/★/g, ".*") +
+      suffix;
    return new RegExp(regexp);
 };
 
@@ -24,7 +29,7 @@ const testRegExpAndPath = (componentArr: ComponentItem[], pathName: string) => {
          //sort by path string length
          .sort((a, b) => b.path.length - a.path.length)
          //test and return matched element
-         .find((route) => changeRegExp(route.path).test(pathName))
+         .find((route) => changeRegExp(route.path, false).test(pathName))
    );
 };
 
@@ -48,10 +53,10 @@ export const getCurrentComponent: ({
 }) => {
    const currentComponent = testRegExpAndPath(componentArr, pathName);
    if (currentComponent) {
-      console.log("成功");
+      // console.log("成功");
       return currentComponent.component;
    } else {
-      console.log("失敗");
+      // console.log("失敗");
       return children;
    }
 };

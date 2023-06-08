@@ -14,6 +14,7 @@ function Child() {
 
    usePageMekuriAnimation({
       isReRender: true,
+      mode: "wait",
       stateName: PAGEMEKURISTATE.mekuri.name,
       leave: () => {
          gsap.context(() => {

@@ -8,7 +8,7 @@ export default function RootLayout({
 }) {
    return (
       <>
-         <Nav />
+         <Nav pathName="sync" />
          <SyncLayout>{children}</SyncLayout>
       </>
    );

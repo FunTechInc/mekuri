@@ -1,14 +1,14 @@
 "use client";
-
 import { useRef, memo, useEffect } from "react";
+import syncStyle from "../sync.module.scss";
 import styles from "./style.module.scss";
 import { usePageMekuriAnimation } from "../../_hook/usePageMekuriAnimation";
-import { gsap } from "gsap";
 import { PAGEMEKURISTATE } from "../../_context/usePageMekuriStore";
 import { InfinitSlider } from "../../_utils/InfinitTxt";
 
 import Image from "next/image";
 import Link from "next/link";
+import { enterAnim, leaveAnim } from "../_utils/transitionAnimation";
 
 interface IBox {
    title: string;
@@ -28,8 +28,7 @@ const Box = ({ title, className, dir }: IBox) => {
    }, []);
    return (
       <Link
-         href="https://twitter.com/tkm_hmng8"
-         target="_blank"
+         href="/sync/about/recruit"
          ref={ref}
          className={`${styles.box} ${className}`}>
          <h1 className="slideText">{title}</h1>
@@ -39,108 +38,56 @@ const Box = ({ title, className, dir }: IBox) => {
 };
 
 function About() {
+   // console.log("about render");
    const ref = useRef(null);
+   const wrapperRef = useRef(null);
    usePageMekuriAnimation({
       isReRender: true,
+      mode: "sync",
       stateName: PAGEMEKURISTATE.mekuri.name,
       leave: () => {
-         gsap.context(() => {
-            gsap.to(".fadein", {
-               x: function (index) {
-                  if (index % 2 === 0) {
-                     return -80;
-                  } else {
-                     return 80;
-                  }
-               },
-               duration: PAGEMEKURISTATE.mekuri.second(),
-               ease: "power3.out",
-               stagger: {
-                  each: 0.05,
-               },
-            });
-            gsap.to(".titleSpan", {
-               y: -64,
-               opacity: 0,
-               duration: PAGEMEKURISTATE.mekuri.second(),
-               ease: "power3.out",
-               stagger: {
-                  each: 0.08,
-               },
-            });
-         }, ref.current!);
+         leaveAnim(ref);
       },
       enter: () => {
-         gsap.context(() => {
-            gsap.fromTo(
-               ".fadein",
-               {
-                  x: function (index) {
-                     if (index % 2 === 0) {
-                        return -80;
-                     } else {
-                        return 80;
-                     }
-                  },
-               },
-               {
-                  x: 0,
-                  duration: PAGEMEKURISTATE.mekuri.second(),
-                  ease: "power3.out",
-                  stagger: {
-                     each: 0.05,
-                  },
-               }
-            );
-            gsap.fromTo(
-               ".titleSpan",
-               {
-                  y: 64,
-                  opacity: 0,
-               },
-               {
-                  y: 0,
-                  opacity: 1,
-                  duration: PAGEMEKURISTATE.mekuri.second(),
-                  ease: "power3.out",
-                  stagger: {
-                     each: 0.08,
-                  },
-               }
-            );
-         }, ref.current!);
+         enterAnim(wrapperRef, ref);
       },
    });
 
    return (
-      <div className={styles.wrapper} ref={ref}>
-         <div className={styles.mv}>
-            <div className={styles.titleWrapper}>
-               <h2>
-                  <span className="titleSpan">Creativity</span>
-                  <span className="titleSpan">is</span>
-                  <span className="titleSpan">ロマン</span>
-               </h2>
+      <div className={syncStyle.wrapper} ref={wrapperRef}>
+         <div className={syncStyle.syncInner} ref={ref}>
+            <div className={styles.mv}>
+               <div className={styles.titleWrapper}>
+                  <h2>
+                     <span className="titleSpan">Creativity</span>
+                     <span className="titleSpan">is</span>
+                     <span className="titleSpan">ロマン</span>
+                  </h2>
+               </div>
+               <Image
+                  src="/camp.jpg"
+                  width={1200}
+                  height={630}
+                  alt="キャンプにみんなでいきました"
+               />
             </div>
-            <Image
-               src="/camp.jpg"
-               width={1200}
-               height={630}
-               alt="キャンプにみんなでいきました"
-            />
-         </div>
-         <div>
-            <Box
-               title="ファンテックハファンテックハ"
-               className="fadein"
-               dir={1}
-            />
-            <Box title="エンジニアヲエンジニアヲ" className="fadein" dir={-1} />
-            <Box
-               title="ボシュウチュウボシュウチュウ"
-               className="fadein"
-               dir={1}
-            />
+            <div>
+               <Box
+                  title="ファンテックハファンテックハ"
+                  className="fadein"
+                  dir={1}
+               />
+               <Box
+                  title="エンジニアヲエンジニアヲ"
+                  className="fadein"
+                  dir={-1}
+               />
+               <Box
+                  title="ボシュウチュウボシュウチュウ"
+                  className="fadein"
+                  dir={1}
+               />
+            </div>
          </div>
       </div>
    );

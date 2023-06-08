@@ -16,18 +16,21 @@ export const useUpdatePageMekuriTrigger = ({
       if (firstRender.current) {
          firstRender.current = false;
          dispatcher({
-            //初回renderでprevを現在地に更新する
-            prev: pathName,
+            prev: null,
+            current: pathName,
+            next: null,
          });
          return;
       }
       dispatcher({
-         path: pathName,
+         next: pathName,
          phase: "leave",
       });
       timeoutID.current = setTimeout(() => {
          dispatcher({
-            prev: pathName,
+            prev: state.current,
+            current: pathName,
+            next: pathName,
             phase: "enter",
          });
       }, state.duration!);

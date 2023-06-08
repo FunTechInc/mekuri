@@ -27,7 +27,10 @@ export const useUnmountPrevEffect = ({
    };
 
    useIsomorphicLayoutEffect(() => {
-      if (!state.prev) {
+      if (
+         (!state.prev && mode === "wait") ||
+         (!state.next && mode === "sync")
+      ) {
          return;
       }
 
@@ -40,5 +43,5 @@ export const useUnmountPrevEffect = ({
       return () => {
          clearTimeout(timeoutID.current);
       };
-   }, [state.current]);
+   }, [state.current, state.next]);
 };

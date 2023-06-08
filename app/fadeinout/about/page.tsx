@@ -41,6 +41,7 @@ function About() {
    const ref = useRef(null);
    usePageMekuriAnimation({
       isReRender: true,
+      mode: "wait",
       stateName: PAGEMEKURISTATE.mekuri.name,
       leave: ({ next }) => {
          gsap.context(() => {

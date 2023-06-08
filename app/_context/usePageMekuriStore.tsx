@@ -33,7 +33,8 @@ export const usePageMekuriStore = create<
    subscribeWithSelector((set) => ({
       pageMekuriTrigger: {
          prev: null,
-         path: null,
+         current: null,
+         next: null,
          phase: null,
          duration: PAGEMEKURISTATE.mekuri.duration,
          second: PAGEMEKURISTATE.mekuri.second(),
@@ -53,8 +54,9 @@ export const usePageMekuriStore = create<
 いじらない
 ===============================================*/
 export interface IPageMekuriProps {
-   path?: string | null;
    prev?: string | null;
+   current?: string | null;
+   next?: string | null;
    phase?: "leave" | "enter" | null;
    duration?: TPageMekuriDuration;
    second?: number;

@@ -28,16 +28,17 @@ export const FadeInOutLayout = ({
    const state = PAGEMEKURISTATE.mekuri;
    usePageMekuriAnimation({
       isReRender: false,
+      mode: "wait",
       stateName: state.name,
-      leave: ({ prev }) => {
-         if (prev === "/") return;
+      leave: ({ isCurrent }) => {
+         if (isCurrent(["/"])) return;
          gsap.to(ref.current, {
             opacity: 0,
             duration: state.second(),
          });
       },
-      enter: ({ prev }) => {
-         if (prev === "/") return;
+      enter: ({ isPrev }) => {
+         if (isPrev(["/"])) return;
          gsap.to(ref.current, {
             opacity: 1,
             duration: state.second(),

@@ -1,0 +1,26 @@
+.textbox {
+   h2 {
+      font-size: 32px;
+   }
+   p {
+      font-size: 18px;
+      margin-top: 32px;
+   }
+   a {
+      font-size: 32px;
+      margin-top: 40px;
+      text-decoration: underline;
+   }
+}
+
+.funkun {
+   position: fixed;
+   width: 100%;
+   opacity: 0.08;
+   display: block;
+   top: 0;
+   bottom: 0;
+   right: 0;
+   left: 0;
+   margin: auto;
+}

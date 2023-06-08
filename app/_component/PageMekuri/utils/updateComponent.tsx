@@ -8,22 +8,24 @@ import { IState, TMode, IAction, ComponentItem } from "../types";
 ===============================================*/
 export const componentReducer = (state: IState, action: IAction) => {
    switch (action.type) {
+      //syncモード
       case "update":
          return {
             ...state,
-            prev: state.current,
-            current: action.component || null,
+            next: action.component || null,
          };
+      case "unmount-prev":
+         return {
+            ...state,
+            current: state.next || null,
+            next: null,
+         };
+      //waitモード
       case "update-unmount":
          return {
             ...state,
             prev: null,
             current: action.component || null,
-         };
-      case "unmount-prev":
-         return {
-            ...state,
-            prev: null,
          };
       default:
          throw new Error();

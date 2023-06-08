@@ -20,6 +20,7 @@ export interface IProps {
 export interface IState {
    prev: React.ReactNode | null;
    current: React.ReactNode | null;
+   next: React.ReactNode | null;
 }
 
 export interface IAction {
