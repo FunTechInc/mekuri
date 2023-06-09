@@ -4,6 +4,7 @@ import { TPageMekuriDuration } from "@/app/_context/usePageMekuriStore";
 types
 ===============================================*/
 export type TMode = "sync" | "wait";
+export type TRestore = "top" | "restore";
 
 export type ComponentItem = {
    path: string;
@@ -15,15 +16,22 @@ export interface IProps {
    children: React.ReactNode;
    mode: TMode;
    duration: TPageMekuriDuration;
+   scrollRestoration: TRestore;
 }
 
+type TRestorePos = {
+   key: string;
+   pos: number;
+};
+
 export interface IState {
-   prev: React.ReactNode | null;
    current: React.ReactNode | null;
    next: React.ReactNode | null;
+   restorePos: TRestorePos;
 }
 
 export interface IAction {
    type: "update" | "update-unmount" | "unmount-prev";
    component?: React.ReactNode;
+   restorePos?: TRestorePos;
 }

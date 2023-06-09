@@ -27,7 +27,6 @@ const Box = ({ className, title, description, eng }: IBox) => {
 Box.displayName = "Box";
 
 export const HomeContent = () => {
-   console.log("wait home render");
    const ref = useRef<HTMLDivElement>(null);
    usePageMekuriAnimation({
       isReRender: true,
@@ -94,7 +93,6 @@ export const HomeContent = () => {
                eng="page-mekuri is a demo for creating page transition animations in the app directory of Next13. It allows you to do page transition animations without using DOM libraries like React-transition-group, framer motion, or react-spring. It also supports wait and sync modes, as well as popstate (saving scroll position at the time of popstate, also known as scroll restoration). Since animations can be set per component, you can flexibly implement them using animation libraries like gsap."
             />
             <Link href="/about" className={`${styles.campImage} fadeIn`}>
-               <p>アバウト</p>
                <Image
                   src="/camp.jpg"
                   width={1200}

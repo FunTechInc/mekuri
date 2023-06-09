@@ -35,7 +35,7 @@ export const HomeContent = () => {
       mode: "sync",
       stateName: PAGEMEKURISTATE.mekuri.name,
       leave: (prop) => {
-         leaveAnim(ref);
+         leaveAnim(wrapperRef, ref);
       },
       enter: ({ isPrev }) => {
          if (isPrev(["/"])) return;

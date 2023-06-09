@@ -5,7 +5,11 @@
    border-top: 1px solid #fff;
    display: flex;
    align-items: center;
-   justify-content: flex-end;
+   justify-content: space-between;
    padding: 0 40px;
    font-size: 12px;
+}
+
+.linkList {
+   display: flex;
 }

@@ -8,6 +8,15 @@ export default function Home() {
       <>
          <Nav pathName="home" />
          <main className={`ly_main ${styles.main}`}>
+            <video
+               className={`${styles.video}`}
+               src="/logo-movie.mp4"
+               loop
+               muted
+               autoPlay
+               width={1200}
+               height={677}
+               playsInline={true}></video>
             <div className={styles.linkWrapper}>
                <LinkList pathName="home" />
             </div>

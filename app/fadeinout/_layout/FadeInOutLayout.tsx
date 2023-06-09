@@ -50,7 +50,8 @@ export const FadeInOutLayout = ({
          <PageMekuriLayout
             duration={state.duration}
             componentArr={componentArr}
-            mode="wait">
+            mode="wait"
+            scrollRestoration="restore">
             {children}
          </PageMekuriLayout>
       </main>

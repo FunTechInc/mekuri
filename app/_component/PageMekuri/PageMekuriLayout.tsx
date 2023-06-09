@@ -9,6 +9,7 @@ import {
 import { getCurrentComponent } from "./utils/getComponent";
 import { useUnmountPrevEffect } from "./utils/unmountComponent";
 import { IProps } from "./types";
+import { useScrollRestoration } from "./utils/useScrollRestoration";
 
 /**
  * PageMekuriLayout
@@ -20,15 +21,19 @@ const PageMekuriLayout = ({
    mode,
    children,
    duration,
+   scrollRestoration,
 }: IProps) => {
    /*===============================================
 	１現在のコンポーネントを取得する
 	===============================================*/
    const pathName = usePathname();
    const [state, dispatch] = useReducer(componentReducer, {
-      prev: null,
       current: getCurrentComponent({ componentArr, pathName, children }),
       next: null,
+      restorePos: {
+         key: pathName,
+         pos: 0,
+      },
    });
 
    /*===============================================
@@ -54,11 +59,15 @@ const PageMekuriLayout = ({
    useUnmountPrevEffect({ state, mode, duration, dispatch });
 
    /*===============================================
-	5 render
+	5 scroll restoration
+	===============================================*/
+   useScrollRestoration({ scrollRestoration, state });
+
+   /*===============================================
+	6 render
 	===============================================*/
    return (
       <>
-         {state.prev && state.prev}
          {state.current && state.current}
          {state.next && state.next}
       </>

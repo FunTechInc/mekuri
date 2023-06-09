@@ -19,7 +19,7 @@ function Child() {
       leave: () => {
          gsap.context(() => {
             gsap.to(".textBlock", {
-               scale: 2,
+               scale: 1.2,
                duration: PAGEMEKURISTATE.mekuri.second(),
                ease: "power3.out",
             });
@@ -30,7 +30,7 @@ function Child() {
             gsap.fromTo(
                ".textBlock",
                {
-                  scale: 2,
+                  scale: 1.2,
                },
                {
                   scale: 1,

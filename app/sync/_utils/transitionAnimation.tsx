@@ -3,8 +3,15 @@ import { PAGEMEKURISTATE } from "../../_context/usePageMekuriStore";
 import { gsap } from "gsap";
 
 type TRef = RefObject<HTMLDivElement>;
-export const leaveAnim = (ref: TRef) => {
+export const leaveAnim = (wrapperRef: TRef, ref: TRef) => {
    const wWidth = window.innerWidth;
+   gsap.set(wrapperRef.current, {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      margin: "auto",
+   });
    gsap.to(ref.current, {
       x: wWidth * -1,
       scale: 0.8,
@@ -15,13 +22,6 @@ export const leaveAnim = (ref: TRef) => {
 
 export const enterAnim = (wrapperRef: TRef, ref: TRef) => {
    const wWidth = window.innerWidth;
-   gsap.set(wrapperRef.current, {
-      position: "absolute",
-      top: 0,
-      left: 0,
-      right: 0,
-      margin: "auto",
-   });
    gsap.fromTo(
       ref.current,
       {

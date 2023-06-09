@@ -17,23 +17,37 @@ export const useUnmountPrevEffect = ({
    duration,
    dispatch,
 }: IUnmountPrevEffect) => {
+   const firstRender = useRef(true);
    const timeoutID = useRef<NodeJS.Timeout | number>(0);
 
+   /*===============================================
+	unmount & cssReset
+	===============================================*/
    const unmountPrev = () => {
       if (mode === "sync") {
-         dispatch({ type: "unmount-prev" });
+         dispatch({
+            type: "unmount-prev",
+         });
       }
       // resetStyleCopies();
    };
 
    useIsomorphicLayoutEffect(() => {
-      if (
-         (!state.prev && mode === "wait") ||
-         (!state.next && mode === "sync")
-      ) {
+      /*===============================================
+		prevent
+		===============================================*/
+      //初回レンダリング
+      if (firstRender.current) {
+         firstRender.current = false;
+         return;
+      }
+      if (!state.next && mode === "sync") {
          return;
       }
 
+      /*===============================================
+		unmount
+		===============================================*/
       if (mode === "wait") {
          unmountPrev();
       } else {

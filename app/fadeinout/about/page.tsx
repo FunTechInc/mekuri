@@ -62,15 +62,6 @@ function About() {
                   each: 0.05,
                },
             });
-            gsap.to(".titleSpan", {
-               y: -64,
-               opacity: 0,
-               duration: PAGEMEKURISTATE.mekuri.second(),
-               ease: "power3.out",
-               stagger: {
-                  each: 0.08,
-               },
-            });
          }, ref.current!);
       },
       enter: () => {
@@ -96,22 +87,6 @@ function About() {
                   },
                }
             );
-            gsap.fromTo(
-               ".titleSpan",
-               {
-                  y: 64,
-                  opacity: 0,
-               },
-               {
-                  y: 0,
-                  opacity: 1,
-                  duration: PAGEMEKURISTATE.mekuri.second(),
-                  ease: "power3.out",
-                  stagger: {
-                     each: 0.08,
-                  },
-               }
-            );
          }, ref.current!);
       },
    });
@@ -119,13 +94,6 @@ function About() {
    return (
       <div className={styles.wrapper} ref={ref}>
          <div className={styles.mv}>
-            <div className={styles.titleWrapper}>
-               <h2>
-                  <span className="titleSpan">Creativity</span>
-                  <span className="titleSpan">is</span>
-                  <span className="titleSpan">ロマン</span>
-               </h2>
-            </div>
             <Image
                src="/camp.jpg"
                width={1200}

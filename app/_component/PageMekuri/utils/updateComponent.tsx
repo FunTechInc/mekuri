@@ -13,6 +13,7 @@ export const componentReducer = (state: IState, action: IAction) => {
          return {
             ...state,
             next: action.component || null,
+            restorePos: action.restorePos!,
          };
       case "unmount-prev":
          return {
@@ -24,8 +25,8 @@ export const componentReducer = (state: IState, action: IAction) => {
       case "update-unmount":
          return {
             ...state,
-            prev: null,
             current: action.component || null,
+            restorePos: action.restorePos!,
          };
       default:
          throw new Error();
@@ -67,9 +68,14 @@ export const useComponentUpdateEffect = ({
          isCurrentComponentForPath({ componentArr, pathName, state })
       )
          return;
+
       dispatch({
          type: mode === "wait" ? "update-unmount" : "update",
          component: currentComponent,
+         restorePos: {
+            key: pathName,
+            pos: window.pageYOffset || document.documentElement.scrollTop || 0,
+         },
       });
    };
 

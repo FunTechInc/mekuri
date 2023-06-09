@@ -10,6 +10,7 @@ type TCallBackProp = {
    prev: string | null | undefined;
    current: string | null | undefined;
    next: string | null | undefined;
+   yPosBeforeLeave: number;
    isPrev: (array: string[]) => string | false;
    isCurrent: (array: string[]) => string | false;
    isNext: (array: string[]) => string | false;
@@ -63,6 +64,7 @@ export const usePageMekuriAnimation = ({
                prev: state.prev,
                current: state.current,
                next: state.next,
+               yPosBeforeLeave: state.yPosBeforeLeave!,
                isPrev: (pathArr) => {
                   return returnMatchPath(pathArr, state.prev!);
                },

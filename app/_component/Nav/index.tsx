@@ -40,12 +40,7 @@ export const Nav = ({ pathName }: TNav) => {
    return (
       <header className={styles.wrapper}>
          <Link href="/" className={styles.logo}>
-            <Image
-               src="/ft-logo.png"
-               width={1606}
-               height={1193}
-               alt="FunTech"
-            />
+            <Image src="/logo.svg" width={229} height={315} alt="FunTech" />
          </Link>
          <nav className={styles.nav}>
             <LinkList pathName={pathName} />

@@ -18,7 +18,7 @@ function Child() {
       mode: "sync",
       stateName: PAGEMEKURISTATE.mekuri.name,
       leave: () => {
-         leaveAnim(ref);
+         leaveAnim(wrapperRef, ref);
       },
       enter: () => {
          enterAnim(wrapperRef, ref);

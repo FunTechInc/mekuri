@@ -53,10 +53,8 @@ export const getCurrentComponent: ({
 }) => {
    const currentComponent = testRegExpAndPath(componentArr, pathName);
    if (currentComponent) {
-      // console.log("成功");
       return currentComponent.component;
    } else {
-      // console.log("失敗");
       return children;
    }
 };

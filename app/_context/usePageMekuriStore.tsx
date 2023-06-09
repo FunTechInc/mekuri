@@ -36,6 +36,7 @@ export const usePageMekuriStore = create<
          current: null,
          next: null,
          phase: null,
+         yPosBeforeLeave: 0,
          duration: PAGEMEKURISTATE.mekuri.duration,
          second: PAGEMEKURISTATE.mekuri.second(),
       },
@@ -58,6 +59,7 @@ export interface IPageMekuriProps {
    current?: string | null;
    next?: string | null;
    phase?: "leave" | "enter" | null;
+   yPosBeforeLeave?: number;
    duration?: TPageMekuriDuration;
    second?: number;
 }

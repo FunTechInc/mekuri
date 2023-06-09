@@ -22,11 +22,17 @@ export const useUpdatePageMekuriTrigger = ({
          });
          return;
       }
+      //get yPosBeforeLeave
+      const scrollYPos =
+         window.pageYOffset || document.documentElement.scrollTop;
+      //update state (leave)
       dispatcher({
          next: pathName,
          phase: "leave",
+         yPosBeforeLeave: scrollYPos,
       });
       timeoutID.current = setTimeout(() => {
+         //update state (enter)
          dispatcher({
             prev: state.current,
             current: pathName,
