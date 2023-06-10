@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import {
    TPageMekuriStateName,
    usePageMekuriStore,
@@ -19,9 +19,11 @@ type TCallBackProp = {
 interface IProps {
    isReRender: boolean;
    mode: TMode;
-   leave: (state: TCallBackProp) => void;
-   enter: (state: TCallBackProp) => void;
    stateName: TPageMekuriStateName;
+   once?: () => void;
+   leave?: (state: TCallBackProp) => void;
+   enter?: (state: TCallBackProp) => void;
+   afterEnter?: (state: TCallBackProp) => void;
 }
 
 //Return a string that matches testPath after normalization.
@@ -43,20 +45,32 @@ const returnMatchPath = (
 export const usePageMekuriAnimation = ({
    isReRender = true,
    mode,
+   once,
    leave,
    enter,
+   afterEnter,
    stateName,
 }: IProps) => {
+   const firstRender = useRef(true);
    useEffect(() => {
-      //render時点とstateのsubscribe関数の発火時点でのlocation.pathnameを比較してleaveとenterを呼び出し分ける
+      //Differentiate the calling of leave and enter by comparing the location.pathname at the time of render and the execution time of the state's subscribe function
       let pathName = location.pathname;
+      //In sync mode, call the afterEnter callback after enter. However, do not trigger it during the render time of the leave phase.
+      let isLeavePhaseRender: boolean = false;
       const unsubscribe = usePageMekuriStore.subscribe(
          (state) => state[stateName],
          (state) => {
-            /********************
-				初回renderはreturn
-				********************/
-            if (state.next === null) return;
+            /*===============================================
+				prevent first access && render
+				once event
+				===============================================*/
+            if (state.phase === null) {
+               if (firstRender.current) {
+                  once && once();
+                  firstRender.current = false;
+               }
+               return;
+            }
             /*===============================================
 				leaveとenterコールバックに返すオブジェクト
 				===============================================*/
@@ -83,33 +97,43 @@ export const usePageMekuriAnimation = ({
 					leave フェーズ
 					===============================================*/
                if (mode === "wait") {
-                  leave(callBackProp);
+                  //waitモードはisReRender:falseで使用することも想定するので、pathNameでのpreventはしない
+                  leave && leave(callBackProp);
                }
                if (mode === "sync") {
                   if (pathName === location.pathname) {
-                     enter({
-                        ...callBackProp,
-                        prev: state.current,
-                        current: state.next,
-                        isPrev: (pathArr) => {
-                           return returnMatchPath(pathArr, state.current!);
-                        },
-                        isCurrent: (pathArr) => {
-                           return returnMatchPath(pathArr, state.next!);
-                        },
-                     });
+                     enter &&
+                        enter({
+                           ...callBackProp,
+                           prev: state.current,
+                           current: state.next,
+                           isPrev: (pathArr) => {
+                              return returnMatchPath(pathArr, state.current!);
+                           },
+                           isCurrent: (pathArr) => {
+                              return returnMatchPath(pathArr, state.next!);
+                           },
+                        });
+                     isLeavePhaseRender = true;
                   } else {
-                     leave(callBackProp);
+                     leave && leave(callBackProp);
                   }
                }
             } else if (state.phase === "enter") {
                /*===============================================
 					enter フェーズ
 					===============================================*/
+               if (
+                  mode === "sync" &&
+                  pathName === location.pathname &&
+                  !isLeavePhaseRender
+               ) {
+                  afterEnter && afterEnter(callBackProp);
+               }
                //Prevent the enter animation from reoccurring at the timing after the page transition (after the leave animation has completed) and before the component is unmounted. However, if isReRender is false, let the enter animation reoccur due to dependencies on the state.
                if (pathName !== location.pathname && isReRender) return;
                if (mode === "wait") {
-                  enter(callBackProp);
+                  enter && enter(callBackProp);
                }
             }
          },

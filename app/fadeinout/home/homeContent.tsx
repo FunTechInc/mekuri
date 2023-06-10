@@ -45,8 +45,8 @@ export const HomeContent = () => {
             });
          }, ref.current!);
       },
-      enter: ({ isPrev, isCurrent }) => {
-         if (isPrev(["/"]) || isCurrent(["/"])) return;
+      enter: ({ isPrev }) => {
+         if (isPrev(["/"])) return;
          gsap.context(() => {
             gsap.fromTo(
                ".fadeIn",

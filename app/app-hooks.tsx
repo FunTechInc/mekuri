@@ -8,6 +8,7 @@ export const AppHooks = () => {
    useUpdatePageMekuriTrigger({
       state: usePageMekuriStore((state) => state.pageMekuriTrigger),
       dispatcher: usePageMekuriStore((state) => state.setPageMekuriTrigger),
+      isPreventArr: ["/"],
    });
    // funtechConsole();
    return null;

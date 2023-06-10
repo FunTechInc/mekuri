@@ -23,7 +23,7 @@ export const SyncLayout = ({ children }: { children: React.ReactNode }) => {
          <PageMekuriLayout
             duration={state.duration}
             componentArr={componentArr}
-            scrollRestoration="restore"
+            scrollRestoration="top"
             mode="sync">
             {children}
          </PageMekuriLayout>

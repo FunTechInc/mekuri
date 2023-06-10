@@ -42,6 +42,7 @@ export const useUnmountPrevEffect = ({
          return;
       }
       if (!state.next && mode === "sync") {
+         //currentをnextで切り替えた後の2度目のunmoutを防ぐ
          return;
       }
 

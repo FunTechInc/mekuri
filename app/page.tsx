@@ -1,5 +1,4 @@
 "use client";
-
 import { LinkList, Nav } from "./_component/Nav";
 import styles from "./home.module.scss";
 
