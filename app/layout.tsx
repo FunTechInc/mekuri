@@ -8,7 +8,11 @@ const dotGothic = DotGothic16({ weight: ["400"], subsets: ["latin"] });
 
 export const metadata = {
    title: "Page Mekuri",
-   description: "Page Mekuri Demo",
+   description:
+      "page-mekuri is a demo for creating page transition animations in the app directory of Next13.",
+   twitter: {
+      card: "summary_large_image",
+   },
 };
 
 export default function RootLayout({

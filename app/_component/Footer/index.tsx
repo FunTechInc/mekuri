@@ -5,8 +5,14 @@ export const Footer = () => {
       <footer className={styles.footer}>
          <p>© HASHIMOTO Takuma at FunTech,inc</p>
          <div className={styles.linkList}>
-            <p>github</p>
-            <p>twitter</p>
+            <a
+               href="https://github.com/takuma-hmng8/page-mekuri"
+               target="_blank">
+               github
+            </a>
+            <a href="https://twitter.com/tkm_hmng8" target="_blank">
+               twitter
+            </a>
          </div>
       </footer>
    );

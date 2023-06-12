@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { usePageMekuriStore } from "./_context/usePageMekuriStore";
 import { useUpdatePageMekuriTrigger } from "./_hook/useUpdatePageMekuriTrigger";
 import { funtechConsole } from "./_utils/funtechConsole";
@@ -10,6 +11,8 @@ export const AppHooks = () => {
       dispatcher: usePageMekuriStore((state) => state.setPageMekuriTrigger),
       isPreventArr: ["/"],
    });
-   funtechConsole();
+   useEffect(() => {
+      funtechConsole();
+   }, []);
    return null;
 };
