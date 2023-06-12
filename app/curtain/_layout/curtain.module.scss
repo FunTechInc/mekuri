@@ -1,0 +1,23 @@
+.curtain {
+   position: fixed;
+   width: 100vw;
+   height: 100vh;
+   top: 0;
+   left: 0;
+   z-index: 9000;
+   background-color: #000;
+   background-image: url("/funkun.svg");
+   background-size: 80px;
+   background-repeat: repeat;
+   background-position: center center;
+   transform: translateY(100%);
+   &:after {
+      content: "";
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      position: absolute;
+      top: 0;
+      left: 0;
+   }
+}

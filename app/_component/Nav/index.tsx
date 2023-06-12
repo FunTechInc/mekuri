@@ -31,6 +31,13 @@ export const LinkList = ({ pathName }: TNav) => {
             <Link href="/sync/about">アバウト</Link>
          </>
       );
+   } else if (pathName === "curtain") {
+      return (
+         <>
+            <Link href="/curtain">ホーム</Link>
+            <Link href="/curtain/about">アバウト</Link>
+         </>
+      );
    } else {
       return null;
    }
