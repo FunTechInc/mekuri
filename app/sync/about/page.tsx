@@ -38,15 +38,14 @@ const Box = ({ title, className, dir }: IBox) => {
 };
 
 function About() {
-   // console.log("about render");
    const ref = useRef(null);
    const wrapperRef = useRef(null);
    usePageMekuriAnimation({
       isReRender: true,
       mode: "sync",
       stateName: PAGEMEKURISTATE.mekuri.name,
-      leave: () => {
-         leaveAnim(wrapperRef, ref);
+      leave: ({ yPosBeforeLeave }) => {
+         leaveAnim(wrapperRef, ref, yPosBeforeLeave);
       },
       enter: () => {
          enterAnim(wrapperRef, ref);
@@ -57,13 +56,6 @@ function About() {
       <div className={syncStyle.wrapper} ref={wrapperRef}>
          <div className={syncStyle.syncInner} ref={ref}>
             <div className={styles.mv}>
-               <div className={styles.titleWrapper}>
-                  <h2>
-                     <span className="titleSpan">Creativity</span>
-                     <span className="titleSpan">is</span>
-                     <span className="titleSpan">ロマン</span>
-                  </h2>
-               </div>
                <Image
                   src="/camp.jpg"
                   width={1200}

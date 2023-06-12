@@ -3,7 +3,7 @@ import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
 import { IState, TMode, IAction } from "../types";
 
 /*===============================================
-stateの変更に応じてアンマウントする
+Unmount in response to changes in state.
 ===============================================*/
 interface IUnmountPrevEffect {
    state: IState;
@@ -29,20 +29,19 @@ export const useUnmountPrevEffect = ({
             type: "unmount-prev",
          });
       }
-      // resetStyleCopies();
    };
 
    useIsomorphicLayoutEffect(() => {
       /*===============================================
 		prevent
 		===============================================*/
-      //初回レンダリング
+      //first render
       if (firstRender.current) {
          firstRender.current = false;
          return;
       }
       if (!state.next && mode === "sync") {
-         //currentをnextで切り替えた後の2度目のunmoutを防ぐ
+         //Prevent the second unmount after switching current to next.
          return;
       }
 

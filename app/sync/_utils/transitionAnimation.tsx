@@ -3,11 +3,15 @@ import { PAGEMEKURISTATE } from "../../_context/usePageMekuriStore";
 import { gsap } from "gsap";
 
 type TRef = RefObject<HTMLDivElement>;
-export const leaveAnim = (wrapperRef: TRef, ref: TRef) => {
+export const leaveAnim = (
+   wrapperRef: TRef,
+   ref: TRef,
+   yPosBeforeLeave: number
+) => {
    const wWidth = window.innerWidth;
    gsap.set(wrapperRef.current, {
       position: "absolute",
-      top: 0,
+      top: `${yPosBeforeLeave * -1}px`,
       left: 0,
       right: 0,
       margin: "auto",

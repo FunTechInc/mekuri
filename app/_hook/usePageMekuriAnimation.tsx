@@ -72,7 +72,7 @@ export const usePageMekuriAnimation = ({
                return;
             }
             /*===============================================
-				leaveとenterコールバックに返すオブジェクト
+				pass to the leave and enter callback
 				===============================================*/
             const callBackProp: TCallBackProp = {
                prev: state.prev,
@@ -90,14 +90,14 @@ export const usePageMekuriAnimation = ({
                },
             };
             /*===============================================
-				phase
+				phases
 				===============================================*/
             if (state.phase === "leave") {
                /*===============================================
-					leave フェーズ
+					leave
 					===============================================*/
                if (mode === "wait") {
-                  //waitモードはisReRender:falseで使用することも想定するので、pathNameでのpreventはしない
+                  //wait mode is also intended to be used with isReRender:false, do not prevent by pathName.
                   leave && leave(callBackProp);
                }
                if (mode === "sync") {
@@ -121,7 +121,7 @@ export const usePageMekuriAnimation = ({
                }
             } else if (state.phase === "enter") {
                /*===============================================
-					enter フェーズ
+					enter
 					===============================================*/
                if (
                   mode === "sync" &&

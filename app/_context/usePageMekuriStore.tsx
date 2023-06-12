@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
 
 /*===============================================
-いじる
+you can customize
 ===============================================*/
 /********************
 const
@@ -52,7 +52,7 @@ export const usePageMekuriStore = create<
 );
 
 /*===============================================
-いじらない
+do not customize
 ===============================================*/
 export interface IPageMekuriProps {
    prev?: string | null;

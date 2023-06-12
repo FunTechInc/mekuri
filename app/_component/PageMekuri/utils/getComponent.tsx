@@ -19,7 +19,7 @@ export const changeRegExp = (string: string, isStrict: boolean = false) => {
 };
 
 /********************
-現在のpathNameとcomponentArrを比較して現在のコンポーネントを取得する
+get the current component by comparing the current pathName with componentArr.
 ********************/
 const testRegExpAndPath = (componentArr: ComponentItem[], pathName: string) => {
    return (
@@ -34,8 +34,8 @@ const testRegExpAndPath = (componentArr: ComponentItem[], pathName: string) => {
 };
 
 /*===============================================
-pathに対応するコンポーネントを取得する
-componentArrに一致するものがない場合はchildrenを返す
+get the component corresponding to the path.
+If there is no match in componentArr, return children
 ===============================================*/
 interface IGetCurrentComponent {
    componentArr: ComponentItem[];
@@ -60,7 +60,7 @@ export const getCurrentComponent: ({
 };
 
 /*===============================================
-現在のコンポーネントと渡ってきたpathNameに対応するコンポーネントが同じ場合、trueを返す
+Return true if the current component and the component corresponding to the passed pathName are the same.
 ===============================================*/
 interface IIsCurrentComponentForPath {
    componentArr: ComponentItem[];

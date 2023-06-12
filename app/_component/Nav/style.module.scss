@@ -12,6 +12,9 @@
    a {
       text-decoration: underline;
    }
+   @media screen and (max-width: 560px) {
+      padding: 0 16px;
+   }
 }
 
 .title {
@@ -21,6 +24,11 @@
 .logo {
    width: auto;
    height: 72%;
+   display: block;
+   img {
+      width: auto;
+      height: 100%;
+   }
 }
 
 .nav {
@@ -31,6 +39,9 @@
       color: #fff;
       &:not(:last-child) {
          margin-right: 24px;
+      }
+      @media screen and (max-width: 560px) {
+         font-size: 14px;
       }
    }
 }

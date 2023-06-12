@@ -3,7 +3,7 @@ import styles from "./style.module.scss";
 import Image from "next/image";
 
 type TNav = {
-   pathName: "home" | "curtain" | "fadeinout" | "sync" | "wait-sync" | "fluid";
+   pathName: "home" | "curtain" | "fadeinout" | "sync";
 };
 
 export const LinkList = ({ pathName }: TNav) => {
@@ -13,8 +13,6 @@ export const LinkList = ({ pathName }: TNav) => {
             <Link href="/fadeinout">FadeInOut</Link>
             <Link href="/sync">Sync</Link>
             <Link href="/curtain">Curtain</Link>
-            <Link href="/wait-sync">Wait-Sync</Link>
-            <Link href="/fluid">Fluid</Link>
          </>
       );
    } else if (pathName === "fadeinout") {

@@ -18,7 +18,7 @@ interface IGetYPosFromCache {
 }
 
 /*===============================================
-cacheからscroll position を getする
+get scroll position by cache
 ===============================================*/
 const getYPosFromCache = ({
    cache,
@@ -27,7 +27,7 @@ const getYPosFromCache = ({
    pos,
 }: IGetYPosFromCache) => {
    /********************
-	ノーマル遷移
+	default transition
 	********************/
    if (isPopstate === false) {
       cache.backPosY = pos;
@@ -38,11 +38,11 @@ const getYPosFromCache = ({
 	popstate
 	********************/
    if (key === cache.keysArr[cache.keysArr.length - 2]) {
-      //backで1回だけrestore
+      //restore pos
       cache.keysArr = [key];
       return cache.backPosY || 0;
    }
-   //それ以外は0を返す
+   //return 0
    return 0;
 };
 
@@ -59,7 +59,6 @@ export const useScrollRestoration = ({
    });
 
    useIsomorphicLayoutEffect(() => {
-      //初回レンダリング
       if (firstRender.current) {
          if (window.history.scrollRestoration === "auto") {
             window.history.scrollRestoration = "manual";
@@ -68,7 +67,7 @@ export const useScrollRestoration = ({
             isPopstate.current = true;
          });
 
-         //最初のkeyをいれる
+         //push first key
          restoreCache.current.keysArr.push(state.restorePos.key);
 
          firstRender.current = false;
@@ -78,7 +77,6 @@ export const useScrollRestoration = ({
 		scroll restration
 		===============================================*/
       if (scrollRestoration === "top") {
-         //topの時は常にTOPに
          window.scrollTo({ top: 0 });
       } else if (scrollRestoration === "restore") {
          const restorePosY = getYPosFromCache({

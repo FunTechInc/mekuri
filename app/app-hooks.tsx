@@ -10,6 +10,6 @@ export const AppHooks = () => {
       dispatcher: usePageMekuriStore((state) => state.setPageMekuriTrigger),
       isPreventArr: ["/"],
    });
-   // funtechConsole();
+   funtechConsole();
    return null;
 };

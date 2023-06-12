@@ -24,7 +24,7 @@ const PageMekuriLayout = ({
    scrollRestoration,
 }: IProps) => {
    /*===============================================
-	１現在のコンポーネントを取得する
+	１get current component
 	===============================================*/
    const pathName = usePathname();
    const [state, dispatch] = useReducer(componentReducer, {
@@ -37,7 +37,7 @@ const PageMekuriLayout = ({
    });
 
    /*===============================================
-	2 コンポーネントを更新する
+	2 update component
 	===============================================*/
    useComponentUpdateEffect({
       pathName,
@@ -50,21 +50,17 @@ const PageMekuriLayout = ({
    });
 
    /*===============================================
-	3 css moduleの対応
-	===============================================*/
-
-   /*===============================================
-	4 アンマウントする
+	3 unmount
 	===============================================*/
    useUnmountPrevEffect({ state, mode, duration, dispatch });
 
    /*===============================================
-	5 scroll restoration
+	4 scroll restoration
 	===============================================*/
    useScrollRestoration({ scrollRestoration, state });
 
    /*===============================================
-	6 render
+	5 render
 	===============================================*/
    return (
       <>

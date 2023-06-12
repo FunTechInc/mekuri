@@ -16,7 +16,6 @@
       "eslint": "8.41.0",
       "eslint-config-next": "13.4.4",
       "gsap": "^3.11.5",
-      "nanoid": "^4.0.2",
       "next": "13.4.4",
       "react": "18.2.0",
       "react-dom": "18.2.0",

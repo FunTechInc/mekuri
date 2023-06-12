@@ -4,7 +4,7 @@ import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
 import { IState, TMode, IAction, ComponentItem } from "../types";
 
 /*===============================================
-コンポーネント用状態管理stateの更新関数
+update component reducer
 ===============================================*/
 export const componentReducer = (state: IState, action: IAction) => {
    switch (action.type) {
@@ -34,7 +34,7 @@ export const componentReducer = (state: IState, action: IAction) => {
 };
 
 /*===============================================
-pathの切り替えに応じて、コンポーネントを更新する
+Update the component according to the switch of the path.
 ===============================================*/
 interface IComponentUpdateEffect {
    pathName: string;
