@@ -1,8 +1,3 @@
-import { TPageMekuriDuration } from "@/app/_context/usePageMekuriStore";
-
-/*===============================================
-types
-===============================================*/
 export type TMode = "sync" | "wait";
 export type TRestore = "top" | "restore";
 
@@ -15,8 +10,8 @@ export interface IProps {
    componentArr: ComponentItem[];
    children: React.ReactNode;
    mode: TMode;
-   duration: TPageMekuriDuration;
    scrollRestoration: TRestore;
+   millisecond: number;
 }
 
 type TRestorePos = {

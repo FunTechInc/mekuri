@@ -8,7 +8,7 @@ import {
 } from "./utils/updateComponent";
 import { getCurrentComponent } from "./utils/getComponent";
 import { useUnmountPrevEffect } from "./utils/unmountComponent";
-import { IProps } from "./types";
+import { IProps } from "../types";
 import { useScrollRestoration } from "./utils/useScrollRestoration";
 
 /**
@@ -16,13 +16,13 @@ import { useScrollRestoration } from "./utils/useScrollRestoration";
  * @param props
  */
 
-const PageMekuriLayout = ({
+export const PageMekuriLayout = memo(function PageMekuriLayout({
    componentArr,
    mode,
    children,
-   duration,
    scrollRestoration,
-}: IProps) => {
+   millisecond,
+}: IProps) {
    /*===============================================
 	１get current component
 	===============================================*/
@@ -42,7 +42,7 @@ const PageMekuriLayout = ({
    useComponentUpdateEffect({
       pathName,
       mode,
-      duration,
+      millisecond,
       state,
       componentArr,
       children,
@@ -52,7 +52,7 @@ const PageMekuriLayout = ({
    /*===============================================
 	3 unmount
 	===============================================*/
-   useUnmountPrevEffect({ state, mode, duration, dispatch });
+   useUnmountPrevEffect({ state, mode, millisecond, dispatch });
 
    /*===============================================
 	4 scroll restoration
@@ -68,6 +68,4 @@ const PageMekuriLayout = ({
          {state.next && state.next}
       </>
    );
-};
-
-export default memo(PageMekuriLayout);
+});

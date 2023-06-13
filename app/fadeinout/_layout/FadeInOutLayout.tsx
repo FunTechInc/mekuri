@@ -1,10 +1,13 @@
 "use client";
 
 import { useRef } from "react";
-import PageMekuriLayout from "../../_component/PageMekuri/PageMekuriLayout";
-import { usePageMekuriAnimation } from "../../_hook/usePageMekuriAnimation";
 import { gsap } from "gsap";
-import { PAGEMEKURISTATE } from "../../_context/usePageMekuriStore";
+import { PAGEMEKURISTATE } from "../../app-hooks";
+
+import {
+   PageMekuriLayout,
+   usePageMekuriAnimation,
+} from "@/packages/page-mekuri";
 
 /*===============================================
 pageMekuriLayoutに渡すコンポーネントの配列
@@ -25,33 +28,31 @@ export const FadeInOutLayout = ({
    children: React.ReactNode;
 }) => {
    const ref = useRef(null);
-   const state = PAGEMEKURISTATE.mekuri;
    usePageMekuriAnimation({
       isReRender: false,
       mode: "wait",
-      stateName: state.name,
       leave: ({ isCurrent }) => {
          if (isCurrent(["/"])) return;
          gsap.to(ref.current, {
             opacity: 0,
-            duration: state.second(),
+            duration: PAGEMEKURISTATE.second(),
          });
       },
       enter: ({ isPrev }) => {
          if (isPrev(["/"])) return;
          gsap.to(ref.current, {
             opacity: 1,
-            duration: state.second(),
+            duration: PAGEMEKURISTATE.second(),
          });
       },
    });
    return (
       <main ref={ref} className="ly_main">
          <PageMekuriLayout
-            duration={state.duration}
             componentArr={componentArr}
             mode="wait"
-            scrollRestoration="restore">
+            scrollRestoration="restore"
+            millisecond={PAGEMEKURISTATE.millisecond}>
             {children}
          </PageMekuriLayout>
       </main>

@@ -1,11 +1,12 @@
 "use client";
 import { gsap } from "gsap";
 import styles from "./style.module.scss";
-import { usePageMekuriAnimation } from "../../_hook/usePageMekuriAnimation";
 import { useRef } from "react";
-import { PAGEMEKURISTATE } from "../../_context/usePageMekuriStore";
+import { PAGEMEKURISTATE } from "../../app-hooks";
 import Image from "next/image";
 import Link from "next/link";
+
+import { usePageMekuriAnimation } from "@/packages/page-mekuri";
 
 interface IBox {
    className: string;
@@ -31,13 +32,12 @@ export const HomeContent = () => {
    usePageMekuriAnimation({
       isReRender: true,
       mode: "wait",
-      stateName: PAGEMEKURISTATE.mekuri.name,
       leave: ({ isCurrent }) => {
          if (isCurrent(["/"])) return;
          gsap.context(() => {
             gsap.to(".fadeIn", {
                y: -80,
-               duration: PAGEMEKURISTATE.mekuri.second(),
+               duration: PAGEMEKURISTATE.second(),
                ease: "power3.out",
                stagger: {
                   each: 0.05,
@@ -57,7 +57,7 @@ export const HomeContent = () => {
                {
                   opacity: 1,
                   y: 0,
-                  duration: PAGEMEKURISTATE.mekuri.second(),
+                  duration: PAGEMEKURISTATE.second(),
                   ease: "power2.out",
                   stagger: {
                      each: 0.05,

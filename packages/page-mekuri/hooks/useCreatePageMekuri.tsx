@@ -1,7 +1,12 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
-import { IPageMekuriProps } from "../_context/usePageMekuriStore";
-import { changeRegExp } from "../_component/PageMekuri/utils/getComponent";
+import { usePageMekuriStore } from "./usePageMekuriStore";
+import { changeRegExp } from "../utils/changeRegExp";
+
+interface UuseCreatePageMekuri {
+   millisecond: number;
+   preventArr: string[];
+}
 
 const checkPreventPath = (pathArr: string[], testPath: string): boolean => {
    if (!testPath) return false;
@@ -11,20 +16,18 @@ const checkPreventPath = (pathArr: string[], testPath: string): boolean => {
    return matchPath ? true : false;
 };
 
-export const useUpdatePageMekuriTrigger = ({
-   state,
-   dispatcher,
-   isPreventArr,
-}: {
-   state: IPageMekuriProps;
-   dispatcher: (props: IPageMekuriProps) => any;
-   isPreventArr: string[];
-}) => {
+export const useCreatePageMekuri = ({
+   millisecond,
+   preventArr,
+}: UuseCreatePageMekuri) => {
+   const state = usePageMekuriStore((state) => state.state);
+   const dispatcher = usePageMekuriStore((state) => state.dispatch);
    const pathName = usePathname();
    const firstRender = useRef(true);
    const timeoutID = useRef<NodeJS.Timeout | number>(0);
+
    useEffect(() => {
-      if (firstRender.current || checkPreventPath(isPreventArr, pathName)) {
+      if (firstRender.current || checkPreventPath(preventArr, pathName)) {
          firstRender.current = false;
          dispatcher({
             prev: null,
@@ -51,7 +54,7 @@ export const useUpdatePageMekuriTrigger = ({
             next: pathName,
             phase: "enter",
          });
-      }, state.duration!);
+      }, millisecond);
       return () => {
          clearTimeout(timeoutID.current);
       };

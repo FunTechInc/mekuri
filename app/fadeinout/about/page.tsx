@@ -2,10 +2,11 @@
 
 import { useRef, memo, useEffect } from "react";
 import styles from "./style.module.scss";
-import { usePageMekuriAnimation } from "../../_hook/usePageMekuriAnimation";
 import { gsap } from "gsap";
-import { PAGEMEKURISTATE } from "../../_context/usePageMekuriStore";
+import { PAGEMEKURISTATE } from "../../app-hooks";
 import { InfinitSlider } from "../../_utils/InfinitTxt";
+
+import { usePageMekuriAnimation } from "@/packages/page-mekuri";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -42,7 +43,6 @@ function About() {
    usePageMekuriAnimation({
       isReRender: true,
       mode: "wait",
-      stateName: PAGEMEKURISTATE.mekuri.name,
       leave: ({ next }) => {
          gsap.context(() => {
             gsap.to(".fadein", {
@@ -56,7 +56,7 @@ function About() {
                scale: function () {
                   return next === "/fadeinout/about/recruit" ? 2 : 1;
                },
-               duration: PAGEMEKURISTATE.mekuri.second(),
+               duration: PAGEMEKURISTATE.second(),
                ease: "power3.out",
                stagger: {
                   each: 0.05,
@@ -80,7 +80,7 @@ function About() {
                {
                   x: 0,
                   scale: 1,
-                  duration: PAGEMEKURISTATE.mekuri.second(),
+                  duration: PAGEMEKURISTATE.second(),
                   ease: "power3.out",
                   stagger: {
                      each: 0.05,

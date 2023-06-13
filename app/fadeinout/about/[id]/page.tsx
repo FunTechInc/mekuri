@@ -3,11 +3,12 @@
 import styles from "./child.module.scss";
 
 import { useRef, memo } from "react";
-import { usePageMekuriAnimation } from "../../../_hook/usePageMekuriAnimation";
 import { gsap } from "gsap";
-import { PAGEMEKURISTATE } from "../../../_context/usePageMekuriStore";
+import { PAGEMEKURISTATE } from "../../../app-hooks";
 import Image from "next/image";
 import Link from "next/link";
+
+import { usePageMekuriAnimation } from "@/packages/page-mekuri";
 
 function Child() {
    const ref = useRef(null);
@@ -15,12 +16,11 @@ function Child() {
    usePageMekuriAnimation({
       isReRender: true,
       mode: "wait",
-      stateName: PAGEMEKURISTATE.mekuri.name,
       leave: () => {
          gsap.context(() => {
             gsap.to(".textBlock", {
                scale: 1.2,
-               duration: PAGEMEKURISTATE.mekuri.second(),
+               duration: PAGEMEKURISTATE.second(),
                ease: "power3.out",
             });
          }, ref.current!);
@@ -34,7 +34,7 @@ function Child() {
                },
                {
                   scale: 1,
-                  duration: PAGEMEKURISTATE.mekuri.second(),
+                  duration: PAGEMEKURISTATE.second(),
                   ease: "power3.out",
                }
             );

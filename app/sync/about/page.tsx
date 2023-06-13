@@ -2,13 +2,11 @@
 import { useRef, memo, useEffect } from "react";
 import syncStyle from "../sync.module.scss";
 import styles from "./style.module.scss";
-import { usePageMekuriAnimation } from "../../_hook/usePageMekuriAnimation";
-import { PAGEMEKURISTATE } from "../../_context/usePageMekuriStore";
 import { InfinitSlider } from "../../_utils/InfinitTxt";
-
 import Image from "next/image";
 import Link from "next/link";
 import { enterAnim, leaveAnim } from "../_utils/transitionAnimation";
+import { usePageMekuriAnimation } from "@/packages/page-mekuri";
 
 interface IBox {
    title: string;
@@ -43,7 +41,6 @@ function About() {
    usePageMekuriAnimation({
       isReRender: true,
       mode: "sync",
-      stateName: PAGEMEKURISTATE.mekuri.name,
       leave: ({ yPosBeforeLeave }) => {
          leaveAnim(wrapperRef, ref, yPosBeforeLeave);
       },

@@ -1,13 +1,14 @@
 "use client";
 import syncStyle from "../sync.module.scss";
 import styles from "./style.module.scss";
-import { usePageMekuriAnimation } from "../../_hook/usePageMekuriAnimation";
-import { useEffect, useRef } from "react";
-import { PAGEMEKURISTATE } from "../../_context/usePageMekuriStore";
+import { useRef } from "react";
+import { PAGEMEKURISTATE } from "../../app-hooks";
 import Image from "next/image";
 import Link from "next/link";
 import { enterAnim, leaveAnim } from "../_utils/transitionAnimation";
 import { gsap } from "gsap";
+
+import { usePageMekuriAnimation } from "@/packages/page-mekuri";
 
 interface IBox {
    className: string;
@@ -35,12 +36,11 @@ export const HomeContent = () => {
    usePageMekuriAnimation({
       isReRender: true,
       mode: "sync",
-      stateName: PAGEMEKURISTATE.mekuri.name,
       once: () => {
          gsap.context(() => {
             gsap.to("video.fadeIn", {
                opacity: 1,
-               duration: PAGEMEKURISTATE.mekuri.second(),
+               duration: PAGEMEKURISTATE.second(),
             });
          }, ref.current!);
       },
@@ -55,7 +55,7 @@ export const HomeContent = () => {
          gsap.context(() => {
             gsap.to("video.fadeIn", {
                opacity: 1,
-               duration: PAGEMEKURISTATE.mekuri.second(),
+               duration: PAGEMEKURISTATE.second(),
             });
          }, ref.current!);
       },

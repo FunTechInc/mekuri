@@ -1,10 +1,7 @@
 import { useEffect, useRef } from "react";
-import {
-   TPageMekuriStateName,
-   usePageMekuriStore,
-} from "../_context/usePageMekuriStore";
-import { TMode } from "../_component/PageMekuri/types";
-import { changeRegExp } from "../_component/PageMekuri/utils/getComponent";
+import { usePageMekuriStore } from "./usePageMekuriStore";
+import { TMode } from "../types";
+import { changeRegExp } from "../utils/changeRegExp";
 
 type TCallBackProp = {
    prev: string | null | undefined;
@@ -19,7 +16,6 @@ type TCallBackProp = {
 interface IProps {
    isReRender: boolean;
    mode: TMode;
-   stateName: TPageMekuriStateName;
    once?: () => void;
    leave?: (state: TCallBackProp) => void;
    enter?: (state: TCallBackProp) => void;
@@ -49,7 +45,6 @@ export const usePageMekuriAnimation = ({
    leave,
    enter,
    afterEnter,
-   stateName,
 }: IProps) => {
    const firstRender = useRef(true);
    useEffect(() => {
@@ -58,7 +53,7 @@ export const usePageMekuriAnimation = ({
       //In sync mode, call the afterEnter callback after enter. However, do not trigger it during the render time of the leave phase.
       let isLeavePhaseRender: boolean = false;
       const unsubscribe = usePageMekuriStore.subscribe(
-         (state) => state[stateName],
+         (state) => state.state,
          (state) => {
             /*===============================================
 				prevent first access && render
