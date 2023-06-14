@@ -1,0 +1,16 @@
+{
+   "compilerOptions": {
+      "target": "es5",
+      "module": "commonjs",
+      "declaration": true,
+      "sourceMap": true,
+      "rootDir": "./src",
+      "declarationDir": "./types/",
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "strict": true,
+      "skipLibCheck": true,
+      "jsx": "preserve"
+   },
+   "include": ["./src/**/*.ts", "./src/**/*.tsx"]
+}

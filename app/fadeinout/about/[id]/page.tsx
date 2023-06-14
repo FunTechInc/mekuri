@@ -8,7 +8,7 @@ import { PAGEMEKURISTATE } from "../../../app-hooks";
 import Image from "next/image";
 import Link from "next/link";
 
-import { usePageMekuriAnimation } from "@/packages/page-mekuri";
+import { usePageMekuriAnimation } from "@/packages/page-mekuri/src";
 
 function Child() {
    const ref = useRef(null);

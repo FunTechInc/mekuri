@@ -1,12 +1,13 @@
 {
    "name": "@funtech-inc/page-mekuri",
-   "version": "1.0.0",
-   "description": "page-mekuri is a demo for creating page transition animations in the app directory of Next13.",
-   "main": "index.js",
+   "version": "1.0.1",
+   "description": "Page transition animation with Next.js",
+   "main": "/src/index.ts",
+   "types": "./types/index.d.ts",
    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
+      "type": "tsc --emitDeclarationOnly"
    },
-   "author": "HASHIMOTO Takuma",
+   "author": "HASHIMOTO Takuma at FunTech",
    "license": "MIT",
    "keywords": [
       "react",
@@ -16,9 +17,13 @@
       "type": "git",
       "url": "https://github.com/FunTechInc/page-mekuri"
    },
+   "devDependencies": {
+      "typescript": "^5.1.3"
+   },
    "peerDependencies": {
-      "zustand": "^4.3.8",
+      "next": "^13.4.4",
       "react": "^18.2.0",
-      "react-dom": "^18.2.0"
+      "react-dom": "^18.2.0",
+      "zustand": "^4.3.8"
    }
 }

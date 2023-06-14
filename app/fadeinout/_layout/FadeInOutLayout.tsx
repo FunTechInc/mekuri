@@ -7,7 +7,7 @@ import { PAGEMEKURISTATE } from "../../app-hooks";
 import {
    PageMekuriLayout,
    usePageMekuriAnimation,
-} from "@/packages/page-mekuri";
+} from "@/packages/page-mekuri/src";
 
 /*===============================================
 pageMekuriLayoutに渡すコンポーネントの配列

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useCreatePageMekuri } from "../packages/page-mekuri/";
+import { useCreatePageMekuri } from "@/packages/page-mekuri/src";
 import { funtechConsole } from "./_utils/funtechConsole";
 
 export const PAGEMEKURISTATE = {

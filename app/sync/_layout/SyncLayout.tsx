@@ -1,6 +1,6 @@
 "use client";
 
-import { PageMekuriLayout } from "../../../packages/page-mekuri";
+import { PageMekuriLayout } from "@/packages/page-mekuri/src";
 import { PAGEMEKURISTATE } from "../../app-hooks";
 
 /*===============================================

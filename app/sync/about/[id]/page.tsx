@@ -3,7 +3,7 @@
 import styles from "./child.module.scss";
 import syncStyle from "../../sync.module.scss";
 import { useRef, memo } from "react";
-import { usePageMekuriAnimation } from "@/packages/page-mekuri";
+import { usePageMekuriAnimation } from "@/packages/page-mekuri/src";
 import Image from "next/image";
 import Link from "next/link";
 import { enterAnim, leaveAnim } from "../../_utils/transitionAnimation";

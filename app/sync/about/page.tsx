@@ -6,7 +6,7 @@ import { InfinitSlider } from "../../_utils/InfinitTxt";
 import Image from "next/image";
 import Link from "next/link";
 import { enterAnim, leaveAnim } from "../_utils/transitionAnimation";
-import { usePageMekuriAnimation } from "@/packages/page-mekuri";
+import { usePageMekuriAnimation } from "@/packages/page-mekuri/src";
 
 interface IBox {
    title: string;
