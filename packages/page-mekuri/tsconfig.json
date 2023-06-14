@@ -4,6 +4,7 @@
       "module": "commonjs",
       "declaration": true,
       "sourceMap": true,
+      "outDir": "./build",
       "rootDir": "./src",
       "declarationDir": "./types/",
       "esModuleInterop": true,

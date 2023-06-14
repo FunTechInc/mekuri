@@ -1,10 +1,11 @@
 {
    "name": "@funtech-inc/page-mekuri",
-   "version": "1.0.1",
+   "version": "1.0.3",
    "description": "Page transition animation with Next.js",
-   "main": "/src/index.ts",
+   "main": "/build/index.js",
    "types": "./types/index.d.ts",
    "scripts": {
+      "build": "tsc -d",
       "type": "tsc --emitDeclarationOnly"
    },
    "author": "HASHIMOTO Takuma at FunTech",
