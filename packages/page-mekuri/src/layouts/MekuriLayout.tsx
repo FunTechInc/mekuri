@@ -22,6 +22,7 @@ export const MekuriLayout = memo(function MekuriLayout({
    children,
 }: IMekuriLayoutProps) {
    //durationを持ってくる
+   //todo createContextらへんの整理
    const millisecond = useMekuriDuration()!.millisecond;
 
    /*===============================================
