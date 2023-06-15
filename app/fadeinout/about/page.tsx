@@ -3,10 +3,13 @@
 import { useRef, memo, useEffect } from "react";
 import styles from "./style.module.scss";
 import { gsap } from "gsap";
-import { PAGEMEKURISTATE } from "../../app-hooks";
+
 import { InfinitSlider } from "../../_utils/InfinitTxt";
 
-import { usePageMekuriAnimation } from "@/packages/page-mekuri/src";
+import {
+   useMekuriAnimation,
+   useMekuriDuration,
+} from "@/packages/page-mekuri/src";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -40,7 +43,8 @@ const Box = ({ title, className, dir }: IBox) => {
 
 function About() {
    const ref = useRef(null);
-   usePageMekuriAnimation({
+   const duration = useMekuriDuration();
+   useMekuriAnimation({
       isReRender: true,
       mode: "wait",
       leave: ({ next }) => {
@@ -56,7 +60,7 @@ function About() {
                scale: function () {
                   return next === "/fadeinout/about/recruit" ? 2 : 1;
                },
-               duration: PAGEMEKURISTATE.second(),
+               duration: duration?.second,
                ease: "power3.out",
                stagger: {
                   each: 0.05,
@@ -80,7 +84,7 @@ function About() {
                {
                   x: 0,
                   scale: 1,
-                  duration: PAGEMEKURISTATE.second(),
+                  duration: duration?.second,
                   ease: "power3.out",
                   stagger: {
                      each: 0.05,

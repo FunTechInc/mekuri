@@ -1,30 +1,43 @@
 {
    "name": "@funtech-inc/page-mekuri",
-   "version": "1.0.3",
+   "version": "1.1.7",
    "description": "Page transition animation with Next.js",
-   "main": "/build/index.js",
+   "main": "./build/mekuri.umd.cjs",
+   "module": "./build/mekuri.js",
    "types": "./types/index.d.ts",
-   "scripts": {
-      "build": "tsc -d",
-      "type": "tsc --emitDeclarationOnly"
+   "exports": {
+      ".": {
+         "import": "./build/mekuri.js",
+         "require": "./build/mekuri.umd.cjs"
+      }
    },
-   "author": "HASHIMOTO Takuma at FunTech",
-   "license": "MIT",
-   "keywords": [
-      "react",
-      "next"
-   ],
+   "type": "module",
+   "scripts": {
+      "type": "tsc",
+      "build": "vite build"
+   },
    "repository": {
       "type": "git",
       "url": "https://github.com/FunTechInc/page-mekuri"
    },
-   "devDependencies": {
-      "typescript": "^5.1.3"
-   },
+   "keywords": [
+      "react",
+      "next"
+   ],
+   "author": "HASHIMOTO Takuma at FunTech",
+   "license": "MIT",
+   "files": [
+      "build",
+      "types"
+   ],
    "peerDependencies": {
       "next": "^13.4.4",
       "react": "^18.2.0",
       "react-dom": "^18.2.0",
       "zustand": "^4.3.8"
+   },
+   "devDependencies": {
+      "typescript": "^5.1.3",
+      "vite": "^4.3.9"
    }
 }

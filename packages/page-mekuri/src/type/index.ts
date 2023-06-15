@@ -6,12 +6,12 @@ export type ComponentItem = {
    component: React.ReactElement;
 };
 
-export interface IProps {
+export interface IMekuriLayoutProps {
    componentArr: ComponentItem[];
    children: React.ReactNode;
    mode: TMode;
    scrollRestoration: TRestore;
-   millisecond: number;
+   pathName: string;
 }
 
 type TRestorePos = {
@@ -29,4 +29,12 @@ export interface IAction {
    type: "update" | "update-unmount" | "unmount-prev";
    component?: React.ReactNode;
    restorePos?: TRestorePos;
+}
+
+export interface IRouterState {
+   prev?: string | null;
+   current?: string | null;
+   next?: string | null;
+   phase?: "leave" | "enter" | null;
+   yPosBeforeLeave?: number;
 }

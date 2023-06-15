@@ -2,12 +2,16 @@
 
 import { useRef } from "react";
 import { gsap } from "gsap";
-import { PAGEMEKURISTATE } from "../../app-hooks";
 
 import {
-   PageMekuriLayout,
-   usePageMekuriAnimation,
+   MekuriLayout,
+   useMekuriAnimation,
+   useMekuriDuration,
 } from "@/packages/page-mekuri/src";
+// import {
+//    PageMekuriLayout,
+//    usePageMekuriAnimation,
+// } from "@funtech-inc/page-mekuri";
 
 /*===============================================
 pageMekuriLayoutに渡すコンポーネントの配列
@@ -15,6 +19,7 @@ pageMekuriLayoutに渡すコンポーネントの配列
 import About from "../about/page";
 import Child from "../about/[id]/page";
 import Home from "../page";
+import { usePathname } from "next/navigation";
 
 const componentArr = [
    { path: "/fadeinout/about/★", component: <Child /> },
@@ -28,33 +33,36 @@ export const FadeInOutLayout = ({
    children: React.ReactNode;
 }) => {
    const ref = useRef(null);
-   usePageMekuriAnimation({
+   const router = usePathname();
+   //TODO:createContextの型がundifinedを返さないようにする
+   const duration = useMekuriDuration();
+   useMekuriAnimation({
       isReRender: false,
       mode: "wait",
       leave: ({ isCurrent }) => {
          if (isCurrent(["/"])) return;
          gsap.to(ref.current, {
             opacity: 0,
-            duration: PAGEMEKURISTATE.second(),
+            duration: duration!.second,
          });
       },
       enter: ({ isPrev }) => {
          if (isPrev(["/"])) return;
          gsap.to(ref.current, {
             opacity: 1,
-            duration: PAGEMEKURISTATE.second(),
+            duration: duration!.second,
          });
       },
    });
    return (
       <main ref={ref} className="ly_main">
-         <PageMekuriLayout
+         <MekuriLayout
             componentArr={componentArr}
             mode="wait"
             scrollRestoration="restore"
-            millisecond={PAGEMEKURISTATE.millisecond}>
+            pathName={router}>
             {children}
-         </PageMekuriLayout>
+         </MekuriLayout>
       </main>
    );
 };

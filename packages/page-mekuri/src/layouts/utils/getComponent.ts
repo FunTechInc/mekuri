@@ -1,5 +1,5 @@
-import { IState, ComponentItem } from "../../types";
 import { changeRegExp } from "../../utils/changeRegExp";
+import { IState, ComponentItem } from "../../type";
 
 /********************
 get the current component by comparing the current pathName with componentArr.

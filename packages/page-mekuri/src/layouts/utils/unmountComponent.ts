@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
-import { IState, TMode, IAction } from "../../types";
+import { IState, TMode, IAction } from "../../type";
 
 /*===============================================
 Unmount in response to changes in state.

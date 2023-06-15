@@ -1,57 +1,60 @@
-import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
-import { usePageMekuriStore } from "./usePageMekuriStore";
 import { changeRegExp } from "../utils/changeRegExp";
 
-interface UuseCreatePageMekuri {
+import { IRouterState } from "../type";
+
+interface IUseUpdateRouterState {
+   state: IRouterState;
+   dispatch: (prop: IRouterState) => void;
+   router: string;
    millisecond: number;
    preventArr: string[];
 }
 
 const checkPreventPath = (pathArr: string[], testPath: string): boolean => {
    if (!testPath) return false;
+   if (pathArr.length === 0) return false;
    const matchPath = pathArr
       .slice()
       .find((path) => changeRegExp(path, true).test(testPath!));
    return matchPath ? true : false;
 };
 
-export const useCreatePageMekuri = ({
+export const useUpdateRouterState = ({
+   state,
+   dispatch,
    millisecond,
    preventArr,
-}: UuseCreatePageMekuri) => {
-   const state = usePageMekuriStore((state) => state.state);
-   const dispatcher = usePageMekuriStore((state) => state.dispatch);
-   const pathName = usePathname();
+   router,
+}: IUseUpdateRouterState) => {
    const firstRender = useRef(true);
    const timeoutID = useRef<NodeJS.Timeout | number>(0);
 
    useEffect(() => {
-      if (firstRender.current || checkPreventPath(preventArr, pathName)) {
+      if (firstRender.current || checkPreventPath(preventArr, router)) {
          firstRender.current = false;
-         dispatcher({
+         dispatch({
             prev: null,
-            current: pathName,
+            current: router,
             phase: null,
             next: null,
          });
          return;
       }
       //get yPosBeforeLeave
-      const scrollYPos =
-         window.pageYOffset || document.documentElement.scrollTop;
+      const scrollYPos = document.documentElement.scrollTop;
       //update state (leave)
-      dispatcher({
-         next: pathName,
+      dispatch({
+         next: router,
          phase: "leave",
          yPosBeforeLeave: scrollYPos,
       });
       timeoutID.current = setTimeout(() => {
          //update state (enter)
-         dispatcher({
+         dispatch({
             prev: state.current,
-            current: pathName,
-            next: pathName,
+            current: router,
+            next: router,
             phase: "enter",
          });
       }, millisecond);
@@ -59,5 +62,5 @@ export const useCreatePageMekuri = ({
          clearTimeout(timeoutID.current);
       };
       // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [pathName]);
+   }, [router]);
 };

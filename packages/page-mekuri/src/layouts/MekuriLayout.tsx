@@ -1,32 +1,32 @@
-"use client";
-
 import { useReducer, memo } from "react";
-import { usePathname } from "next/navigation";
 import {
    componentReducer,
    useComponentUpdateEffect,
 } from "./utils/updateComponent";
 import { getCurrentComponent } from "./utils/getComponent";
 import { useUnmountPrevEffect } from "./utils/unmountComponent";
-import { IProps } from "../types";
 import { useScrollRestoration } from "./utils/useScrollRestoration";
+import { IMekuriLayoutProps } from "../type";
+import { useMekuriDuration } from "./MekuriContext";
 
 /**
- * PageMekuriLayout
+ * MekuriLayout
  * @param props
  */
 
-export const PageMekuriLayout = memo(function PageMekuriLayout({
+export const MekuriLayout = memo(function MekuriLayout({
    componentArr,
    mode,
-   children,
    scrollRestoration,
-   millisecond,
-}: IProps) {
+   pathName,
+   children,
+}: IMekuriLayoutProps) {
+   //durationを持ってくる
+   const millisecond = useMekuriDuration()!.millisecond;
+
    /*===============================================
 	１get current component
 	===============================================*/
-   const pathName = usePathname();
    const [state, dispatch] = useReducer(componentReducer, {
       current: getCurrentComponent({ componentArr, pathName, children }),
       next: null,

@@ -2,11 +2,13 @@
 import { gsap } from "gsap";
 import styles from "./style.module.scss";
 import { useRef } from "react";
-import { PAGEMEKURISTATE } from "../../app-hooks";
 import Image from "next/image";
 import Link from "next/link";
 
-import { usePageMekuriAnimation } from "@/packages/page-mekuri/src";
+import {
+   useMekuriAnimation,
+   useMekuriDuration,
+} from "@/packages/page-mekuri/src";
 
 interface IBox {
    className: string;
@@ -28,49 +30,10 @@ const Box = ({ className, title, description, eng }: IBox) => {
 Box.displayName = "Box";
 
 export const HomeContent = () => {
-   const ref = useRef<HTMLDivElement>(null);
-   usePageMekuriAnimation({
-      isReRender: true,
-      mode: "wait",
-      leave: ({ isCurrent }) => {
-         if (isCurrent(["/"])) return;
-         gsap.context(() => {
-            gsap.to(".fadeIn", {
-               y: -80,
-               duration: PAGEMEKURISTATE.second(),
-               ease: "power3.out",
-               stagger: {
-                  each: 0.05,
-               },
-            });
-         }, ref.current!);
-      },
-      enter: ({ isPrev }) => {
-         if (isPrev(["/"])) return;
-         gsap.context(() => {
-            gsap.fromTo(
-               ".fadeIn",
-               {
-                  opacity: 0,
-                  y: 80,
-               },
-               {
-                  opacity: 1,
-                  y: 0,
-                  duration: PAGEMEKURISTATE.second(),
-                  ease: "power2.out",
-                  stagger: {
-                     each: 0.05,
-                  },
-               }
-            );
-         }, ref.current!);
-      },
-   });
-
+   console.log("home render");
    return (
-      <>
-         <div ref={ref} className={styles.wrapper}>
+      <AnimationLayout>
+         <div className={styles.wrapper}>
             <Box
                className="fadeIn"
                title="ページメクリ / page-mekuri"
@@ -103,6 +66,50 @@ export const HomeContent = () => {
                />
             </Link>
          </div>
-      </>
+      </AnimationLayout>
    );
+};
+
+const AnimationLayout = ({ children }: { children: React.ReactNode }) => {
+   const ref = useRef<HTMLDivElement>(null);
+   const duration = useMekuriDuration();
+   useMekuriAnimation({
+      isReRender: true,
+      mode: "wait",
+      leave: ({ isCurrent }) => {
+         if (isCurrent(["/"])) return;
+         gsap.context(() => {
+            gsap.to(".fadeIn", {
+               y: -80,
+               duration: duration?.second,
+               ease: "power3.out",
+               stagger: {
+                  each: 0.05,
+               },
+            });
+         }, ref.current!);
+      },
+      enter: ({ isPrev }) => {
+         if (isPrev(["/"])) return;
+         gsap.context(() => {
+            gsap.fromTo(
+               ".fadeIn",
+               {
+                  opacity: 0,
+                  y: 80,
+               },
+               {
+                  opacity: 1,
+                  y: 0,
+                  duration: duration?.second,
+                  ease: "power2.out",
+                  stagger: {
+                     each: 0.05,
+                  },
+               }
+            );
+         }, ref.current!);
+      },
+   });
+   return <div ref={ref}>{children}</div>;
 };

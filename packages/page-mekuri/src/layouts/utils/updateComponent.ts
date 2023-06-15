@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { getCurrentComponent, isCurrentComponentForPath } from "./getComponent";
 import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
-import { IState, TMode, IAction, ComponentItem } from "../../types";
+import { IState, TMode, IAction, ComponentItem } from "../../type";
 
 /*===============================================
 update component reducer
