@@ -1,5 +1,5 @@
 import { RefObject } from "react";
-import { PAGEMEKURISTATE } from "../../_context/usePageMekuriStore";
+import { PAGEMEKURISTATE } from "../../app-hooks";
 import { gsap } from "gsap";
 
 type TRef = RefObject<HTMLDivElement>;
@@ -19,12 +19,12 @@ export const leaveAnim = (
    gsap.to(ref.current, {
       x: wWidth * -1,
       scale: 0.8,
-      duration: PAGEMEKURISTATE.mekuri.second(),
+      duration: PAGEMEKURISTATE.second(),
       ease: "power1.out",
    });
 };
 
-export const enterAnim = (wrapperRef: TRef, ref: TRef) => {
+export const enterAnim = (ref: TRef) => {
    const wWidth = window.innerWidth;
    gsap.fromTo(
       ref.current,
@@ -34,7 +34,7 @@ export const enterAnim = (wrapperRef: TRef, ref: TRef) => {
       {
          x: 0,
          scale: 1,
-         duration: PAGEMEKURISTATE.mekuri.second(),
+         duration: PAGEMEKURISTATE.second(),
          ease: "power2.out",
       }
    );

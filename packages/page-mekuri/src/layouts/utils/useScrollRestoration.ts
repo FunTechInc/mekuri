@@ -1,6 +1,6 @@
 import { useRef } from "react";
-import { TRestore, IState } from "../types";
 import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
+import { TRestore, IState } from "../../type";
 
 interface IUseScrollRestoration {
    state: IState;

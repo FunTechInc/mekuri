@@ -3,8 +3,7 @@
 import styles from "./child.module.scss";
 import syncStyle from "../../sync.module.scss";
 import { useRef, memo } from "react";
-import { usePageMekuriAnimation } from "../../../_hook/usePageMekuriAnimation";
-import { PAGEMEKURISTATE } from "../../../_context/usePageMekuriStore";
+import { usePageMekuriAnimation } from "@/packages/page-mekuri/src";
 import Image from "next/image";
 import Link from "next/link";
 import { enterAnim, leaveAnim } from "../../_utils/transitionAnimation";
@@ -16,7 +15,6 @@ function Child() {
    usePageMekuriAnimation({
       isReRender: true,
       mode: "sync",
-      stateName: PAGEMEKURISTATE.mekuri.name,
       leave: ({ yPosBeforeLeave }) => {
          leaveAnim(wrapperRef, ref, yPosBeforeLeave);
       },

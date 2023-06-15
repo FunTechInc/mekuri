@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { getCurrentComponent, isCurrentComponentForPath } from "./getComponent";
 import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
-import { IState, TMode, IAction, ComponentItem } from "../types";
+import { IState, TMode, IAction, ComponentItem } from "../../type";
 
 /*===============================================
 update component reducer
@@ -39,7 +39,7 @@ Update the component according to the switch of the path.
 interface IComponentUpdateEffect {
    pathName: string;
    mode: TMode;
-   duration: number;
+   millisecond: number;
    state: IState;
    componentArr: ComponentItem[];
    children: React.ReactNode;
@@ -48,7 +48,7 @@ interface IComponentUpdateEffect {
 export const useComponentUpdateEffect = ({
    pathName,
    mode,
-   duration,
+   millisecond,
    state,
    componentArr,
    children,
@@ -86,7 +86,7 @@ export const useComponentUpdateEffect = ({
       }
 
       if (mode === "wait") {
-         timeoutID.current = setTimeout(updateCurrentComponent, duration);
+         timeoutID.current = setTimeout(updateCurrentComponent, millisecond);
       } else {
          updateCurrentComponent();
       }

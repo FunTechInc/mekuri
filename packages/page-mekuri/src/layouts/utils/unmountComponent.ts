@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
-import { IState, TMode, IAction } from "../types";
+import { IState, TMode, IAction } from "../../type";
 
 /*===============================================
 Unmount in response to changes in state.
@@ -8,13 +8,14 @@ Unmount in response to changes in state.
 interface IUnmountPrevEffect {
    state: IState;
    mode: TMode;
-   duration: number;
+   millisecond: number;
    dispatch: (prop: IAction) => void;
 }
+
 export const useUnmountPrevEffect = ({
    state,
    mode,
-   duration,
+   millisecond,
    dispatch,
 }: IUnmountPrevEffect) => {
    const firstRender = useRef(true);
@@ -51,7 +52,7 @@ export const useUnmountPrevEffect = ({
       if (mode === "wait") {
          unmountPrev();
       } else {
-         timeoutID.current = setTimeout(unmountPrev, duration);
+         timeoutID.current = setTimeout(unmountPrev, millisecond);
       }
 
       return () => {

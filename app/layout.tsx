@@ -3,7 +3,7 @@ import "the-new-css-reset/css/reset.css";
 import { DotGothic16 } from "next/font/google";
 import { AppHooks } from "./app-hooks";
 import { Footer } from "./_component/Footer";
-
+import { PageTransitionContext } from "./_context/MekuriContext";
 const dotGothic = DotGothic16({ weight: ["400"], subsets: ["latin"] });
 
 export const metadata = {
@@ -24,7 +24,7 @@ export default function RootLayout({
       <html lang="ja">
          <body className={dotGothic.className}>
             <div className="ly_wrapper is_hidden">
-               {children}
+               <PageTransitionContext>{children}</PageTransitionContext>
                <Footer />
             </div>
             <AppHooks />

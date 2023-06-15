@@ -2,6 +2,6 @@
 
 ![page-mekuri](public/app-header.jpg)
 
-page-mekuri is a demo for creating page transition animations in the app directory of Next13. It allows you to do page transition animations without using DOM libraries like React-transition-group, framer motion, or react-spring. It also supports wait and sync modes, as well as popstate (saving scroll position at the time of popstate, also known as scroll restoration). Since animations can be set per component, you can flexibly implement them using animation libraries like gsap.
+Page Mekuri is a package for page transition animation in Next.js. It supports both 'wait' and 'sync' modes, as well as popstate (scroll position preservation during popstate). Since animations can be set on a per-component basis, you can implement them flexibly using animation libraries such as GSAP.
 
-[Docs](https://funtech-inc.notion.site/docs-2fc596dbda464b41a0efc22b2fc7a4ee?pvs=4)
+[Docs is Here!](https://funtech-inc.notion.site/docs-2fc596dbda464b41a0efc22b2fc7a4ee?pvs=4)

@@ -1,18 +1,24 @@
 "use client";
 
 import { useEffect } from "react";
-import { usePageMekuriStore } from "./_context/usePageMekuriStore";
-import { useUpdatePageMekuriTrigger } from "./_hook/useUpdatePageMekuriTrigger";
+// import { useCreatePageMekuri } from "@/packages/page-mekuri/src";
 import { funtechConsole } from "./_utils/funtechConsole";
 
+// export const PAGEMEKURISTATE = {
+//    millisecond: 800,
+//    second: function () {
+//       return this.millisecond / 1000;
+//    },
+// };
+
 export const AppHooks = () => {
-   useUpdatePageMekuriTrigger({
-      state: usePageMekuriStore((state) => state.pageMekuriTrigger),
-      dispatcher: usePageMekuriStore((state) => state.setPageMekuriTrigger),
-      isPreventArr: ["/"],
-   });
+   // useCreatePageMekuri({
+   //    millisecond: PAGEMEKURISTATE.millisecond,
+   //    preventArr: ["/"],
+   // });
+
    useEffect(() => {
-      funtechConsole();
+      // funtechConsole();
    }, []);
    return null;
 };

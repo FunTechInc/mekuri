@@ -1,7 +1,7 @@
 "use client";
 
-import PageMekuriLayout from "../../_component/PageMekuri/PageMekuriLayout";
-import { PAGEMEKURISTATE } from "../../_context/usePageMekuriStore";
+import { PageMekuriLayout } from "@/packages/page-mekuri/src";
+import { PAGEMEKURISTATE } from "../../app-hooks";
 
 /*===============================================
 pageMekuriLayoutに渡すコンポーネントの配列
@@ -17,11 +17,10 @@ const componentArr = [
 ];
 
 export const SyncLayout = ({ children }: { children: React.ReactNode }) => {
-   const state = PAGEMEKURISTATE.mekuri;
    return (
       <main className="ly_main">
          <PageMekuriLayout
-            duration={state.duration}
+            millisecond={PAGEMEKURISTATE.millisecond}
             componentArr={componentArr}
             scrollRestoration="top"
             mode="sync">
