@@ -7,7 +7,7 @@ import {
    MekuriLayout,
    useMekuriAnimation,
    useMekuriDuration,
-} from "@/packages/page-mekuri/src";
+} from "@/packages/mekuri/src";
 // import {
 //    MekuriLayout,
 //    useMekuriAnimation,

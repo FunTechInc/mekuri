@@ -7,6 +7,7 @@ type TCallBackProp = {
     isPrev: (array: string[]) => string | false;
     isCurrent: (array: string[]) => string | false;
     isNext: (array: string[]) => string | false;
+    getHashPos: () => number | false;
 };
 interface IProps {
     isReRender: boolean;

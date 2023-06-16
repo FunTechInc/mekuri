@@ -3,13 +3,10 @@
 import styles from "./child.module.scss";
 import syncStyle from "../../sync.module.scss";
 import { useRef, memo } from "react";
-import {
-   useMekuriAnimation,
-   useMekuriDuration,
-} from "@/packages/page-mekuri/src";
 import Image from "next/image";
 import Link from "next/link";
 import { enterAnim, leaveAnim } from "../../_utils/transitionAnimation";
+import { useMekuriAnimation, useMekuriDuration } from "@/packages/mekuri/src";
 
 function Child() {
    return (

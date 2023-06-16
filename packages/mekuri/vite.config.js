@@ -6,7 +6,7 @@ export default defineConfig({
    build: {
       lib: {
          entry: path.resolve(__dirname, "src/index.js"),
-         name: "pagemekuri",
+         name: "mekuri",
          fileName: "mekuri",
       },
       rollupOptions: {

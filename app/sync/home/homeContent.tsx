@@ -7,10 +7,7 @@ import Link from "next/link";
 import { enterAnim, leaveAnim } from "../_utils/transitionAnimation";
 import { gsap } from "gsap";
 
-import {
-   useMekuriAnimation,
-   useMekuriDuration,
-} from "@/packages/page-mekuri/src";
+import { useMekuriAnimation, useMekuriDuration } from "@/packages/mekuri/src";
 
 interface IBox {
    className: string;

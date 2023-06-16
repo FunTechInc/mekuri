@@ -6,10 +6,7 @@ import { gsap } from "gsap";
 
 import { InfinitSlider } from "../../_utils/InfinitTxt";
 
-import {
-   useMekuriAnimation,
-   useMekuriDuration,
-} from "@/packages/page-mekuri/src";
+import { useMekuriAnimation, useMekuriDuration } from "@/packages/mekuri/src";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -52,7 +49,7 @@ function About() {
                alt="キャンプにみんなでいきました"
             />
          </div>
-         <div>
+         <div id="test">
             <Box
                title="ファンテックハファンテックハ"
                className="fadein"
@@ -96,7 +93,11 @@ const Animation = ({ children }: { children: React.ReactNode }) => {
             });
          }, ref.current!);
       },
-      enter: () => {
+      enter: ({ getHashPos }) => {
+         const hashPos = getHashPos();
+         if (hashPos) {
+            window.scrollTo({ top: hashPos });
+         }
          gsap.context(() => {
             gsap.fromTo(
                ".fadein",
