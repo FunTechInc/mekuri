@@ -1,6 +1,8 @@
 import { useRef } from "react";
 import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
-import { IState, TMode, IAction } from "../../type";
+import { IState } from "./updateComponent";
+import { TMode } from "../MekuriLayout";
+import { IAction } from "./updateComponent";
 
 /*===============================================
 Unmount in response to changes in state.

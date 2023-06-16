@@ -5,6 +5,11 @@ import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+// import {
+//    useMekuriAnimation,
+//    useMekuriDuration,
+// } from "@/packages/page-mekuri/src";
+
 import {
    useMekuriAnimation,
    useMekuriDuration,
@@ -30,7 +35,6 @@ const Box = ({ className, title, description, eng }: IBox) => {
 Box.displayName = "Box";
 
 export const HomeContent = () => {
-   console.log("home render");
    return (
       <AnimationLayout>
          <div className={styles.wrapper}>
@@ -81,7 +85,7 @@ const AnimationLayout = ({ children }: { children: React.ReactNode }) => {
          gsap.context(() => {
             gsap.to(".fadeIn", {
                y: -80,
-               duration: duration?.second,
+               duration: duration.second,
                ease: "power3.out",
                stagger: {
                   each: 0.05,
@@ -101,7 +105,7 @@ const AnimationLayout = ({ children }: { children: React.ReactNode }) => {
                {
                   opacity: 1,
                   y: 0,
-                  duration: duration?.second,
+                  duration: duration.second,
                   ease: "power2.out",
                   stagger: {
                      each: 0.05,

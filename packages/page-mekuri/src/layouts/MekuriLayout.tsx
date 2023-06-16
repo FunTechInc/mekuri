@@ -6,8 +6,24 @@ import {
 import { getCurrentComponent } from "./utils/getComponent";
 import { useUnmountPrevEffect } from "./utils/unmountComponent";
 import { useScrollRestoration } from "./utils/useScrollRestoration";
-import { IMekuriLayoutProps } from "../type";
-import { useMekuriDuration } from "./MekuriContext";
+import { useMekuriDuration } from "../context/MekuriContext";
+
+/*===============================================
+type
+===============================================*/
+export type TMode = "sync" | "wait";
+export type TRestore = "top" | "restore";
+export type TComponentItem = {
+   path: string;
+   component: React.ReactElement;
+};
+export interface IMekuriLayoutProps {
+   componentArr: TComponentItem[];
+   children: React.ReactNode;
+   mode: TMode;
+   scrollRestoration: TRestore;
+   router: string;
+}
 
 /**
  * MekuriLayout
@@ -18,21 +34,20 @@ export const MekuriLayout = memo(function MekuriLayout({
    componentArr,
    mode,
    scrollRestoration,
-   pathName,
+   router,
    children,
 }: IMekuriLayoutProps) {
-   //durationを持ってくる
-   //todo createContextらへんの整理
-   const millisecond = useMekuriDuration()!.millisecond;
+   //get millisecond from context
+   const millisecond = useMekuriDuration().millisecond;
 
    /*===============================================
 	１get current component
 	===============================================*/
    const [state, dispatch] = useReducer(componentReducer, {
-      current: getCurrentComponent({ componentArr, pathName, children }),
+      current: getCurrentComponent({ componentArr, router, children }),
       next: null,
       restorePos: {
-         key: pathName,
+         key: router,
          pos: 0,
       },
    });
@@ -41,7 +56,7 @@ export const MekuriLayout = memo(function MekuriLayout({
 	2 update component
 	===============================================*/
    useComponentUpdateEffect({
-      pathName,
+      router,
       mode,
       millisecond,
       state,

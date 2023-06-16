@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { changeRegExp } from "../utils/changeRegExp";
-import { TMode } from "../type";
-import { useRouterState } from "../layouts/MekuriContext";
+import { useRouterState } from "../context/MekuriContext";
+import { TMode } from "../layouts/MekuriLayout";
 
 type TCallBackProp = {
    prev: string | null | undefined;
@@ -65,7 +65,7 @@ export const useMekuriAnimation = ({
 		prevent first access && render
 		once event
 		===============================================*/
-      if (routerState!.phase === null) {
+      if (routerState.phase === null) {
          if (firstRender.current) {
             once && once();
             firstRender.current = false;
@@ -76,18 +76,18 @@ export const useMekuriAnimation = ({
 		pass to the leave and enter callback
 		===============================================*/
       const callBackProp: TCallBackProp = {
-         prev: routerState!.prev,
-         current: routerState!.current,
-         next: routerState!.next,
-         yPosBeforeLeave: routerState!.yPosBeforeLeave!,
+         prev: routerState.prev,
+         current: routerState.current,
+         next: routerState.next,
+         yPosBeforeLeave: routerState.yPosBeforeLeave!,
          isPrev: (pathArr) => {
-            return returnMatchPath(pathArr, routerState!.prev!);
+            return returnMatchPath(pathArr, routerState.prev!);
          },
          isCurrent: (pathArr) => {
-            return returnMatchPath(pathArr, routerState!.current!);
+            return returnMatchPath(pathArr, routerState.current!);
          },
          isNext: (pathArr) => {
-            return returnMatchPath(pathArr, routerState!.next!);
+            return returnMatchPath(pathArr, routerState.next!);
          },
       };
       /*===============================================

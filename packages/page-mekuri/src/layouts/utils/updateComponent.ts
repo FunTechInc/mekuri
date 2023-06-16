@@ -1,7 +1,25 @@
 import { useRef } from "react";
 import { getCurrentComponent, isCurrentComponentForPath } from "./getComponent";
 import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
-import { IState, TMode, IAction, ComponentItem } from "../../type";
+import { TMode, TComponentItem } from "../MekuriLayout";
+
+/*===============================================
+type
+===============================================*/
+type TRestorePos = {
+   key: string;
+   pos: number;
+};
+export interface IState {
+   current: React.ReactNode | null;
+   next: React.ReactNode | null;
+   restorePos: TRestorePos;
+}
+export interface IAction {
+   type: "update" | "update-unmount" | "unmount-prev";
+   component?: React.ReactNode;
+   restorePos?: TRestorePos;
+}
 
 /*===============================================
 update component reducer
@@ -37,16 +55,16 @@ export const componentReducer = (state: IState, action: IAction) => {
 Update the component according to the switch of the path.
 ===============================================*/
 interface IComponentUpdateEffect {
-   pathName: string;
+   router: string;
    mode: TMode;
    millisecond: number;
    state: IState;
-   componentArr: ComponentItem[];
+   componentArr: TComponentItem[];
    children: React.ReactNode;
    dispatch: (prop: IAction) => void;
 }
 export const useComponentUpdateEffect = ({
-   pathName,
+   router,
    mode,
    millisecond,
    state,
@@ -60,12 +78,12 @@ export const useComponentUpdateEffect = ({
    const updateCurrentComponent = () => {
       const currentComponent = getCurrentComponent({
          componentArr,
-         pathName,
+         router,
          children,
       });
       if (
          !currentComponent ||
-         isCurrentComponentForPath({ componentArr, pathName, state })
+         isCurrentComponentForPath({ componentArr, router, state })
       )
          return;
 
@@ -73,7 +91,7 @@ export const useComponentUpdateEffect = ({
          type: mode === "wait" ? "update-unmount" : "update",
          component: currentComponent,
          restorePos: {
-            key: pathName,
+            key: router,
             pos: window.pageYOffset || document.documentElement.scrollTop || 0,
          },
       });
@@ -94,5 +112,5 @@ export const useComponentUpdateEffect = ({
       return () => {
          clearTimeout(timeoutID.current);
       };
-   }, [pathName]);
+   }, [router]);
 };
