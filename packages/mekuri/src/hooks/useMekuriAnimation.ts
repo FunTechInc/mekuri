@@ -59,24 +59,21 @@ export const useMekuriAnimation = ({
 }: IProps) => {
    const firstRender = useRef(true);
    const pathRef = useRef<string>(null!);
-   const isLeavePhaseRender = useRef<boolean>(true);
    const routerState = useRouterState();
 
    useEffect(() => {
       //Differentiate the calling of leave and enter by comparing the location.pathname at the time of render and the execution time of the state's subscribe function
       pathRef.current = location.pathname;
-      //In sync mode, call the afterEnter callback after enter. However, do not trigger it during the render time of the leave phase.
-      isLeavePhaseRender.current = false;
 
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
 
    useEffect(() => {
-      /*===============================================
-		prevent first access && render
-		once event
-		===============================================*/
-      if (routerState.phase === null) {
+      if (routerState.firstAccess) {
+         /*===============================================
+			prevent first access && render
+			once event
+			===============================================*/
          if (firstRender.current) {
             once && once();
             firstRender.current = false;
@@ -127,7 +124,6 @@ export const useMekuriAnimation = ({
                         return returnMatchPath(pathArr, routerState!.next!);
                      },
                   });
-               isLeavePhaseRender.current = true;
             } else {
                leave && leave(callBackProp);
             }
@@ -138,8 +134,7 @@ export const useMekuriAnimation = ({
 			===============================================*/
          if (
             mode === "sync" &&
-            pathRef.current === location.pathname &&
-            !isLeavePhaseRender.current
+            returnMatchPath([routerState.current!], location.pathname)
          ) {
             afterEnter && afterEnter(callBackProp);
          }

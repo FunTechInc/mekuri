@@ -33,6 +33,7 @@ export const useUpdateRouterState = ({
       if (firstRender.current || checkPreventPath(preventArr, router)) {
          firstRender.current = false;
          dispatch({
+            firstAccess: false,
             prev: null,
             current: router,
             phase: null,

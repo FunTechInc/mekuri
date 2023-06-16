@@ -32,8 +32,8 @@ export const HomeContent = () => {
          <div className={styles.wrapper}>
             <Box
                className="fadeIn"
-               title="ページメクリ / page-mekuri"
-               description="Page MekuriはNext.jsでページ遷移アニメーションするためのパッケージです。`wait`と`sync`モードや、popstate（popstate時のスクロール位置の保存(scroll restration)）にも対応しています。アニメーションはコンポーネント単位で設定可能なので、gsapなどのアニメーションライブラリを使って柔軟に実装ができます。"
+               title="(hidden)mekuri"
+               description="(hidden)mekuriはNext.jsでページ遷移アニメーションするためのパッケージです。`wait`と`sync`モードや、popstate（popstate時のスクロール位置の保存(scroll restration)）にも対応しています。アニメーションはコンポーネント単位で設定可能なので、gsapなどのアニメーションライブラリを使って柔軟に実装ができます。"
                eng="(hidden)mekuri is a package for page transition animation in Next.js. It supports both 'wait' and 'sync' modes, as well as popstate (scroll position preservation during popstate). Since animations can be set on a per-component basis, you can implement them flexibly using animation libraries such as GSAP."
             />
             <video

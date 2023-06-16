@@ -10,6 +10,7 @@ interface IMekuriContext {
     children: React.ReactNode;
 }
 export interface IRouterState {
+    firstAccess?: boolean;
     prev?: string | null;
     current?: string | null;
     next?: string | null;
