@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import { changeRegExp } from "../utils/changeRegExp";
-
-import { IRouterState } from "../type";
+import { IRouterState } from "./MekuriContext";
 
 interface IUseUpdateRouterState {
    state: IRouterState;

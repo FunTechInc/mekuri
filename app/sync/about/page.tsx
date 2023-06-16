@@ -6,7 +6,10 @@ import { InfinitSlider } from "../../_utils/InfinitTxt";
 import Image from "next/image";
 import Link from "next/link";
 import { enterAnim, leaveAnim } from "../_utils/transitionAnimation";
-import { usePageMekuriAnimation } from "@/packages/page-mekuri/src";
+import {
+   useMekuriAnimation,
+   useMekuriDuration,
+} from "@/packages/page-mekuri/src";
 
 interface IBox {
    title: string;
@@ -36,50 +39,55 @@ const Box = ({ title, className, dir }: IBox) => {
 };
 
 function About() {
+   return (
+      <Animation>
+         <div className={styles.mv}>
+            <Image
+               src="/camp.jpg"
+               width={1200}
+               height={630}
+               alt="キャンプにみんなでいきました"
+            />
+         </div>
+         <div>
+            <Box
+               title="ファンテックハファンテックハ"
+               className="fadein"
+               dir={1}
+            />
+            <Box title="エンジニアヲエンジニアヲ" className="fadein" dir={-1} />
+            <Box
+               title="ボシュウチュウボシュウチュウ"
+               className="fadein"
+               dir={1}
+            />
+         </div>
+      </Animation>
+   );
+}
+
+const Animation = ({ children }: { children: React.ReactNode }) => {
    const ref = useRef(null);
    const wrapperRef = useRef(null);
-   usePageMekuriAnimation({
+   const duration = useMekuriDuration();
+   useMekuriAnimation({
       isReRender: true,
       mode: "sync",
       leave: ({ yPosBeforeLeave }) => {
-         leaveAnim(wrapperRef, ref, yPosBeforeLeave);
+         leaveAnim(wrapperRef, ref, yPosBeforeLeave, duration.second);
       },
       enter: () => {
-         enterAnim(wrapperRef, ref);
+         enterAnim(ref, duration.second);
       },
    });
 
    return (
       <div className={syncStyle.wrapper} ref={wrapperRef}>
          <div className={syncStyle.syncInner} ref={ref}>
-            <div className={styles.mv}>
-               <Image
-                  src="/camp.jpg"
-                  width={1200}
-                  height={630}
-                  alt="キャンプにみんなでいきました"
-               />
-            </div>
-            <div>
-               <Box
-                  title="ファンテックハファンテックハ"
-                  className="fadein"
-                  dir={1}
-               />
-               <Box
-                  title="エンジニアヲエンジニアヲ"
-                  className="fadein"
-                  dir={-1}
-               />
-               <Box
-                  title="ボシュウチュウボシュウチュウ"
-                  className="fadein"
-                  dir={1}
-               />
-            </div>
+            {children}
          </div>
       </div>
    );
-}
+};
 
 export default memo(About);

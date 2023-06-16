@@ -1,10 +1,14 @@
 import { changeRegExp } from "../../utils/changeRegExp";
-import { IState, ComponentItem } from "../../type";
+import { IState } from "./updateComponent";
+import { TComponentItem } from "../MekuriLayout";
 
 /********************
 get the current component by comparing the current pathName with componentArr.
 ********************/
-const testRegExpAndPath = (componentArr: ComponentItem[], pathName: string) => {
+const testRegExpAndPath = (
+   componentArr: TComponentItem[],
+   pathName: string
+) => {
    return (
       componentArr
          //copy
@@ -21,20 +25,20 @@ get the component corresponding to the path.
 If there is no match in componentArr, return children
 ===============================================*/
 interface IGetCurrentComponent {
-   componentArr: ComponentItem[];
-   pathName: string;
+   componentArr: TComponentItem[];
+   router: string;
    children: React.ReactNode;
 }
 export const getCurrentComponent: ({
    componentArr,
-   pathName,
+   router,
    children,
 }: IGetCurrentComponent) => React.ReactNode = ({
    componentArr,
-   pathName,
+   router,
    children,
 }) => {
-   const currentComponent = testRegExpAndPath(componentArr, pathName);
+   const currentComponent = testRegExpAndPath(componentArr, router);
    if (currentComponent) {
       return currentComponent.component;
    } else {
@@ -46,15 +50,15 @@ export const getCurrentComponent: ({
 Return true if the current component and the component corresponding to the passed pathName are the same.
 ===============================================*/
 interface IIsCurrentComponentForPath {
-   componentArr: ComponentItem[];
-   pathName: string;
+   componentArr: TComponentItem[];
+   router: string;
    state: IState;
 }
 export const isCurrentComponentForPath = ({
    componentArr,
-   pathName,
+   router,
    state,
 }: IIsCurrentComponentForPath) => {
-   const currentComponent = testRegExpAndPath(componentArr, pathName);
+   const currentComponent = testRegExpAndPath(componentArr, router);
    return currentComponent?.component === state.current;
 };

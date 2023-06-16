@@ -1,12 +1,12 @@
 import { RefObject } from "react";
-import { PAGEMEKURISTATE } from "../../app-hooks";
 import { gsap } from "gsap";
 
 type TRef = RefObject<HTMLDivElement>;
 export const leaveAnim = (
    wrapperRef: TRef,
    ref: TRef,
-   yPosBeforeLeave: number
+   yPosBeforeLeave: number,
+   duration: number
 ) => {
    const wWidth = window.innerWidth;
    gsap.set(wrapperRef.current, {
@@ -19,12 +19,12 @@ export const leaveAnim = (
    gsap.to(ref.current, {
       x: wWidth * -1,
       scale: 0.8,
-      duration: PAGEMEKURISTATE.second(),
+      duration: 1,
       ease: "power1.out",
    });
 };
 
-export const enterAnim = (ref: TRef) => {
+export const enterAnim = (ref: TRef, duration: number) => {
    const wWidth = window.innerWidth;
    gsap.fromTo(
       ref.current,
@@ -34,7 +34,7 @@ export const enterAnim = (ref: TRef) => {
       {
          x: 0,
          scale: 1,
-         duration: PAGEMEKURISTATE.second(),
+         duration: 1,
          ease: "power2.out",
       }
    );

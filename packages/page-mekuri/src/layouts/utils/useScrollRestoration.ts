@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
-import { TRestore, IState } from "../../type";
+import { TRestore } from "../MekuriLayout";
+import { IState } from "./updateComponent";
 
 interface IUseScrollRestoration {
    state: IState;

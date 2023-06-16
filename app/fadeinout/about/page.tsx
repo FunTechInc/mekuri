@@ -42,6 +42,34 @@ const Box = ({ title, className, dir }: IBox) => {
 };
 
 function About() {
+   return (
+      <Animation>
+         <div className={styles.mv}>
+            <Image
+               src="/camp.jpg"
+               width={1200}
+               height={630}
+               alt="キャンプにみんなでいきました"
+            />
+         </div>
+         <div>
+            <Box
+               title="ファンテックハファンテックハ"
+               className="fadein"
+               dir={1}
+            />
+            <Box title="エンジニアヲエンジニアヲ" className="fadein" dir={-1} />
+            <Box
+               title="ボシュウチュウボシュウチュウ"
+               className="fadein"
+               dir={1}
+            />
+         </div>
+      </Animation>
+   );
+}
+
+const Animation = ({ children }: { children: React.ReactNode }) => {
    const ref = useRef(null);
    const duration = useMekuriDuration();
    useMekuriAnimation({
@@ -97,29 +125,9 @@ function About() {
 
    return (
       <div className={styles.wrapper} ref={ref}>
-         <div className={styles.mv}>
-            <Image
-               src="/camp.jpg"
-               width={1200}
-               height={630}
-               alt="キャンプにみんなでいきました"
-            />
-         </div>
-         <div>
-            <Box
-               title="ファンテックハファンテックハ"
-               className="fadein"
-               dir={1}
-            />
-            <Box title="エンジニアヲエンジニアヲ" className="fadein" dir={-1} />
-            <Box
-               title="ボシュウチュウボシュウチュウ"
-               className="fadein"
-               dir={1}
-            />
-         </div>
+         {children}
       </div>
    );
-}
+};
 
 export default memo(About);

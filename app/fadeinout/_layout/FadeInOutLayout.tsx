@@ -9,8 +9,9 @@ import {
    useMekuriDuration,
 } from "@/packages/page-mekuri/src";
 // import {
-//    PageMekuriLayout,
-//    usePageMekuriAnimation,
+//    MekuriLayout,
+//    useMekuriAnimation,
+//    useMekuriDuration,
 // } from "@funtech-inc/page-mekuri";
 
 /*===============================================
@@ -32,10 +33,24 @@ export const FadeInOutLayout = ({
 }: {
    children: React.ReactNode;
 }) => {
-   const ref = useRef(null);
    const router = usePathname();
-   //TODO:createContextの型がundifinedを返さないようにする
+   return (
+      <Animation>
+         <MekuriLayout
+            componentArr={componentArr}
+            mode="wait"
+            scrollRestoration="restore"
+            router={router}>
+            {children}
+         </MekuriLayout>
+      </Animation>
+   );
+};
+
+const Animation = ({ children }: { children: React.ReactNode }) => {
+   const ref = useRef(null);
    const duration = useMekuriDuration();
+
    useMekuriAnimation({
       isReRender: false,
       mode: "wait",
@@ -43,26 +58,20 @@ export const FadeInOutLayout = ({
          if (isCurrent(["/"])) return;
          gsap.to(ref.current, {
             opacity: 0,
-            duration: duration!.second,
+            duration: duration.second,
          });
       },
       enter: ({ isPrev }) => {
          if (isPrev(["/"])) return;
          gsap.to(ref.current, {
             opacity: 1,
-            duration: duration!.second,
+            duration: duration.second,
          });
       },
    });
    return (
       <main ref={ref} className="ly_main">
-         <MekuriLayout
-            componentArr={componentArr}
-            mode="wait"
-            scrollRestoration="restore"
-            pathName={router}>
-            {children}
-         </MekuriLayout>
+         {children}
       </main>
    );
 };

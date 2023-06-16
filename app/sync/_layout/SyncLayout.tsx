@@ -1,7 +1,6 @@
 "use client";
-
-import { PageMekuriLayout } from "@/packages/page-mekuri/src";
-import { PAGEMEKURISTATE } from "../../app-hooks";
+import { usePathname } from "next/navigation";
+import { MekuriLayout } from "@/packages/page-mekuri/src";
 
 /*===============================================
 pageMekuriLayoutに渡すコンポーネントの配列
@@ -17,15 +16,16 @@ const componentArr = [
 ];
 
 export const SyncLayout = ({ children }: { children: React.ReactNode }) => {
+   const router = usePathname();
    return (
       <main className="ly_main">
-         <PageMekuriLayout
-            millisecond={PAGEMEKURISTATE.millisecond}
+         <MekuriLayout
             componentArr={componentArr}
             scrollRestoration="top"
-            mode="sync">
+            mode="sync"
+            router={router}>
             {children}
-         </PageMekuriLayout>
+         </MekuriLayout>
       </main>
    );
 };
