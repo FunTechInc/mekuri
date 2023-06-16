@@ -19,7 +19,7 @@ export const leaveAnim = (
    gsap.to(ref.current, {
       x: wWidth * -1,
       scale: 0.8,
-      duration: 1,
+      duration: duration,
       ease: "power1.out",
    });
 };
@@ -34,7 +34,7 @@ export const enterAnim = (ref: TRef, duration: number) => {
       {
          x: 0,
          scale: 1,
-         duration: 1,
+         duration: duration,
          ease: "power2.out",
       }
    );

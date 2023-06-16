@@ -1,8 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-// import { MekuriContext } from "@/packages/page-mekuri/src";
-import { MekuriContext } from "@funtech-inc/page-mekuri";
+import { MekuriContext } from "@/packages/mekuri/src";
 
 export const PageTransitionContext = ({
    children,

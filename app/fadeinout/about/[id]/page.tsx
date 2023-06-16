@@ -7,10 +7,7 @@ import { gsap } from "gsap";
 import Image from "next/image";
 import Link from "next/link";
 
-import {
-   useMekuriAnimation,
-   useMekuriDuration,
-} from "@/packages/page-mekuri/src";
+import { useMekuriAnimation, useMekuriDuration } from "@/packages/mekuri/src";
 
 function Child() {
    return (

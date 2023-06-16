@@ -7,9 +7,9 @@ import { PageTransitionContext } from "./_context/MekuriContext";
 const dotGothic = DotGothic16({ weight: ["400"], subsets: ["latin"] });
 
 export const metadata = {
-   title: "Page Mekuri",
+   title: "(hidden)mekuri",
    description:
-      "page-mekuri is a demo for creating page transition animations in the app directory of Next13.",
+      "(hidden)mekuri is a package for page transition animation in Next.js.",
    twitter: {
       card: "summary_large_image",
    },

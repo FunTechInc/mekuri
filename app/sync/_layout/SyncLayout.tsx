@@ -1,6 +1,6 @@
 "use client";
 import { usePathname } from "next/navigation";
-import { MekuriLayout } from "@/packages/page-mekuri/src";
+import { MekuriLayout } from "@/packages/mekuri/src";
 
 /*===============================================
 pageMekuriLayoutに渡すコンポーネントの配列

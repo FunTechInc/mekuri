@@ -8,7 +8,7 @@ import {
    MekuriLayout,
    useMekuriAnimation,
    useMekuriDuration,
-} from "@/packages/page-mekuri/src";
+} from "@/packages/mekuri/src";
 
 /*===============================================
 pageMekuriLayoutに渡すコンポーネントの配列

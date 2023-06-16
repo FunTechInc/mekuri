@@ -11,6 +11,7 @@ type TCallBackProp = {
    isPrev: (array: string[]) => string | false;
    isCurrent: (array: string[]) => string | false;
    isNext: (array: string[]) => string | false;
+   getHashPos: () => number | false;
 };
 
 interface IProps {
@@ -32,6 +33,16 @@ const returnMatchPath = (
       .slice()
       .find((path) => changeRegExp(path, true).test(testPath!));
    return matchPath ?? false;
+};
+
+const returnHashPos = () => {
+   const hash = window.location.hash.substring(1);
+   if (!hash) return false;
+   const target = document.getElementById(hash);
+   if (!target) return false;
+   const scrollYPos = window.pageYOffset || document.documentElement.scrollTop;
+   const pos = target.getBoundingClientRect().top + scrollYPos;
+   return pos;
 };
 
 /**
@@ -89,6 +100,7 @@ export const useMekuriAnimation = ({
          isNext: (pathArr) => {
             return returnMatchPath(pathArr, routerState.next!);
          },
+         getHashPos: () => returnHashPos(),
       };
       /*===============================================
 		phases
