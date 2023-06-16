@@ -15,6 +15,7 @@ interface IMekuriContext {
    children: React.ReactNode;
 }
 export interface IRouterState {
+   firstAccess?: boolean;
    prev?: string | null;
    current?: string | null;
    next?: string | null;
@@ -26,6 +27,7 @@ export interface IRouterState {
 constant
 ===============================================*/
 const initialRouterState = {
+   firstAccess: true,
    prev: null,
    current: null,
    next: null,

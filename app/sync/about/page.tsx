@@ -16,14 +16,26 @@ interface IBox {
 
 const Box = ({ title, className, dir }: IBox) => {
    const ref = useRef(null);
-   useEffect(() => {
+
+   const inifinitTxt = () => {
       const infinit = new InfinitSlider(ref.current!, "slideText", {
          duration: 80,
          dir: dir,
       }).init();
       infinit.play();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, []);
+   };
+
+   useMekuriAnimation({
+      isReRender: true,
+      mode: "sync",
+      once: () => {
+         inifinitTxt();
+      },
+      afterEnter: () => {
+         inifinitTxt();
+      },
+   });
+
    return (
       <Link
          href="/sync/about/recruit"

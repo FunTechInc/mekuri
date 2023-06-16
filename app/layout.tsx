@@ -9,7 +9,7 @@ const dotGothic = DotGothic16({ weight: ["400"], subsets: ["latin"] });
 export const metadata = {
    title: "(hidden)mekuri",
    description:
-      "(hidden)mekuri is a package for page transition animation in Next.js.",
+      "(hidden)mekuri is a package for page transition animation in Next.js. It supports both 'wait' and 'sync' modes, as well as popstate (scroll position preservation during popstate). Since animations can be set on a per-component basis, you can implement them flexibly using animation libraries such as GSAP.",
    twitter: {
       card: "summary_large_image",
    },
