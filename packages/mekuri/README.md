@@ -6,4 +6,4 @@
 $ npm i @funtech-inc/mekuri
 ```
 
-[Docs is Here!](https://funtech-inc.notion.site/hidden-mekuri-doc-df3824fc348448de84a7fc6b2543c247?pvs=4)
+[Docs is Here!](https://funtech-inc.notion.site/hidden-mekuri-13ccf68e709d48429ceb2854bf42d7ed?pvs=4)
