@@ -1,6 +1,6 @@
 {
    "name": "@funtech-inc/mekuri",
-   "version": "1.0.5",
+   "version": "1.0.6",
    "description": "Page transition animation with Next.js",
    "main": "./build/mekuri.umd.cjs",
    "module": "./build/mekuri.js",
@@ -14,7 +14,8 @@
    "type": "module",
    "scripts": {
       "type": "tsc",
-      "build": "tsc && vite build"
+      "build": "tsc && vite build",
+      "clean": "rimraf build && rimraf types"
    },
    "repository": {
       "type": "git",

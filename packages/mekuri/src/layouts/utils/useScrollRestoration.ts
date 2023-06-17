@@ -39,11 +39,12 @@ const getYPosFromCache = ({
 	popstate
 	********************/
    if (key === cache.keysArr[cache.keysArr.length - 2]) {
-      //restore pos
+      //back
       cache.keysArr = [key];
       return cache.backPosY || 0;
    }
-   //return 0
+   //forward
+   cache.keysArr = [key];
    return 0;
 };
 
