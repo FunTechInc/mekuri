@@ -1,10 +1,10 @@
-import styles from "./footer.module.scss";
+import s from "./footer.module.scss";
 
 export const Footer = () => {
    return (
-      <footer className={styles.footer}>
+      <footer className={s.footer}>
          <p>© HASHIMOTO Takuma</p>
-         <div className={styles.linkList}>
+         <div className={s.linkList}>
             <a href="https://github.com/FunTechInc/mekuri" target="_blank">
                github
             </a>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, memo, useEffect } from "react";
-import styles from "./style.module.scss";
+import s from "./style.module.scss";
 import { InfinitSlider } from "../../_utils/InfinitTxt";
 
 import Image from "next/image";
@@ -27,17 +27,17 @@ const Box = ({ title, className, dir }: IBox) => {
       <Link
          href="/curtain/about/recruit"
          ref={ref}
-         className={`${styles.box} ${className}`}>
+         className={`${s.box} ${className}`}>
          <h1 className="slideText">{title}</h1>
          <h1 className="slideText">{title}</h1>
       </Link>
    );
 };
 
-function About() {
+const About = () => {
    return (
-      <div className={styles.wrapper}>
-         <div className={styles.mv}>
+      <div className={s.wrapper}>
+         <div className={s.mv}>
             <Image
                src="/camp.jpg"
                width={1200}
@@ -60,6 +60,6 @@ function About() {
          </div>
       </div>
    );
-}
+};
 
 export default memo(About);

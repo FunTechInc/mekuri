@@ -1,5 +1,5 @@
 "use client";
-import styles from "./style.module.scss";
+import s from "./style.module.scss";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -12,7 +12,7 @@ interface IBox {
 
 const Box = ({ className, title, description, eng }: IBox) => {
    return (
-      <div className={`${styles.box} ${className}`}>
+      <div className={`${s.box} ${className}`}>
          <h1>{title}</h1>
          <p>{description}</p>
          <p>{eng}</p>
@@ -25,7 +25,7 @@ Box.displayName = "Box";
 export const HomeContent = () => {
    return (
       <>
-         <div className={styles.wrapper}>
+         <div className={s.wrapper}>
             <Box
                className="fadeIn"
                title="(hidden)mekuri"
@@ -33,7 +33,7 @@ export const HomeContent = () => {
                eng="(hidden)mekuri is a package for page transition animation in Next.js. It supports both 'wait' and 'sync' modes, as well as popstate (scroll position preservation during popstate). Since animations can be set on a per-component basis, you can implement them flexibly using animation libraries such as GSAP."
             />
             <video
-               className={`${styles.video} fadeIn`}
+               className={`${s.video} fadeIn`}
                src="/logo-movie.mp4"
                loop
                muted
@@ -47,9 +47,7 @@ export const HomeContent = () => {
                description="叩き上げの超属人的チーム。多角的視点を持つ突き抜けたクリエイター集団。"
                eng="Creative production team crafting cutting-edge content. Shibuya, Kumamoto, Germany, Netherlands"
             />
-            <Link
-               href="/curtain/about"
-               className={`${styles.campImage} fadeIn`}>
+            <Link href="/curtain/about" className={`${s.campImage} fadeIn`}>
                <Image
                   src="/camp.jpg"
                   width={1200}

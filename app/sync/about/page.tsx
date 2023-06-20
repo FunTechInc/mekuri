@@ -1,7 +1,7 @@
 "use client";
-import { useRef, memo, useEffect } from "react";
+import { useRef, memo } from "react";
 import syncStyle from "../sync.module.scss";
-import styles from "./style.module.scss";
+import s from "./style.module.scss";
 import { InfinitSlider } from "../../_utils/InfinitTxt";
 import Image from "next/image";
 import Link from "next/link";
@@ -40,17 +40,17 @@ const Box = ({ title, className, dir }: IBox) => {
       <Link
          href="/sync/about/recruit"
          ref={ref}
-         className={`${styles.box} ${className}`}>
+         className={`${s.box} ${className}`}>
          <h1 className="slideText">{title}</h1>
          <h1 className="slideText">{title}</h1>
       </Link>
    );
 };
 
-function About() {
+const About = () => {
    return (
       <Animation>
-         <div className={styles.mv}>
+         <div className={s.mv}>
             <Image
                src="/camp.jpg"
                width={1200}
@@ -73,7 +73,7 @@ function About() {
          </div>
       </Animation>
    );
-}
+};
 
 const Animation = ({ children }: { children: React.ReactNode }) => {
    const ref = useRef(null);

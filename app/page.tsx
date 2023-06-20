@@ -1,14 +1,14 @@
 "use client";
 import { LinkList, Nav } from "./_component/Nav";
-import styles from "./home.module.scss";
+import s from "./home.module.scss";
 
-export default function Home() {
+const Home = () => {
    return (
       <>
          <Nav pathName="home" />
-         <main className={`ly_main ${styles.main}`}>
+         <main className={`ly_main ${s.main}`}>
             <video
-               className={`${styles.video}`}
+               className={`${s.video}`}
                src="/logo-movie.mp4"
                loop
                muted
@@ -16,10 +16,12 @@ export default function Home() {
                width={1200}
                height={677}
                playsInline={true}></video>
-            <div className={styles.linkWrapper}>
+            <div className={s.linkWrapper}>
                <LinkList pathName="home" />
             </div>
          </main>
       </>
    );
-}
+};
+
+export default Home;
