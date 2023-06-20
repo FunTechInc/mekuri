@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "./child.module.scss";
+import s from "./child.module.scss";
 import syncStyle from "../../sync.module.scss";
 import { useRef, memo } from "react";
 import Image from "next/image";
@@ -8,10 +8,10 @@ import Link from "next/link";
 import { enterAnim, leaveAnim } from "../../_utils/transitionAnimation";
 import { useMekuriAnimation, useMekuriDuration } from "@/packages/mekuri/src";
 
-function Child() {
+const Child = () => {
    return (
       <Animation>
-         <div className={`${styles.textbox} textBlock`}>
+         <div className={`${s.textbox} textBlock`}>
             <h2>
                FunTechと一緒にクリエイティブをしていただける
                <br />
@@ -25,7 +25,7 @@ function Child() {
             </Link>
          </div>
          <Image
-            className={styles.funkun}
+            className={s.funkun}
             src="/funkun.svg"
             width={400}
             height={600}
@@ -33,7 +33,7 @@ function Child() {
          />
       </Animation>
    );
-}
+};
 
 const Animation = ({ children }: { children: React.ReactNode }) => {
    const ref = useRef(null);

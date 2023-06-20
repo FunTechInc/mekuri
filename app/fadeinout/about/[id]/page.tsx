@@ -1,15 +1,12 @@
 "use client";
-
 import styles from "./child.module.scss";
-
 import React, { useRef, memo } from "react";
 import { gsap } from "gsap";
 import Image from "next/image";
 import Link from "next/link";
-
 import { useMekuriAnimation, useMekuriDuration } from "@/packages/mekuri/src";
 
-function Child() {
+const Child = () => {
    return (
       <Animation>
          <div className={`${styles.textbox} textBlock`}>
@@ -34,7 +31,7 @@ function Child() {
          />
       </Animation>
    );
-}
+};
 
 const Animation = ({ children }: { children: React.ReactNode }) => {
    const ref = useRef(null);

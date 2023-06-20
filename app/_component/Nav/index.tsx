@@ -1,5 +1,5 @@
 import Link from "next/link";
-import styles from "./style.module.scss";
+import s from "./style.module.scss";
 import Image from "next/image";
 
 type TNav = {
@@ -43,11 +43,11 @@ export const LinkList = ({ pathName }: TNav) => {
 
 export const Nav = ({ pathName }: TNav) => {
    return (
-      <header className={styles.wrapper}>
-         <Link href="/" className={styles.logo}>
+      <header className={s.wrapper}>
+         <Link href="/" className={s.logo}>
             <Image src="/logo.svg" width={229} height={315} alt="FunTech" />
          </Link>
-         <nav className={styles.nav}>
+         <nav className={s.nav}>
             <LinkList pathName={pathName} />
          </nav>
       </header>

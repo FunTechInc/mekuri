@@ -30,13 +30,13 @@ export interface IMekuriLayoutProps {
  * @param props
  */
 
-export const MekuriLayout = memo(function MekuriLayout({
+const Layout = ({
    componentArr,
    mode,
    scrollRestoration,
    router,
    children,
-}: IMekuriLayoutProps) {
+}: IMekuriLayoutProps) => {
    //get millisecond from context
    const millisecond = useMekuriDuration().millisecond;
 
@@ -84,4 +84,6 @@ export const MekuriLayout = memo(function MekuriLayout({
          {state.next && state.next}
       </>
    );
-});
+};
+
+export const MekuriLayout = memo(Layout);

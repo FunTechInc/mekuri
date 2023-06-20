@@ -1,13 +1,10 @@
 "use client";
 
 import { useRef, memo, useEffect } from "react";
-import styles from "./style.module.scss";
+import s from "./style.module.scss";
 import { gsap } from "gsap";
-
 import { InfinitSlider } from "../../_utils/InfinitTxt";
-
 import { useMekuriAnimation, useMekuriDuration } from "@/packages/mekuri/src";
-
 import Image from "next/image";
 import Link from "next/link";
 
@@ -31,17 +28,17 @@ const Box = ({ title, className, dir }: IBox) => {
       <Link
          href="/fadeinout/about/recruit"
          ref={ref}
-         className={`${styles.box} ${className}`}>
+         className={`${s.box} ${className}`}>
          <h1 className="slideText">{title}</h1>
          <h1 className="slideText">{title}</h1>
       </Link>
    );
 };
 
-function About() {
+const About = () => {
    return (
       <Animation>
-         <div className={styles.mv}>
+         <div className={s.mv}>
             <Image
                src="/camp.jpg"
                width={1200}
@@ -64,7 +61,7 @@ function About() {
          </div>
       </Animation>
    );
-}
+};
 
 const Animation = ({ children }: { children: React.ReactNode }) => {
    const ref = useRef(null);
@@ -125,7 +122,7 @@ const Animation = ({ children }: { children: React.ReactNode }) => {
    });
 
    return (
-      <div className={styles.wrapper} ref={ref}>
+      <div className={s.wrapper} ref={ref}>
          {children}
       </div>
    );

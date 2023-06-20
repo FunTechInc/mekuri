@@ -1,14 +1,14 @@
 "use client";
 
-import styles from "./child.module.scss";
+import s from "./child.module.scss";
 import { memo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-function Child() {
+const Child = () => {
    return (
-      <div className={styles.wrapper}>
-         <div className={`${styles.textbox} textBlock`}>
+      <div className={s.wrapper}>
+         <div className={`${s.textbox} textBlock`}>
             <h2>
                FunTechと一緒にクリエイティブをしていただける
                <br />
@@ -22,7 +22,7 @@ function Child() {
             </Link>
          </div>
          <Image
-            className={styles.funkun}
+            className={s.funkun}
             src="/funkun.svg"
             width={400}
             height={600}
@@ -30,6 +30,6 @@ function Child() {
          />
       </div>
    );
-}
+};
 
 export default memo(Child);

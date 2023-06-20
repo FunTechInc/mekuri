@@ -12,8 +12,4 @@ export interface IMekuriLayoutProps {
     scrollRestoration: TRestore;
     router: string;
 }
-/**
- * MekuriLayout
- * @param props
- */
-export declare const MekuriLayout: import("react").NamedExoticComponent<IMekuriLayoutProps>;
+export declare const MekuriLayout: import("react").MemoExoticComponent<({ componentArr, mode, scrollRestoration, router, children, }: IMekuriLayoutProps) => import("react/jsx-runtime").JSX.Element>;

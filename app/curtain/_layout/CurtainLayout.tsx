@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { gsap } from "gsap";
-import styles from "./curtain.module.scss";
+import s from "./curtain.module.scss";
 
 import {
    MekuriLayout,
@@ -66,7 +66,7 @@ const Animation = ({ children }: { children: React.ReactNode }) => {
    return (
       <main className="ly_main">
          {children}
-         <div ref={ref} className={styles.curtain}></div>
+         <div ref={ref} className={s.curtain}></div>
       </main>
    );
 };
