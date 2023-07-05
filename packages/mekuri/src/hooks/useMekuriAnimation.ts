@@ -40,7 +40,7 @@ const returnHashPos = () => {
    if (!hash) return false;
    const target = document.getElementById(hash);
    if (!target) return false;
-   const scrollYPos = window.pageYOffset || document.documentElement.scrollTop;
+   const scrollYPos = window.scrollY || document.documentElement.scrollTop;
    const pos = target.getBoundingClientRect().top + scrollYPos;
    return pos;
 };
