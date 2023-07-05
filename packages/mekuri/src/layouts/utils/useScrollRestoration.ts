@@ -1,5 +1,4 @@
-import { useRef } from "react";
-import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
+import { useRef, useEffect } from "react";
 import { TRestore } from "../MekuriLayout";
 import { IState } from "./updateComponent";
 
@@ -60,7 +59,7 @@ export const useScrollRestoration = ({
       keysArr: [],
    });
 
-   useIsomorphicLayoutEffect(() => {
+   useEffect(() => {
       if (firstRender.current) {
          if (window.history.scrollRestoration === "auto") {
             window.history.scrollRestoration = "manual";
@@ -90,5 +89,6 @@ export const useScrollRestoration = ({
          window.scrollTo({ top: restorePosY });
          isPopstate.current = false;
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [state.restorePos]);
 };

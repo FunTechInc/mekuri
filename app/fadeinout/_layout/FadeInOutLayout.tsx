@@ -23,9 +23,9 @@ import Home from "../page";
 import { usePathname } from "next/navigation";
 
 const componentArr = [
-   { path: "/fadeinout/about/★", component: <Child /> },
-   { path: "/fadeinout/about", component: <About /> },
-   { path: "/fadeinout", component: <Home /> },
+   { path: "/fadeinout/about/★", children: <Child /> },
+   { path: "/fadeinout/about", children: <About /> },
+   { path: "/fadeinout", children: <Home /> },
 ];
 
 export const FadeInOutLayout = ({
@@ -37,7 +37,7 @@ export const FadeInOutLayout = ({
    return (
       <Animation>
          <MekuriLayout
-            componentArr={componentArr}
+            pages={componentArr}
             mode="wait"
             scrollRestoration="restore"
             router={router}>

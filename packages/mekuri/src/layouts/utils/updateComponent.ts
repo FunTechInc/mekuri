@@ -1,7 +1,6 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { getCurrentComponent, isCurrentComponentForPath } from "./getComponent";
-import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
-import { TMode, TComponentItem } from "../MekuriLayout";
+import { TMode, TPagesItem } from "../MekuriLayout";
 
 /*===============================================
 type
@@ -59,7 +58,7 @@ interface IComponentUpdateEffect {
    mode: TMode;
    millisecond: number;
    state: IState;
-   componentArr: TComponentItem[];
+   pages: TPagesItem[];
    children: React.ReactNode;
    dispatch: (prop: IAction) => void;
 }
@@ -68,7 +67,7 @@ export const useComponentUpdateEffect = ({
    mode,
    millisecond,
    state,
-   componentArr,
+   pages,
    children,
    dispatch,
 }: IComponentUpdateEffect) => {
@@ -77,13 +76,13 @@ export const useComponentUpdateEffect = ({
 
    const updateCurrentComponent = () => {
       const currentComponent = getCurrentComponent({
-         componentArr,
+         pages,
          router,
          children,
       });
       if (
          !currentComponent ||
-         isCurrentComponentForPath({ componentArr, router, state })
+         isCurrentComponentForPath({ pages, router, state })
       )
          return;
 
@@ -92,12 +91,12 @@ export const useComponentUpdateEffect = ({
          component: currentComponent,
          restorePos: {
             key: router,
-            pos: window.pageYOffset || document.documentElement.scrollTop || 0,
+            pos: window.scrollY || document.documentElement.scrollTop || 0,
          },
       });
    };
 
-   useIsomorphicLayoutEffect(() => {
+   useEffect(() => {
       if (firstRender.current) {
          firstRender.current = false;
          return;
@@ -112,5 +111,6 @@ export const useComponentUpdateEffect = ({
       return () => {
          clearTimeout(timeoutID.current);
       };
+      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [router]);
 };

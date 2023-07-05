@@ -1,5 +1,4 @@
-import { useRef } from "react";
-import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
+import { useEffect, useRef } from "react";
 import { IState } from "./updateComponent";
 import { TMode } from "../MekuriLayout";
 import { IAction } from "./updateComponent";
@@ -34,7 +33,7 @@ export const useUnmountPrevEffect = ({
       }
    };
 
-   useIsomorphicLayoutEffect(() => {
+   useEffect(() => {
       /*===============================================
 		prevent
 		===============================================*/
@@ -60,5 +59,6 @@ export const useUnmountPrevEffect = ({
       return () => {
          clearTimeout(timeoutID.current);
       };
+      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [state.current, state.next]);
 };
