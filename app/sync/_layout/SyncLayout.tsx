@@ -10,9 +10,9 @@ import Child from "../about/[id]/page";
 import Home from "../page";
 
 const componentArr = [
-   { path: "/sync/about/★", component: <Child /> },
-   { path: "/sync/about", component: <About /> },
-   { path: "/sync", component: <Home /> },
+   { path: "/sync/about/★", children: <Child /> },
+   { path: "/sync/about", children: <About /> },
+   { path: "/sync", children: <Home /> },
 ];
 
 export const SyncLayout = ({ children }: { children: React.ReactNode }) => {
@@ -20,7 +20,7 @@ export const SyncLayout = ({ children }: { children: React.ReactNode }) => {
    return (
       <main className="ly_main">
          <MekuriLayout
-            componentArr={componentArr}
+            pages={componentArr}
             scrollRestoration="top"
             mode="sync"
             router={router}>

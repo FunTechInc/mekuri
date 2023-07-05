@@ -19,9 +19,9 @@ import Home from "../page";
 import { usePathname } from "next/navigation";
 
 const componentArr = [
-   { path: "/curtain/about/★", component: <Child /> },
-   { path: "/curtain/about", component: <About /> },
-   { path: "/curtain", component: <Home /> },
+   { path: "/curtain/about/★", children: <Child /> },
+   { path: "/curtain/about", children: <About /> },
+   { path: "/curtain", children: <Home /> },
 ];
 
 export const CurtainLayout = ({ children }: { children: React.ReactNode }) => {
@@ -29,7 +29,7 @@ export const CurtainLayout = ({ children }: { children: React.ReactNode }) => {
    return (
       <Animation>
          <MekuriLayout
-            componentArr={componentArr}
+            pages={componentArr}
             mode="wait"
             scrollRestoration="restore"
             router={router}>

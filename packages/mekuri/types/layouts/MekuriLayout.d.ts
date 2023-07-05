@@ -1,15 +1,15 @@
 /// <reference types="react" />
 export type TMode = "sync" | "wait";
 export type TRestore = "top" | "restore";
-export type TComponentItem = {
+export type TPagesItem = {
     path: string;
-    component: React.ReactElement;
+    children: React.ReactNode;
 };
 export interface IMekuriLayoutProps {
-    componentArr: TComponentItem[];
+    pages: TPagesItem[];
     children: React.ReactNode;
     mode: TMode;
     scrollRestoration: TRestore;
     router: string;
 }
-export declare const MekuriLayout: import("react").MemoExoticComponent<({ componentArr, mode, scrollRestoration, router, children, }: IMekuriLayoutProps) => import("react/jsx-runtime").JSX.Element>;
+export declare const MekuriLayout: import("react").MemoExoticComponent<({ pages, mode, scrollRestoration, router, children, }: IMekuriLayoutProps) => import("react/jsx-runtime").JSX.Element>;

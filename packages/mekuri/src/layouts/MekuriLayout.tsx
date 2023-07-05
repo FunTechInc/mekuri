@@ -13,12 +13,12 @@ type
 ===============================================*/
 export type TMode = "sync" | "wait";
 export type TRestore = "top" | "restore";
-export type TComponentItem = {
+export type TPagesItem = {
    path: string;
-   component: React.ReactElement;
+   children: React.ReactNode;
 };
 export interface IMekuriLayoutProps {
-   componentArr: TComponentItem[];
+   pages: TPagesItem[];
    children: React.ReactNode;
    mode: TMode;
    scrollRestoration: TRestore;
@@ -31,7 +31,7 @@ export interface IMekuriLayoutProps {
  */
 
 const Layout = ({
-   componentArr,
+   pages,
    mode,
    scrollRestoration,
    router,
@@ -44,7 +44,7 @@ const Layout = ({
 	１get current component
 	===============================================*/
    const [state, dispatch] = useReducer(componentReducer, {
-      current: getCurrentComponent({ componentArr, router, children }),
+      current: getCurrentComponent({ pages, router, children }),
       next: null,
       restorePos: {
          key: router,
@@ -60,7 +60,7 @@ const Layout = ({
       mode,
       millisecond,
       state,
-      componentArr,
+      pages,
       children,
       dispatch,
    });

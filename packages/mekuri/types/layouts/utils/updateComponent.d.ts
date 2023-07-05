@@ -1,5 +1,5 @@
 /// <reference types="react" />
-import { TMode, TComponentItem } from "../MekuriLayout";
+import { TMode, TPagesItem } from "../MekuriLayout";
 type TRestorePos = {
     key: string;
     pos: number;
@@ -28,9 +28,9 @@ interface IComponentUpdateEffect {
     mode: TMode;
     millisecond: number;
     state: IState;
-    componentArr: TComponentItem[];
+    pages: TPagesItem[];
     children: React.ReactNode;
     dispatch: (prop: IAction) => void;
 }
-export declare const useComponentUpdateEffect: ({ router, mode, millisecond, state, componentArr, children, dispatch, }: IComponentUpdateEffect) => void;
+export declare const useComponentUpdateEffect: ({ router, mode, millisecond, state, pages, children, dispatch, }: IComponentUpdateEffect) => void;
 export {};

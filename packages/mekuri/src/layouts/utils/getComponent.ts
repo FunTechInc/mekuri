@@ -1,16 +1,13 @@
 import { changeRegExp } from "../../utils/changeRegExp";
 import { IState } from "./updateComponent";
-import { TComponentItem } from "../MekuriLayout";
+import { TPagesItem } from "../MekuriLayout";
 
 /********************
 get the current component by comparing the current pathName with componentArr.
 ********************/
-const testRegExpAndPath = (
-   componentArr: TComponentItem[],
-   pathName: string
-) => {
+const testRegExpAndPath = (pages: TPagesItem[], pathName: string) => {
    return (
-      componentArr
+      pages
          //copy
          .slice()
          //sort by path string length
@@ -25,22 +22,18 @@ get the component corresponding to the path.
 If there is no match in componentArr, return children
 ===============================================*/
 interface IGetCurrentComponent {
-   componentArr: TComponentItem[];
+   pages: TPagesItem[];
    router: string;
    children: React.ReactNode;
 }
 export const getCurrentComponent: ({
-   componentArr,
+   pages,
    router,
    children,
-}: IGetCurrentComponent) => React.ReactNode = ({
-   componentArr,
-   router,
-   children,
-}) => {
-   const currentComponent = testRegExpAndPath(componentArr, router);
+}: IGetCurrentComponent) => React.ReactNode = ({ pages, router, children }) => {
+   const currentComponent = testRegExpAndPath(pages, router);
    if (currentComponent) {
-      return currentComponent.component;
+      return currentComponent.children;
    } else {
       return children;
    }
@@ -50,15 +43,15 @@ export const getCurrentComponent: ({
 Return true if the current component and the component corresponding to the passed pathName are the same.
 ===============================================*/
 interface IIsCurrentComponentForPath {
-   componentArr: TComponentItem[];
+   pages: TPagesItem[];
    router: string;
    state: IState;
 }
 export const isCurrentComponentForPath = ({
-   componentArr,
+   pages,
    router,
    state,
 }: IIsCurrentComponentForPath) => {
-   const currentComponent = testRegExpAndPath(componentArr, router);
-   return currentComponent?.component === state.current;
+   const currentComponent = testRegExpAndPath(pages, router);
+   return currentComponent?.children === state.current;
 };

@@ -1,16 +1,16 @@
 /// <reference types="react" />
 import { IState } from "./updateComponent";
-import { TComponentItem } from "../MekuriLayout";
+import { TPagesItem } from "../MekuriLayout";
 interface IGetCurrentComponent {
-    componentArr: TComponentItem[];
+    pages: TPagesItem[];
     router: string;
     children: React.ReactNode;
 }
-export declare const getCurrentComponent: ({ componentArr, router, children, }: IGetCurrentComponent) => React.ReactNode;
+export declare const getCurrentComponent: ({ pages, router, children, }: IGetCurrentComponent) => React.ReactNode;
 interface IIsCurrentComponentForPath {
-    componentArr: TComponentItem[];
+    pages: TPagesItem[];
     router: string;
     state: IState;
 }
-export declare const isCurrentComponentForPath: ({ componentArr, router, state, }: IIsCurrentComponentForPath) => boolean;
+export declare const isCurrentComponentForPath: ({ pages, router, state, }: IIsCurrentComponentForPath) => boolean;
 export {};
