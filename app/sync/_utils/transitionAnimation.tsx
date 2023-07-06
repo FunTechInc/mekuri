@@ -22,6 +22,17 @@ export const leaveAnim = (
       duration: duration,
       ease: "power1.out",
    });
+   /*===============================================
+	When transitioning continuously, re-rendering does not occur and the position remains, so initialize it with setTimeout.
+	===============================================*/
+   setTimeout(() => {
+      if (!wrapperRef.current) {
+         return;
+      }
+      gsap.set(wrapperRef.current, {
+         position: "",
+      });
+   }, duration * 1000);
 };
 
 export const enterAnim = (ref: TRef, duration: number) => {

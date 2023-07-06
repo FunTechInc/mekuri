@@ -15,7 +15,7 @@ export interface IState {
    restorePos: TRestorePos;
 }
 export interface IAction {
-   type: "update" | "update-unmount" | "unmount-prev";
+   type: "update" | "update-unmount" | "unmount-prev" | "rapid-fire";
    component?: React.ReactNode;
    restorePos?: TRestorePos;
 }
@@ -25,7 +25,9 @@ update component reducer
 ===============================================*/
 export const componentReducer = (state: IState, action: IAction) => {
    switch (action.type) {
-      //syncモード
+      /********************
+		sync
+		********************/
       case "update":
          return {
             ...state,
@@ -38,7 +40,16 @@ export const componentReducer = (state: IState, action: IAction) => {
             current: state.next || null,
             next: null,
          };
-      //waitモード
+      //error handling for rapid-fire errors
+      case "rapid-fire":
+         return {
+            ...state,
+            current: state.current || null,
+            next: null,
+         };
+      /********************
+		wait
+		********************/
       case "update-unmount":
          return {
             ...state,

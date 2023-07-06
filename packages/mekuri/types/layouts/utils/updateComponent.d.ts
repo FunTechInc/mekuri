@@ -10,7 +10,7 @@ export interface IState {
     restorePos: TRestorePos;
 }
 export interface IAction {
-    type: "update" | "update-unmount" | "unmount-prev";
+    type: "update" | "update-unmount" | "unmount-prev" | "rapid-fire";
     component?: React.ReactNode;
     restorePos?: TRestorePos;
 }
