@@ -6,7 +6,7 @@ import { Footer } from "./_component/Footer";
 import { PageTransitionContext } from "./_context/MekuriContext";
 const dotGothic = DotGothic16({ weight: ["400"], subsets: ["latin"] });
 
-export const metadata = {
+const metadata = {
    title: "(hidden)mekuri",
    description:
       "(hidden)mekuri is a package for page transition animation in Next.js. It supports both 'wait' and 'sync' modes, as well as popstate (scroll position preservation during popstate). Since animations can be set on a per-component basis, you can implement them flexibly using animation libraries such as GSAP.",
@@ -29,4 +29,5 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
    );
 };
 
+export { metadata };
 export default RootLayout;
