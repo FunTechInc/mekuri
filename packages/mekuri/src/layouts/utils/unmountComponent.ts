@@ -26,11 +26,21 @@ export const useUnmountPrevEffect = ({
 	unmount & cssReset
 	===============================================*/
    const preventRef = useRef("");
+
+   useEffect(() => {
+      preventRef.current = location.pathname;
+   }, []);
+
    const unmountPrev = () => {
       if (mode === "sync") {
          if (preventRef.current !== location.pathname) {
             dispatch({
                type: "unmount-prev",
+            });
+         } else {
+            //error handling for rapid-fire errors
+            dispatch({
+               type: "rapid-fire",
             });
          }
          preventRef.current = location.pathname;

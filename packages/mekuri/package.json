@@ -1,6 +1,6 @@
 {
    "name": "@funtech-inc/mekuri",
-   "version": "1.0.9",
+   "version": "1.0.10",
    "description": "Page transition animation with Next.js",
    "main": "./build/mekuri.umd.cjs",
    "module": "./build/mekuri.js",
