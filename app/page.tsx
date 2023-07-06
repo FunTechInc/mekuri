@@ -1,4 +1,3 @@
-"use client";
 import { LinkList, Nav } from "./_component/Nav";
 import s from "./home.module.scss";
 
