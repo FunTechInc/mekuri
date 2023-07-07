@@ -82,7 +82,7 @@ export const MekuriContext = ({
    });
 
    //constat state
-   const [constantStaet] = useState({
+   const [constantState] = useState({
       routing,
       scrollRestoration,
       mode,
@@ -107,7 +107,7 @@ export const MekuriContext = ({
 
    return (
       <DurationContext.Provider value={durationState}>
-         <ConstantContext.Provider value={constantStaet}>
+         <ConstantContext.Provider value={constantState}>
             <RouterContext.Provider value={routerState}>
                {children}
             </RouterContext.Provider>
