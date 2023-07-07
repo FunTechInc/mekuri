@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
 import { getCurrentComponent, isCurrentComponentForPath } from "./getComponent";
-import { TMode, TPagesItem } from "../MekuriLayout";
+import { TMode, TRouting } from "../../context/MekuriContext";
 
 /*===============================================
 type
@@ -69,36 +69,46 @@ interface IComponentUpdateEffect {
    mode: TMode;
    millisecond: number;
    state: IState;
-   pages: TPagesItem[];
+   routing: TRouting[];
    children: React.ReactNode;
    dispatch: (prop: IAction) => void;
+   isMatchRouting: boolean;
 }
 export const useComponentUpdateEffect = ({
    router,
    mode,
    millisecond,
    state,
-   pages,
+   routing,
    children,
    dispatch,
+   isMatchRouting,
 }: IComponentUpdateEffect) => {
    const firstRender = useRef(true);
    const timeoutID = useRef<NodeJS.Timeout | number>(0);
 
-   const updateCurrentComponent = () => {
+   const updateCurrentComponent = (isReset = false) => {
       const currentComponent = getCurrentComponent({
-         pages,
+         routing,
          router,
          children,
       });
       if (
          !currentComponent ||
-         isCurrentComponentForPath({ pages, router, state })
+         isCurrentComponentForPath({ routing, router, state })
       )
          return;
 
+      const getType = () => {
+         if (isReset || mode === "wait") {
+            return "update-unmount";
+         } else {
+            return "update";
+         }
+      };
+
       dispatch({
-         type: mode === "wait" ? "update-unmount" : "update",
+         type: getType(),
          component: currentComponent,
          restorePos: {
             key: router,
@@ -110,6 +120,12 @@ export const useComponentUpdateEffect = ({
    useEffect(() => {
       if (firstRender.current) {
          firstRender.current = false;
+         return;
+      }
+
+      //outside of routing.
+      if (!isMatchRouting) {
+         updateCurrentComponent(!isMatchRouting);
          return;
       }
 

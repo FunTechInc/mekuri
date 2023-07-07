@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect } from "react";
-import { funtechConsole } from "./_utils/funtechConsole";
+import { useStarter } from "@funtech-inc/spice";
 
 export const AppHooks = () => {
-   useEffect(() => {
-      funtechConsole();
-   }, []);
+   useStarter({
+      // reloadThresholds: [960, 560],
+      isFixViewportForSmall: true,
+      areYouFun: true,
+   });
    return null;
 };

@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import { changeRegExp } from "../utils/changeRegExp";
-import { useRouterState } from "../context/MekuriContext";
-import { TMode } from "../layouts/MekuriLayout";
+import { useConstantState, useRouterState } from "../context/MekuriContext";
 
 type TCallBackProp = {
    prev: string | null | undefined;
@@ -16,11 +15,12 @@ type TCallBackProp = {
 
 interface IProps {
    isReRender: boolean;
-   mode: TMode;
    once?: () => void;
    leave?: (state: TCallBackProp) => void;
    enter?: (state: TCallBackProp) => void;
    afterEnter?: (state: TCallBackProp) => void;
+   everyLeave?: (state: TCallBackProp) => void;
+   everyEnter?: (state: TCallBackProp) => void;
 }
 
 //Return a string that matches testPath after normalization.
@@ -51,15 +51,17 @@ const returnHashPos = () => {
  */
 export const useMekuriAnimation = ({
    isReRender = true,
-   mode,
    once,
    leave,
    enter,
    afterEnter,
+   everyLeave,
+   everyEnter,
 }: IProps) => {
    const firstRender = useRef(true);
    const pathRef = useRef<string>(null!);
    const routerState = useRouterState();
+   const { mode } = useConstantState();
 
    useEffect(() => {
       //Differentiate the calling of leave and enter by comparing the location.pathname at the time of render and the execution time of the state's subscribe function
@@ -99,10 +101,13 @@ export const useMekuriAnimation = ({
          },
          getHashPos: () => returnHashPos(),
       };
+
       /*===============================================
 		phases
 		===============================================*/
       if (routerState!.phase === "leave") {
+         //everyLeave
+         everyLeave && everyLeave(callBackProp);
          /*===============================================
 			leave
 			===============================================*/
@@ -129,6 +134,8 @@ export const useMekuriAnimation = ({
             }
          }
       } else if (routerState!.phase === "enter") {
+         //everyEnter
+         everyEnter && everyEnter(callBackProp);
          /*===============================================
 			enter
 			===============================================*/

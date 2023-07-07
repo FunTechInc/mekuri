@@ -1,0 +1,413 @@
+@use "sass:math";
+/*===============================================
+designRoot
+===============================================*/
+$designRoot: 1;
+// device
+$sm-device: 560px;
+$md-device: 960px;
+$lg-device: 1200px;
+$lg-design-width: 1440;
+$md-design-width: 750;
+$sm-design-width: 375;
+$lg-design-height: 780;
+$sm-design-height: 812;
+$mobile-design-width: 750;
+
+/*===============================================
+unit
+===============================================*/
+$unit: inherit;
+
+//unit
+@if $designRoot==1 {
+   $unit: rem;
+} @else {
+   $unit: px;
+}
+
+/*===============================================
+spacing
+===============================================*/
+$spacing-0: if($designRoot==1, 0, 0);
+$spacing-half: if($designRoot==1, 0.8rem, 8px);
+$spacing-mini: if($designRoot==1, 1.2rem, 12px);
+$spacing-1: if($designRoot==1, 1.6rem, 16px);
+$spacing-2: if($designRoot==1, 2.4rem, 24px);
+$spacing-3: if($designRoot==1, 3.2rem, 32px);
+$spacing-4: if($designRoot==1, 4rem, 40px);
+$spacing-4half: if($designRoot==1, 4.8rem, 48px);
+$spacing-5: if($designRoot==1, 5.6rem, 56px);
+$spacing-6: if($designRoot==1, 6.4rem, 64px);
+$spacing-7: if($designRoot==1, 7.2rem, 72px);
+$spacing-8: if($designRoot==1, 8rem, 80px);
+$spacing-8half: if($designRoot==1, 8.8rem, 88px);
+$spacing-9: if($designRoot==1, 9.6rem, 96px);
+$spacing-10: if($designRoot==1, 10.4rem, 104px);
+$spacing-11: if($designRoot==1, 11.2rem, 112px);
+$spacing-12: if($designRoot==1, 12rem, 120px);
+
+/*===============================================
+ratio
+===============================================*/
+$r-golden: 62%;
+$r-silver: 71%;
+$r-platinum: 58%;
+$r-16-9: 56.25%;
+$r-square: 100%;
+$r-3-2: 66.66%;
+$r-4-3: 75%;
+
+/*===============================================
+font
+===============================================*/
+//font size
+$fontsize-0: if($designRoot==1, 1.2rem, 12px);
+$fontsize-1: if($designRoot==1, 1.4rem, 14px);
+$fontsize-2: if($designRoot==1, 1.6rem, 16px);
+$fontsize-3: if($designRoot==1, 3.2rem, 32px);
+$fontsize-4: if($designRoot==1, 4rem, 40px);
+$fontsize-5: if($designRoot==1, 5.6rem, 56px);
+$fontsize-6: if($designRoot==1, 6.4rem, 64px);
+$fontsize-7: if($designRoot==1, 7.2rem, 72px);
+$fontsize-8: if($designRoot==1, 8rem, 80px);
+$fontsize-9: if($designRoot==1, 9.6rem, 96px);
+
+// line-height @include lineHeightCrop($leading-loose);
+$leading-none: 1 !default;
+$leading-x-tight: 1.3 !default;
+$leading-tight: 1.5 !default;
+$leading-snug: 1.6 !default;
+$leading-normal: 1.7 !default;
+$leading-relaxed: 1.8 !default;
+$leading-loose: 2 !default;
+$leading-x-loose: 2.2 !default;
+
+// letter-spacing
+$letter-spacing-base: 0.05em !default;
+
+/*===============================================
+color
+===============================================*/
+//brandColor
+$color-line: #00c300;
+$color-yahoo: #ff0027;
+$color-twitter: #1da1f2;
+$color-facebook: #3b5998;
+$color-insta: #e1306c;
+$FunTech: #c34e00;
+//colorRegulation
+$color-txt: #333333;
+$color-key: #333333;
+$color-bg: #ffffff;
+
+/*===============================================
+Media Query
+===============================================*/
+$breakpoints: (
+   "sm": "screen and (max-width:" $sm-device ")",
+   "md": "screen and (max-width:" $md-device ")",
+   "lg": "screen and (max-width:" $lg-device ")",
+) !default;
+
+@mixin mq($breakpoint) {
+   @media #{map-get($breakpoints, $breakpoint)} {
+      @content;
+   }
+}
+
+/*===============================================
+Disable hover effects when on mobile
+===============================================*/
+@mixin hover {
+   @media (hover: none) {
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+   }
+
+   @media (-ms-high-contrast: none),
+      (-ms-high-contrast: active),
+      (-moz-touch-enabled: 0),
+      (hover: hover) {
+      &:hover {
+         @content;
+      }
+   }
+}
+
+/*===============================================
+Line Height Crop
+===============================================*/
+@mixin lineHeightCrop($line-height) {
+   &::before {
+      display: block;
+      width: 0;
+      height: 0;
+      margin-top: calc((1 - #{$line-height}) * 0.5em);
+      content: "";
+   }
+
+   &::after {
+      display: block;
+      width: 0;
+      height: 0;
+      margin-bottom: calc((1 - #{$line-height}) * 0.5em);
+      content: "";
+   }
+}
+
+/*===============================================
+transition
+===============================================*/
+@mixin transition($duration: all 0.6s) {
+   transition: $duration;
+   @include my-cubic-bezier01();
+}
+
+/*===============================================
+my cubic bezier
+===============================================*/
+@mixin my-cubic-bezier01 {
+   //ease out系
+   transition-timing-function: cubic-bezier(0.2, 1.05, 0.7, 0.95);
+}
+
+@mixin cubic-backOut {
+   transition-timing-function: cubic-bezier(0.28, 0.8, 0.36, 1.81);
+}
+
+@mixin cubic-backIn {
+   transition-timing-function: cubic-bezier(0.59, -0.82, 0.79, 0.39);
+}
+
+@mixin cubic-bezier01 {
+   transition-timing-function: cubic-bezier(0.26, 0.06, 0, 1);
+}
+
+@mixin cubic-bezier02 {
+   transition-timing-function: cubic-bezier(0.18, 0.06, 0.23, 1);
+}
+
+@mixin cubic-bezier03 {
+   transition-timing-function: cubic-bezier(0.43, 0.05, 0.17, 1);
+}
+
+@mixin cubic-bezier04 {
+   transition-timing-function: cubic-bezier(0.55, 0.05, 0.22, 0.99);
+}
+
+/*===============================================
+placeholder
+===============================================*/
+
+@mixin placeholder($color) {
+   &::placeholder {
+      color: $color;
+   }
+
+   &:-ms-input-placeholder {
+      color: $color;
+   }
+
+   &::-ms-input-placeholder {
+      color: $color;
+   }
+}
+
+/*===============================================
+background image
+===============================================*/
+@mixin bg_img_cover {
+   background-repeat: no-repeat;
+   background-size: cover;
+   background-position: center;
+}
+
+@mixin bg_img_contain {
+   background-repeat: no-repeat;
+   background-size: contain;
+   background-position: center;
+}
+
+@mixin bg_mask {
+   position: absolute;
+   width: 100%;
+   height: 100%;
+   z-index: 0;
+   left: 0;
+   top: 0;
+}
+
+/*===============================================
+position absolute
+===============================================*/
+//  @include absolute(0,0,0,0);  @include absolute($top:0, $bottom:0);
+@mixin absolute($top: null, $right: null, $bottom: null, $left: null) {
+   position: absolute;
+
+   @if $top !=null {
+      top: $top;
+   }
+
+   @if $right !=null {
+      right: $right;
+   }
+
+   @if $bottom !=null {
+      bottom: $bottom;
+   }
+
+   @if $left !=null {
+      left: $left;
+   }
+}
+
+/*===============================================
+circle
+===============================================*/
+@mixin circle($size, $color) {
+   width: $size;
+   height: $size;
+   border-radius: 50%;
+   background-color: $color;
+}
+
+/*===============================================
+lines-truncate
+===============================================*/
+// @include lines-truncate(3);
+@mixin lines-truncate($lines: 2) {
+   overflow: hidden;
+   display: -webkit-box;
+   -webkit-box-orient: vertical;
+   -webkit-line-clamp: $lines;
+}
+
+/*===============================================
+gradation
+===============================================*/
+// @include gradient(#ff00ff, #ff00cc, vertical);
+@mixin gradient($start-color, $end-color, $orientation) {
+   background: $start-color;
+
+   @if $orientation==vertical {
+      // vertical
+      background: -moz-linear-gradient(top, $start-color 0%, $end-color 100%);
+      background: -webkit-gradient(
+         linear,
+         left top,
+         left bottom,
+         color-stop(0%, $start-color),
+         color-stop(100%, $end-color)
+      );
+      background: -webkit-linear-gradient(
+         top,
+         $start-color 0%,
+         $end-color 100%
+      );
+      background: -o-linear-gradient(top, $start-color 0%, $end-color 100%);
+      background: -ms-linear-gradient(top, $start-color 0%, $end-color 100%);
+      background: linear-gradient(to bottom, $start-color 0%, $end-color 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$start-color', endColorstr='$end-color', GradientType=0);
+   } @else if $orientation==horizontal {
+      // horizontal
+      background: -moz-linear-gradient(left, $start-color 0%, $end-color 100%);
+      background: -webkit-gradient(
+         linear,
+         left top,
+         right top,
+         color-stop(0%, $start-color),
+         color-stop(100%, $end-color)
+      );
+      background: -webkit-linear-gradient(
+         left,
+         $start-color 0%,
+         $end-color 100%
+      );
+      background: -o-linear-gradient(left, $start-color 0%, $end-color 100%);
+      background: -ms-linear-gradient(left, $start-color 0%, $end-color 100%);
+      background: linear-gradient(to right, $start-color 0%, $end-color 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$start-color', endColorstr='$end-color', GradientType=1);
+   } @else {
+      // radial
+      background: -moz-radial-gradient(
+         center,
+         ellipse cover,
+         $start-color 0%,
+         $end-color 100%
+      );
+      background: -webkit-gradient(
+         radial,
+         center center,
+         0px,
+         center center,
+         100%,
+         color-stop(0%, $start-color),
+         color-stop(100%, $end-color)
+      );
+      background: -webkit-radial-gradient(
+         center,
+         ellipse cover,
+         $start-color 0%,
+         $end-color 100%
+      );
+      background: -o-radial-gradient(
+         center,
+         ellipse cover,
+         $start-color 0%,
+         $end-color 100%
+      );
+      background: -ms-radial-gradient(
+         center,
+         ellipse cover,
+         $start-color 0%,
+         $end-color 100%
+      );
+      background: radial-gradient(
+         ellipse at center,
+         $start-color 0%,
+         $end-color 100%
+      );
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$start-color', endColorstr='$end-color', GradientType=1);
+   }
+}
+
+/*===============================================
+webp
+ex）@include webpBg(test, j, layout);
+===============================================*/
+@mixin webpBg($img, $kaku: j, $page: "/") {
+   @if $kaku==j {
+      $kaku: jpg;
+   } @else if $kaku==p {
+      $kaku: png;
+   } @else if $kaku==g {
+      $kaku: gif;
+   }
+
+   @if $page== "/" {
+   } @else {
+      $page: "/" + $page + "/";
+   }
+
+   $path1: "../images" + $page + $img + ".webp";
+   $path2: "../images" + $page + $img + "." + $kaku;
+
+   .webp & {
+      background-image: url($path1);
+   }
+
+   .no-webp & {
+      background-image: url($path2);
+   }
+}
+
+/*===============================================
+remove unit
+===============================================*/
+@function su($number) {
+   @if type-of($number) == "number" and not unitless($number) {
+      @return math.div($number, ($number * 0 + 1));
+   }
+
+   @return $number;
+}

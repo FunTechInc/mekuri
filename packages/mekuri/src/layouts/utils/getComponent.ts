@@ -1,13 +1,13 @@
 import { changeRegExp } from "../../utils/changeRegExp";
 import { IState } from "./updateComponent";
-import { TPagesItem } from "../MekuriLayout";
+import { TRouting } from "../../context/MekuriContext";
 
 /********************
 get the current component by comparing the current pathName with componentArr.
 ********************/
-const testRegExpAndPath = (pages: TPagesItem[], pathName: string) => {
+const testRegExpAndPath = (routing: TRouting[], pathName: string) => {
    return (
-      pages
+      routing
          //copy
          .slice()
          //sort by path string length
@@ -22,16 +22,20 @@ get the component corresponding to the path.
 If there is no match in componentArr, return children
 ===============================================*/
 interface IGetCurrentComponent {
-   pages: TPagesItem[];
+   routing: TRouting[];
    router: string;
    children: React.ReactNode;
 }
 export const getCurrentComponent: ({
-   pages,
+   routing,
    router,
    children,
-}: IGetCurrentComponent) => React.ReactNode = ({ pages, router, children }) => {
-   const currentComponent = testRegExpAndPath(pages, router);
+}: IGetCurrentComponent) => React.ReactNode = ({
+   routing,
+   router,
+   children,
+}) => {
+   const currentComponent = testRegExpAndPath(routing, router);
    if (currentComponent) {
       return currentComponent.children;
    } else {
@@ -43,15 +47,15 @@ export const getCurrentComponent: ({
 Return true if the current component and the component corresponding to the passed pathName are the same.
 ===============================================*/
 interface IIsCurrentComponentForPath {
-   pages: TPagesItem[];
+   routing: TRouting[];
    router: string;
    state: IState;
 }
 export const isCurrentComponentForPath = ({
-   pages,
+   routing,
    router,
    state,
 }: IIsCurrentComponentForPath) => {
-   const currentComponent = testRegExpAndPath(pages, router);
+   const currentComponent = testRegExpAndPath(routing, router);
    return currentComponent?.children === state.current;
 };

@@ -1,4 +1,3 @@
-import { TMode } from "../layouts/MekuriLayout";
 type TCallBackProp = {
     prev: string | null | undefined;
     current: string | null | undefined;
@@ -11,15 +10,16 @@ type TCallBackProp = {
 };
 interface IProps {
     isReRender: boolean;
-    mode: TMode;
     once?: () => void;
     leave?: (state: TCallBackProp) => void;
     enter?: (state: TCallBackProp) => void;
     afterEnter?: (state: TCallBackProp) => void;
+    everyLeave?: (state: TCallBackProp) => void;
+    everyEnter?: (state: TCallBackProp) => void;
 }
 /**
  * usePageMekuriAnimation
  * @param props
  */
-export declare const useMekuriAnimation: ({ isReRender, mode, once, leave, enter, afterEnter, }: IProps) => void;
+export declare const useMekuriAnimation: ({ isReRender, once, leave, enter, afterEnter, everyLeave, everyEnter, }: IProps) => void;
 export {};

@@ -1,5 +1,5 @@
-import { TRestore } from "../MekuriLayout";
 import { IState } from "./updateComponent";
+import { TRestore } from "../../context/MekuriContext";
 interface IUseScrollRestoration {
     state: IState;
     scrollRestoration: TRestore;

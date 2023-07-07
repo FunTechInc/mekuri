@@ -21,5 +21,8 @@
       "sass": "^1.63.3",
       "the-new-css-reset": "^1.8.4",
       "typescript": "5.0.4"
+   },
+   "devDependencies": {
+      "@funtech-inc/spice": "^1.0.11"
    }
 }

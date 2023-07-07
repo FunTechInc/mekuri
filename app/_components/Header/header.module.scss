@@ -1,0 +1,33 @@
+@use "@/css" as *;
+
+.wrapper {
+   border-bottom: 1px solid $color-key;
+   height: 40px;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding: 0 80px;
+   position: fixed;
+   z-index: 9999;
+   width: 100vw;
+   top: 0;
+   left: 0;
+}
+.link {
+   font-size: 16px;
+   color: $color-key;
+   @include hover {
+      opacity: 0.6;
+   }
+   body[data-spice-rendered] & {
+      @include transition;
+      transition-property: opacity;
+   }
+}
+
+.linkWrapper {
+   display: flex;
+   li {
+      margin: 0 8px;
+   }
+}

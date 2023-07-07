@@ -4,13 +4,22 @@ import { useUpdateRouterState } from "./useUpdateRouterState";
 /*===============================================
 type
 ===============================================*/
+export type TRouting = {
+   path: string;
+   children: React.ReactNode;
+};
+export type TMode = "sync" | "wait";
+export type TRestore = "top" | "restore";
+
 interface IDurationContext {
    millisecond: number;
    second: number;
 }
 interface IMekuriContext {
    millisecond: number;
-   preventArr: string[];
+   routing: TRouting[];
+   scrollRestoration: TRestore;
+   mode: TMode;
    router: string;
    children: React.ReactNode;
 }
@@ -21,6 +30,11 @@ export interface IRouterState {
    next?: string | null;
    phase?: "leave" | "enter" | null;
    yPosBeforeLeave?: number;
+}
+interface IConstantState {
+   routing: TRouting[] | null;
+   scrollRestoration: TRestore | null;
+   mode: TMode | null;
 }
 
 /*===============================================
@@ -40,16 +54,24 @@ const initialDurationState = {
    second: 0,
 };
 
+const initialConstantState = {
+   routing: null,
+   scrollRestoration: null,
+   mode: null,
+};
+
 //create context
 const DurationContext = createContext<IDurationContext>(initialDurationState);
 const RouterContext = createContext<IRouterState>(initialRouterState);
-
+const ConstantContext = createContext<IConstantState>(initialConstantState);
 /*===============================================
 component
 ===============================================*/
 export const MekuriContext = ({
    millisecond,
-   preventArr,
+   routing,
+   scrollRestoration,
+   mode,
    router,
    children,
 }: IMekuriContext) => {
@@ -57,6 +79,13 @@ export const MekuriContext = ({
    const [durationState] = useState({
       millisecond,
       second: millisecond / 1000,
+   });
+
+   //constat state
+   const [constantStaet] = useState({
+      routing,
+      scrollRestoration,
+      mode,
    });
 
    //router state
@@ -73,17 +102,20 @@ export const MekuriContext = ({
       dispatch: routerDispatch,
       router: router,
       millisecond,
-      preventArr,
+      routing,
    });
 
    return (
       <DurationContext.Provider value={durationState}>
-         <RouterContext.Provider value={routerState}>
-            {children}
-         </RouterContext.Provider>
+         <ConstantContext.Provider value={constantStaet}>
+            <RouterContext.Provider value={routerState}>
+               {children}
+            </RouterContext.Provider>
+         </ConstantContext.Provider>
       </DurationContext.Provider>
    );
 };
 
 export const useMekuriDuration = () => useContext(DurationContext);
+export const useConstantState = () => useContext(ConstantContext);
 export const useRouterState = () => useContext(RouterContext);

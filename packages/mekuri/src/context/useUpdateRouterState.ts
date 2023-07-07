@@ -1,36 +1,34 @@
 import { useEffect, useRef } from "react";
-import { changeRegExp } from "../utils/changeRegExp";
-import { IRouterState } from "./MekuriContext";
+import { getIsMatchRouting } from "../utils/getIsMatchRouting";
+import { TRouting, IRouterState } from "./MekuriContext";
 
 interface IUseUpdateRouterState {
    state: IRouterState;
    dispatch: (prop: IRouterState) => void;
    router: string;
    millisecond: number;
-   preventArr: string[];
+   routing: TRouting[];
 }
-
-const checkPreventPath = (pathArr: string[], testPath: string): boolean => {
-   if (!testPath) return false;
-   if (pathArr.length === 0) return false;
-   const matchPath = pathArr
-      .slice()
-      .find((path) => changeRegExp(path, true).test(testPath!));
-   return matchPath ? true : false;
-};
 
 export const useUpdateRouterState = ({
    state,
    dispatch,
    millisecond,
-   preventArr,
+   routing,
    router,
 }: IUseUpdateRouterState) => {
    const firstRender = useRef(true);
    const timeoutID = useRef<NodeJS.Timeout | number>(0);
 
+   const prevRouter = useRef("");
+
    useEffect(() => {
-      if (firstRender.current || checkPreventPath(preventArr, router)) {
+      //Initialize state when first render and outside of routing.
+      const isMatchRouting =
+         getIsMatchRouting(routing, router) &&
+         getIsMatchRouting(routing, prevRouter.current);
+      prevRouter.current = router;
+      if (firstRender.current || !isMatchRouting) {
          firstRender.current = false;
          dispatch({
             firstAccess: false,

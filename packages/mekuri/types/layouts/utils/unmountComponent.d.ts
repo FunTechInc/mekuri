@@ -1,11 +1,11 @@
-import { IState } from "./updateComponent";
-import { TMode } from "../MekuriLayout";
-import { IAction } from "./updateComponent";
+import { TMode } from "../../context/MekuriContext";
+import { IAction, IState } from "./updateComponent";
 interface IUnmountPrevEffect {
     state: IState;
     mode: TMode;
     millisecond: number;
     dispatch: (prop: IAction) => void;
+    isMatchRouting: boolean;
 }
-export declare const useUnmountPrevEffect: ({ state, mode, millisecond, dispatch, }: IUnmountPrevEffect) => void;
+export declare const useUnmountPrevEffect: ({ state, mode, millisecond, dispatch, isMatchRouting, }: IUnmountPrevEffect) => void;
 export {};
