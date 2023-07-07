@@ -1,4 +1,4 @@
-import { useReducer, memo } from "react";
+import { useReducer, memo, useRef } from "react";
 import {
    componentReducer,
    useComponentUpdateEffect,
@@ -6,22 +6,15 @@ import {
 import { getCurrentComponent } from "./utils/getComponent";
 import { useUnmountPrevEffect } from "./utils/unmountComponent";
 import { useScrollRestoration } from "./utils/useScrollRestoration";
-import { useMekuriDuration } from "../context/MekuriContext";
+import { useMekuriDuration, useConstantState } from "../context/MekuriContext";
+import { getIsMatchRouting } from "../utils/getIsMatchRouting";
 
 /*===============================================
 type
 ===============================================*/
-export type TMode = "sync" | "wait";
-export type TRestore = "top" | "restore";
-export type TPagesItem = {
-   path: string;
+
+interface IMekuriLayoutProps {
    children: React.ReactNode;
-};
-export interface IMekuriLayoutProps {
-   pages: TPagesItem[];
-   children: React.ReactNode;
-   mode: TMode;
-   scrollRestoration: TRestore;
    router: string;
 }
 
@@ -30,21 +23,30 @@ export interface IMekuriLayoutProps {
  * @param props
  */
 
-const Layout = ({
-   pages,
-   mode,
-   scrollRestoration,
-   router,
-   children,
-}: IMekuriLayoutProps) => {
-   //get millisecond from context
-   const millisecond = useMekuriDuration().millisecond;
+const Layout = ({ router, children }: IMekuriLayoutProps) => {
+   /*===============================================
+	get state from context
+	===============================================*/
+   const { millisecond } = useMekuriDuration();
+   const { routing, scrollRestoration, mode } = useConstantState();
+   if (!routing || !mode || !scrollRestoration) {
+      throw new Error("routing is null");
+   }
+
+   /*===============================================
+	Whether it applies to routing or not.
+	===============================================*/
+   const prevRouter = useRef(router);
+   const isMatchRouting =
+      getIsMatchRouting(routing, router) &&
+      getIsMatchRouting(routing, prevRouter.current);
+   prevRouter.current = router;
 
    /*===============================================
 	１get current component
 	===============================================*/
    const [state, dispatch] = useReducer(componentReducer, {
-      current: getCurrentComponent({ pages, router, children }),
+      current: getCurrentComponent({ routing, router, children }),
       next: null,
       restorePos: {
          key: router,
@@ -60,15 +62,16 @@ const Layout = ({
       mode,
       millisecond,
       state,
-      pages,
+      routing,
       children,
       dispatch,
+      isMatchRouting,
    });
 
    /*===============================================
 	3 unmount
 	===============================================*/
-   useUnmountPrevEffect({ state, mode, millisecond, dispatch });
+   useUnmountPrevEffect({ state, mode, millisecond, dispatch, isMatchRouting });
 
    /*===============================================
 	4 scroll restoration
@@ -80,8 +83,14 @@ const Layout = ({
 	===============================================*/
    return (
       <>
-         {state.current && state.current}
-         {state.next && state.next}
+         {isMatchRouting ? (
+            <>
+               {state.current && state.current}
+               {state.next && state.next}
+            </>
+         ) : (
+            children
+         )}
       </>
    );
 };

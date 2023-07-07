@@ -1,0 +1,118 @@
+@use "./index.scss" as *;
+
+:root {
+   /*===============================================
+	①liquid design
+	===============================================*/
+   --liquid-lgDesignRatio: calc(#{$lg-design-width} / 10);
+   --liquid-mdDesignRatio: calc(#{$md-design-width} / 10);
+   --liquid-smDesignRatio: calc(#{$sm-design-width} / 10);
+   --liquid-htmlroot: calc(
+      calc(var(--vw, 1vw) * 100) / var(--liquid-lgDesignRatio)
+   );
+   --liquid-bodyroot: 1.6rem;
+
+   @include mq(md) {
+      --liquid-htmlroot: calc(
+         calc(var(--vw, 1vw) * 100) / var(--liquid-mdDesignRatio)
+      );
+   }
+
+   @include mq(sm) {
+      --liquid-htmlroot: calc(
+         calc(var(--vw, 1vw) * 100) / var(--liquid-smDesignRatio)
+      );
+   }
+
+   /*===============================================
+	②solid design
+	===============================================*/
+   --solid-root: 16px;
+
+   /*===============================================
+	③mobilefirst design
+	===============================================*/
+   --mobile-DesignWidth: #{$mobile-design-width};
+   --mobile-ContentsWidth: #{$mobile-design-width};
+   --mobile-ContentsRatio: var(--mobile-ContentsWidth) /
+      var(--mobile-DesignWidth);
+   --mobile-root: min(
+      16px * var(--mobile-ContentsRatio),
+      16 * 100 / var(--mobile-DesignWidth) * 1vw
+   );
+}
+
+/*===============================================
+html body
+===============================================*/
+body {
+   background-color: $color-bg;
+   color: $color-txt;
+   letter-spacing: $letter-spacing-base;
+   line-height: $leading-none;
+}
+
+html {
+   //liquid
+   @if $designRoot==1 {
+      font-size: var(--liquid-htmlroot);
+
+      body {
+         font-size: var(--liquid-bodyroot);
+      }
+   }
+
+   //solid
+   @else if $designRoot==2 {
+      font-size: var(--solid-root);
+   }
+
+   //mobile
+   @else if $designRoot==3 {
+      font-size: var(--mobile-root);
+   }
+}
+
+/*===============================================
+UI
+===============================================*/
+a,
+button {
+   display: block;
+}
+
+a,
+button,
+input,
+label,
+textarea,
+select {
+   &:focus-visible {
+      outline: $color-key solid 2px;
+
+      @media (hover: none) {
+         outline: none;
+      }
+   }
+}
+
+/*===============================================
+lenis
+===============================================*/
+html {
+   &.lenis {
+      height: auto;
+   }
+   &.lenis.lenis-smooth {
+      scroll-behavior: auto;
+   }
+   &.lenis.lenis-smooth [data-lenis-prevent] {
+      overscroll-behavior: contain;
+   }
+   &.lenis.lenis-stopped {
+      overflow: hidden;
+   }
+   &.lenis.lenis-scrolling iframe {
+      pointer-events: none;
+   }
+}

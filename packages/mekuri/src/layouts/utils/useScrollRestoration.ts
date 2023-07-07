@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
-import { TRestore } from "../MekuriLayout";
 import { IState } from "./updateComponent";
+import { TRestore } from "../../context/MekuriContext";
 
 interface IUseScrollRestoration {
    state: IState;
@@ -86,6 +86,7 @@ export const useScrollRestoration = ({
             isPopstate: isPopstate.current,
             pos: state.restorePos.pos,
          });
+
          window.scrollTo({ top: restorePosY });
          isPopstate.current = false;
       }
