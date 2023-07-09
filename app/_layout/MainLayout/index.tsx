@@ -25,10 +25,10 @@ const routing = [
       path: "/page1",
       children: <Page1 />,
    },
-   {
-      path: "/page2",
-      children: <Page2 />,
-   },
+   // {
+   //    path: "/page2",
+   //    children: <Page2 />,
+   // },
    {
       path: "/page3",
       children: <Page3 />,
