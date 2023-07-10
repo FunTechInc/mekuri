@@ -1,4 +1,4 @@
-import { register } from "@/packages/mekuri/src/utils/register";
+import { register } from "@/packages/mekuri/src/register";
 import { MainWrapper } from "./MainWrapper";
 import { Header } from "@/app/_components/Header";
 import { Footer } from "@/app/_components/Footer";

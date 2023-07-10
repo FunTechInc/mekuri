@@ -64,9 +64,7 @@ const initialConstantState = {
 const DurationContext = createContext<IDurationContext>(initialDurationState);
 const RouterContext = createContext<IRouterState>(initialRouterState);
 const ConstantContext = createContext<IConstantState>(initialConstantState);
-/*===============================================
-component
-===============================================*/
+
 export const MekuriContext = ({
    millisecond,
    routing,
@@ -75,6 +73,10 @@ export const MekuriContext = ({
    router,
    children,
 }: IMekuriContext) => {
+   //error
+   if (routing.length === 0) {
+      throw new Error("routing length is empty");
+   }
    // duration state
    const [durationState] = useState({
       millisecond,

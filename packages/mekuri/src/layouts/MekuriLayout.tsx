@@ -1,4 +1,4 @@
-import { useReducer, useRef, useMemo } from "react";
+import { useReducer } from "react";
 import {
    componentReducer,
    useComponentUpdateEffect,
@@ -7,7 +7,7 @@ import { getCurrentComponent } from "./utils/getComponent";
 import { useUnmountPrevEffect } from "./utils/unmountComponent";
 import { useScrollRestoration } from "./utils/useScrollRestoration";
 import { useMekuriDuration, useConstantState } from "../context/MekuriContext";
-import { getIsMatchRouting } from "../utils/getIsMatchRouting";
+import { useIsMatchRouting } from "../utils/useIsMatchRouting";
 
 /*===============================================
 type
@@ -17,11 +17,6 @@ interface IMekuriLayoutProps {
    children: React.ReactNode;
    router: string;
 }
-export type TIsMatchRouting = {
-   current: boolean;
-   prev: boolean;
-   match: boolean;
-};
 
 /**
  * MekuriLayout
@@ -41,19 +36,7 @@ export const MekuriLayout = ({ router, children }: IMekuriLayoutProps) => {
    /*===============================================
 	Whether it applies to routing or not.
 	===============================================*/
-   const prevRouter = useRef(router);
-
-   const isMatchRouting = useMemo(() => {
-      const isCurrent = getIsMatchRouting(routing, router);
-      const isPrev = getIsMatchRouting(routing, prevRouter.current);
-      const result: TIsMatchRouting = {
-         current: isCurrent,
-         prev: isPrev,
-         match: isCurrent && isPrev,
-      };
-      prevRouter.current = router;
-      return result;
-   }, [routing, router]);
+   const isMatchRouting = useIsMatchRouting({ router, routing });
 
    /*===============================================
 	１get current component
@@ -102,7 +85,7 @@ export const MekuriLayout = ({ router, children }: IMekuriLayoutProps) => {
 	===============================================*/
    return (
       <>
-         {isMatchRouting.match ? (
+         {isMatchRouting ? (
             <div>
                {state.current && state.current}
                {state.next && state.next}
