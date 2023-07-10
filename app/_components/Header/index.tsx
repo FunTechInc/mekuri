@@ -34,12 +34,12 @@ const routing = [
 export const Header = () => {
    return (
       <header className={s.wrapper}>
-         <PageTransitionContext routing={routing}>
+         {/* <PageTransitionContext routing={routing}>
             <Logo />
             <PageTitle>
                <p>page title</p>
             </PageTitle>
-         </PageTransitionContext>
+         </PageTransitionContext> */}
          <nav className={s.linkWrapper}>
             <li>
                <Link className={s.link} href={"/page1"}>

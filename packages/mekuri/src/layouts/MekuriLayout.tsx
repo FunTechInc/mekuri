@@ -17,6 +17,11 @@ interface IMekuriLayoutProps {
    children: React.ReactNode;
    router: string;
 }
+export type TIsMatchRouting = {
+   current: boolean;
+   prev: boolean;
+   match: boolean;
+};
 
 /**
  * MekuriLayout
@@ -38,9 +43,13 @@ export const MekuriLayout = ({ router, children }: IMekuriLayoutProps) => {
 	===============================================*/
    const prevRouter = useRef(router);
    const isMatchRouting = useMemo(() => {
-      const result =
-         getIsMatchRouting(routing, router) &&
-         getIsMatchRouting(routing, prevRouter.current);
+      const isCurrent = getIsMatchRouting(routing, router);
+      const isPrev = getIsMatchRouting(routing, prevRouter.current);
+      const result: TIsMatchRouting = {
+         current: isCurrent,
+         prev: isPrev,
+         match: isCurrent && isPrev,
+      };
       prevRouter.current = router;
       return result;
    }, [routing, router]);
@@ -86,7 +95,7 @@ export const MekuriLayout = ({ router, children }: IMekuriLayoutProps) => {
 	===============================================*/
    return (
       <>
-         {isMatchRouting ? (
+         {isMatchRouting.match ? (
             <div>
                {state.current && state.current}
                {state.next && state.next}

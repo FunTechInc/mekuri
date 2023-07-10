@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import { getCurrentComponent, isCurrentComponentForPath } from "./getComponent";
 import { TMode, TRouting } from "../../context/MekuriContext";
-
+import { TIsMatchRouting } from "../MekuriLayout";
 /*===============================================
 type
 ===============================================*/
@@ -72,8 +72,9 @@ interface IComponentUpdateEffect {
    routing: TRouting[];
    children: React.ReactNode;
    dispatch: (prop: IAction) => void;
-   isMatchRouting: boolean;
+   isMatchRouting: TIsMatchRouting;
 }
+
 export const useComponentUpdateEffect = ({
    router,
    mode,
@@ -87,7 +88,7 @@ export const useComponentUpdateEffect = ({
    const firstRender = useRef(true);
    const timeoutID = useRef<NodeJS.Timeout | number>(0);
 
-   const updateCurrentComponent = (isReset = false) => {
+   const updateCurrentComponent = (isReset: boolean | "reset" = false) => {
       const currentComponent = getCurrentComponent({
          routing,
          router,
@@ -96,11 +97,12 @@ export const useComponentUpdateEffect = ({
       if (
          !currentComponent ||
          isCurrentComponentForPath({ routing, router, state })
-      )
+      ) {
          return;
+      }
 
       const getType = () => {
-         if (isReset || mode === "wait") {
+         if (isReset === "reset" || mode === "wait") {
             return "update-unmount";
          } else {
             return "update";
@@ -124,8 +126,8 @@ export const useComponentUpdateEffect = ({
       }
 
       //outside of routing.
-      if (!isMatchRouting) {
-         updateCurrentComponent(!isMatchRouting);
+      if (!isMatchRouting.match) {
+         isMatchRouting.current && updateCurrentComponent("reset");
          return;
       }
 
