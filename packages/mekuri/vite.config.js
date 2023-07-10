@@ -7,7 +7,7 @@ export default defineConfig({
       lib: {
          entry: {
             main: path.resolve(__dirname, "src/index.js"),
-            register: path.resolve(__dirname, "src/utils/register.ts"),
+            register: path.resolve(__dirname, "src/register"),
          },
          name: "mekuri",
          fileName: "[name]",

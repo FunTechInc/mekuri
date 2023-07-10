@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
-import { getIsMatchRouting } from "../utils/getIsMatchRouting";
 import { TRouting, IRouterState } from "./MekuriContext";
+import { useIsMatchRouting } from "../utils/useIsMatchRouting";
 
 interface IUseUpdateRouterState {
    state: IRouterState;
@@ -20,14 +20,9 @@ export const useUpdateRouterState = ({
    const firstRender = useRef(true);
    const timeoutID = useRef<NodeJS.Timeout | number>(0);
 
-   const prevRouter = useRef("");
+   const isMatchRouting = useIsMatchRouting({ router, routing });
 
    useEffect(() => {
-      //Initialize state when first render and outside of routing.
-      const isMatchRouting =
-         getIsMatchRouting(routing, router) &&
-         getIsMatchRouting(routing, prevRouter.current);
-      prevRouter.current = router;
       if (firstRender.current || !isMatchRouting) {
          firstRender.current = false;
          dispatch({

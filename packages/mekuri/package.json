@@ -1,6 +1,6 @@
 {
    "name": "@funtech-inc/mekuri",
-   "version": "2.0.5",
+   "version": "2.1.0",
    "description": "Page transition animation with Next.js",
    "main": "./build/main.cjs",
    "module": "./build/main.js",
@@ -12,11 +12,11 @@
       },
       "./register": {
          "import": {
-            "types": "./types/utils/register.d.ts",
+            "types": "./types/register/index.d.ts",
             "default": "./build/register.js"
          },
          "require": {
-            "types": "./types/utils/register.d.ts",
+            "types": "./types/register/index.d.ts",
             "default": "./build/register.cjs"
          }
       }

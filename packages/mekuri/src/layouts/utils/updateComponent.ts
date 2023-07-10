@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import { getCurrentComponent, isCurrentComponentForPath } from "./getComponent";
 import { TMode, TRouting } from "../../context/MekuriContext";
-import { TIsMatchRouting } from "../MekuriLayout";
+
 /*===============================================
 type
 ===============================================*/
@@ -72,7 +72,7 @@ interface IComponentUpdateEffect {
    routing: TRouting[];
    children: React.ReactNode;
    dispatch: (prop: IAction) => void;
-   isMatchRouting: TIsMatchRouting;
+   isMatchRouting: boolean;
 }
 
 export const useComponentUpdateEffect = ({
@@ -126,7 +126,7 @@ export const useComponentUpdateEffect = ({
       }
 
       //outside of routing.
-      if (!isMatchRouting.match) {
+      if (!isMatchRouting) {
          updateCurrentComponent("reset");
          return;
       }

@@ -1,21 +1,6 @@
-import { changeRegExp } from "../../utils/changeRegExp";
 import { IState } from "./updateComponent";
 import { TRouting } from "../../context/MekuriContext";
-
-/********************
-get the current component by comparing the current pathName with componentArr.
-********************/
-const testRegExpAndPath = (routing: TRouting[], pathName: string) => {
-   return (
-      routing
-         //copy
-         .slice()
-         //sort by path string length
-         .sort((a, b) => b.path.length - a.path.length)
-         //test and return matched element
-         .find((route) => changeRegExp(route.path, false).test(pathName))
-   );
-};
+import { testRegExpAndPath } from "../../utils/testRegExpAndPath";
 
 /*===============================================
 get the component corresponding to the path.
