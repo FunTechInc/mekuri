@@ -1,6 +1,4 @@
-import Link from "next/link";
 import { SampleLayout } from "@/app/_layout/SampleLayout";
-import s from "./style.module.scss";
 
 import type { Metadata } from "next";
 
