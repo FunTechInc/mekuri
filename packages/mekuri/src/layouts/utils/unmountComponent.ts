@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { TMode } from "../../context/MekuriContext";
 import { IAction, IState } from "./updateComponent";
-
+import { TIsMatchRouting } from "../MekuriLayout";
 /*===============================================
 Unmount in response to changes in state.
 ===============================================*/
@@ -10,7 +10,7 @@ interface IUnmountPrevEffect {
    mode: TMode;
    millisecond: number;
    dispatch: (prop: IAction) => void;
-   isMatchRouting: boolean;
+   isMatchRouting: TIsMatchRouting;
 }
 
 export const useUnmountPrevEffect = ({
@@ -60,7 +60,7 @@ export const useUnmountPrevEffect = ({
          return;
       }
       //outside of routing
-      if (!isMatchRouting) {
+      if (!isMatchRouting.match) {
          return;
       }
       /*===============================================

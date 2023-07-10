@@ -1,5 +1,6 @@
 /// <reference types="react" />
 import { TMode, TRouting } from "../../context/MekuriContext";
+import { TIsMatchRouting } from "../MekuriLayout";
 type TRestorePos = {
     key: string;
     pos: number;
@@ -31,7 +32,7 @@ interface IComponentUpdateEffect {
     routing: TRouting[];
     children: React.ReactNode;
     dispatch: (prop: IAction) => void;
-    isMatchRouting: boolean;
+    isMatchRouting: TIsMatchRouting;
 }
 export declare const useComponentUpdateEffect: ({ router, mode, millisecond, state, routing, children, dispatch, isMatchRouting, }: IComponentUpdateEffect) => void;
 export {};

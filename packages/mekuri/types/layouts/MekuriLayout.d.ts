@@ -3,6 +3,11 @@ interface IMekuriLayoutProps {
     children: React.ReactNode;
     router: string;
 }
+export type TIsMatchRouting = {
+    current: boolean;
+    prev: boolean;
+    match: boolean;
+};
 /**
  * MekuriLayout
  * @param props
