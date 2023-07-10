@@ -42,6 +42,7 @@ export const MekuriLayout = ({ router, children }: IMekuriLayoutProps) => {
 	Whether it applies to routing or not.
 	===============================================*/
    const prevRouter = useRef(router);
+
    const isMatchRouting = useMemo(() => {
       const isCurrent = getIsMatchRouting(routing, router);
       const isPrev = getIsMatchRouting(routing, prevRouter.current);
@@ -83,7 +84,13 @@ export const MekuriLayout = ({ router, children }: IMekuriLayoutProps) => {
    /*===============================================
 	3 unmount
 	===============================================*/
-   useUnmountPrevEffect({ state, mode, millisecond, dispatch, isMatchRouting });
+   useUnmountPrevEffect({
+      state,
+      mode,
+      millisecond,
+      dispatch,
+      isMatchRouting,
+   });
 
    /*===============================================
 	4 scroll restoration

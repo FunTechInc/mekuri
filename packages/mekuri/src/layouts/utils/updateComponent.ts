@@ -126,8 +126,10 @@ export const useComponentUpdateEffect = ({
       }
 
       //outside of routing.
-      if (!isMatchRouting.match) {
-         isMatchRouting.current && updateCurrentComponent("reset");
+      if (!isMatchRouting.match && isMatchRouting.current) {
+         updateCurrentComponent("reset");
+         return;
+      } else if (!isMatchRouting.match) {
          return;
       }
 
