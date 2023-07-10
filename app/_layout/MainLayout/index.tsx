@@ -1,3 +1,4 @@
+import { register } from "@/packages/mekuri/src/utils/register";
 import { MainWrapper } from "./MainWrapper";
 import { Header } from "@/app/_components/Header";
 import { Footer } from "@/app/_components/Footer";
@@ -25,14 +26,11 @@ const routing = [
       path: "/page1",
       children: <Page1 />,
    },
-   // {
-   //    path: "/page2",
-   //    children: <Page2 />,
-   // },
    {
       path: "/page3",
       children: <Page3 />,
    },
+   // ...register({ path: ["/page2"], children: [<Page2 key={"page2"} />] }),
 ];
 
 export const MainLayout = ({ children }: { children: React.ReactNode }) => {

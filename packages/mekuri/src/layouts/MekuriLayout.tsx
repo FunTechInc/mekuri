@@ -1,4 +1,4 @@
-import { useReducer, memo, useRef } from "react";
+import { useReducer, useRef, useMemo } from "react";
 import {
    componentReducer,
    useComponentUpdateEffect,
@@ -23,7 +23,7 @@ interface IMekuriLayoutProps {
  * @param props
  */
 
-const Layout = ({ router, children }: IMekuriLayoutProps) => {
+export const MekuriLayout = ({ router, children }: IMekuriLayoutProps) => {
    /*===============================================
 	get state from context
 	===============================================*/
@@ -37,10 +37,13 @@ const Layout = ({ router, children }: IMekuriLayoutProps) => {
 	Whether it applies to routing or not.
 	===============================================*/
    const prevRouter = useRef(router);
-   const isMatchRouting =
-      getIsMatchRouting(routing, router) &&
-      getIsMatchRouting(routing, prevRouter.current);
-   prevRouter.current = router;
+   const isMatchRouting = useMemo(() => {
+      const result =
+         getIsMatchRouting(routing, router) &&
+         getIsMatchRouting(routing, prevRouter.current);
+      prevRouter.current = router;
+      return result;
+   }, [routing, router]);
 
    /*===============================================
 	１get current component
@@ -84,15 +87,13 @@ const Layout = ({ router, children }: IMekuriLayoutProps) => {
    return (
       <>
          {isMatchRouting ? (
-            <>
+            <div>
                {state.current && state.current}
                {state.next && state.next}
-            </>
+            </div>
          ) : (
-            children
+            <div>{children}</div>
          )}
       </>
    );
 };
-
-export const MekuriLayout = memo(Layout);

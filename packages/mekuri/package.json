@@ -1,14 +1,24 @@
 {
    "name": "@funtech-inc/mekuri",
-   "version": "2.0.1",
+   "version": "2.0.2",
    "description": "Page transition animation with Next.js",
-   "main": "./build/mekuri.umd.cjs",
-   "module": "./build/mekuri.js",
+   "main": "./build/main.cjs",
+   "module": "./build/main.js",
    "types": "./types/index.d.ts",
    "exports": {
       ".": {
-         "import": "./build/mekuri.js",
-         "require": "./build/mekuri.umd.cjs"
+         "import": "./build/main.js",
+         "require": "./build/main.cjs"
+      },
+      "./register": {
+         "import": {
+            "types": "./types/utils/register.d.ts",
+            "default": "./build/register.js"
+         },
+         "require": {
+            "types": "./types/utils/register.d.ts",
+            "default": "./build/register.cjs"
+         }
       }
    },
    "type": "module",
