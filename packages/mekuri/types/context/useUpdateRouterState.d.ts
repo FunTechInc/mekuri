@@ -1,4 +1,4 @@
-import { TRouting, IRouterState } from "./MekuriContext";
+import { TRouting, IRouterState } from "./MekuriContext.tsx";
 interface IUseUpdateRouterState {
     state: IRouterState;
     dispatch: (prop: IRouterState) => void;

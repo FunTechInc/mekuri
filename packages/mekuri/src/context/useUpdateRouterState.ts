@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
-import { TRouting, IRouterState } from "./MekuriContext";
-import { useIsMatchRouting } from "../utils/useIsMatchRouting";
+import { TRouting, IRouterState } from "./MekuriContext.tsx";
+import { useIsMatchRouting } from "../utils/useIsMatchRouting.ts";
 
 interface IUseUpdateRouterState {
    state: IRouterState;

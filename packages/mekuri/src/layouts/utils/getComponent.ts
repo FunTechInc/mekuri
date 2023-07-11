@@ -1,6 +1,6 @@
-import { IState } from "./updateComponent";
-import { TRouting } from "../../context/MekuriContext";
-import { testRegExpAndPath } from "../../utils/testRegExpAndPath";
+import { IState } from "./updateComponent.ts";
+import { TRouting } from "../../context/MekuriContext.tsx";
+import { testRegExpAndPath } from "../../utils/testRegExpAndPath.ts";
 
 /*===============================================
 get the component corresponding to the path.

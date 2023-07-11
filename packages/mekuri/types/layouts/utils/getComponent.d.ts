@@ -1,6 +1,6 @@
 /// <reference types="react" />
-import { IState } from "./updateComponent";
-import { TRouting } from "../../context/MekuriContext";
+import { IState } from "./updateComponent.ts";
+import { TRouting } from "../../context/MekuriContext.tsx";
 interface IGetCurrentComponent {
     routing: TRouting[];
     router: string;

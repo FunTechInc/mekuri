@@ -1,5 +1,5 @@
-import { TRouting } from "../context/MekuriContext";
-import { changeRegExp } from "./changeRegExp";
+import { TRouting } from "../context/MekuriContext.tsx";
+import { changeRegExp } from "./changeRegExp.ts";
 
 /*===============================================
 get the current component by comparing the current pathName with componentArr.
