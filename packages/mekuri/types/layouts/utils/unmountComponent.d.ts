@@ -1,5 +1,5 @@
-import { TMode } from "../../context/MekuriContext";
-import { IAction, IState } from "./updateComponent";
+import { TMode } from "../../context/MekuriContext.tsx";
+import { IAction, IState } from "./updateComponent.ts";
 interface IUnmountPrevEffect {
     state: IState;
     mode: TMode;

@@ -2,12 +2,15 @@ import { useReducer } from "react";
 import {
    componentReducer,
    useComponentUpdateEffect,
-} from "./utils/updateComponent";
-import { getCurrentComponent } from "./utils/getComponent";
-import { useUnmountPrevEffect } from "./utils/unmountComponent";
-import { useScrollRestoration } from "./utils/useScrollRestoration";
-import { useMekuriDuration, useConstantState } from "../context/MekuriContext";
-import { useIsMatchRouting } from "../utils/useIsMatchRouting";
+} from "./utils/updateComponent.ts";
+import { getCurrentComponent } from "./utils/getComponent.ts";
+import { useUnmountPrevEffect } from "./utils/unmountComponent.ts";
+import { useScrollRestoration } from "./utils/useScrollRestoration.ts";
+import {
+   useMekuriDuration,
+   useConstantState,
+} from "../context/MekuriContext.tsx";
+import { useIsMatchRouting } from "../utils/useIsMatchRouting.ts";
 
 /*===============================================
 type

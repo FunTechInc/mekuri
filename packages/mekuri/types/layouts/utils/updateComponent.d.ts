@@ -1,5 +1,5 @@
 /// <reference types="react" />
-import { TMode, TRouting } from "../../context/MekuriContext";
+import { TMode, TRouting } from "../../context/MekuriContext.tsx";
 type TRestorePos = {
     key: string;
     pos: number;

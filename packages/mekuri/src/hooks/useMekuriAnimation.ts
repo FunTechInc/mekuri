@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
-import { changeRegExp } from "../utils/changeRegExp";
-import { useConstantState, useRouterState } from "../context/MekuriContext";
+import { changeRegExp } from "../utils/changeRegExp.ts";
+import { useConstantState, useRouterState } from "../context/MekuriContext.tsx";
 
 type TCallBackProp = {
    prev: string | null | undefined;

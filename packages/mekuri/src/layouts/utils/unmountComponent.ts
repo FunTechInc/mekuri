@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
-import { TMode } from "../../context/MekuriContext";
-import { IAction, IState } from "./updateComponent";
+import { TMode } from "../../context/MekuriContext.tsx";
+import { IAction, IState } from "./updateComponent.ts";
 
 /*===============================================
 Unmount in response to changes in state.

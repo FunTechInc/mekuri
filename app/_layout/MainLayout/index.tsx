@@ -17,28 +17,35 @@ import Page1 from "@/app/(pages)/page1/page";
 import Page2 from "@/app/(pages)/page2/page";
 import Page3 from "@/app/(pages)/page3/page";
 
-const routing = [
-   {
-      path: "/",
-      children: <Home />,
-   },
-   {
-      path: "/page1",
-      children: <Page1 />,
-   },
-   {
-      path: "/page3",
-      children: <Page3 />,
-   },
-   // ...register({ path: ["/page2"], children: [<Page2 key={"page2"} />] }),
-];
+const createRouting = async () => {
+   const routing = [
+      {
+         path: "/",
+         children: <Home />,
+      },
+      {
+         path: "/page1",
+         children: <Page1 />,
+      },
+      {
+         path: "/page3",
+         children: <Page3 />,
+      },
+      ...register({ path: ["/page2"], children: [<Page2 key={"page2"} />] }),
+   ];
+   return routing;
+};
 
-export const MainLayout = ({ children }: { children: React.ReactNode }) => {
+export const MainLayout = async ({
+   children,
+}: {
+   children: React.ReactNode;
+}) => {
    return (
       <MainWrapper>
          <Header />
          <main>
-            <PageTransitionContext routing={routing}>
+            <PageTransitionContext routing={await createRouting()}>
                <PageTransitionAnimation>
                   <PageTransitionLayout>{children}</PageTransitionLayout>
                </PageTransitionAnimation>

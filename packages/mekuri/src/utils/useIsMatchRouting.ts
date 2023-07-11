@@ -1,6 +1,6 @@
 import { useRef, useMemo, useEffect } from "react";
-import { testRegExpAndPath } from "./testRegExpAndPath";
-import { TRouting } from "../context/MekuriContext";
+import { testRegExpAndPath } from "./testRegExpAndPath.ts";
+import { TRouting } from "../context/MekuriContext.tsx";
 
 export const useIsMatchRouting = ({
    router,

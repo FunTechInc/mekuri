@@ -1,6 +1,9 @@
 import { useRef, useEffect } from "react";
-import { getCurrentComponent, isCurrentComponentForPath } from "./getComponent";
-import { TMode, TRouting } from "../../context/MekuriContext";
+import {
+   getCurrentComponent,
+   isCurrentComponentForPath,
+} from "./getComponent.ts";
+import { TMode, TRouting } from "../../context/MekuriContext.tsx";
 
 /*===============================================
 type
