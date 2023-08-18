@@ -3,8 +3,8 @@ import { AppHooks } from "./app-hooks";
 import { MainLayout } from "@/app/_layout/MainLayout";
 
 //font
-import { DotGothic16 } from "next/font/google";
-const dotGothic = DotGothic16({ weight: ["400"], subsets: ["latin"] });
+import { Lato } from "next/font/google";
+const lato = Lato({ weight: ["400", "700"], subsets: ["latin"] });
 
 //css
 import "the-new-css-reset/css/reset.css";
@@ -31,7 +31,7 @@ const metadata: Metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
    return (
       <html lang="ja">
-         <body className={dotGothic.className}>
+         <body className={lato.className}>
             <MainLayout>{children}</MainLayout>
          </body>
          <AppHooks />

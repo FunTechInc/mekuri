@@ -1,8 +1,7 @@
-import Link from "next/link";
 import { SampleLayout } from "@/app/_layout/SampleLayout";
-import s from "./style.module.scss";
-
 import type { Metadata } from "next";
+import { SampleAnimation } from "@/app/_components/SampleAnimation";
+import s from "./style.module.scss";
 
 const metadata: Metadata = {
    title: "sample",
@@ -11,8 +10,13 @@ const metadata: Metadata = {
 
 const Sample = () => {
    return (
-      <SampleLayout>
-         <h1>PAGE3</h1>
+      <SampleLayout className={s.wrapper}>
+         <SampleAnimation dir="y">
+            <h1>PAGE3</h1>
+            <h1>PAGE3</h1>
+            <h1>PAGE3</h1>
+            <h1>PAGE3</h1>
+         </SampleAnimation>
       </SampleLayout>
    );
 };

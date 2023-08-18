@@ -1,6 +1,7 @@
 "use client";
+import { MekuriFreezer, Mekuri } from "@/packages/mekuri/src";
+import { LayoutRouterContext } from "next/dist/shared/lib/app-router-context";
 import { usePathname } from "next/navigation";
-import { MekuriLayout } from "@/packages/mekuri/src";
 
 export const PageTransitionLayout = ({
    children,
@@ -8,5 +9,11 @@ export const PageTransitionLayout = ({
    children: React.ReactNode;
 }) => {
    const pathname = usePathname();
-   return <MekuriLayout router={pathname}>{children}</MekuriLayout>;
+   return (
+      <Mekuri>
+         <MekuriFreezer key={pathname} routerContext={LayoutRouterContext}>
+            {children}
+         </MekuriFreezer>
+      </Mekuri>
+   );
 };

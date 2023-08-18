@@ -1,118 +1,106 @@
-import { createContext, useContext, useReducer, useState } from "react";
-import { useUpdateRouterState } from "./useUpdateRouterState.ts";
+import { createContext, useContext, useState } from "react";
+import { useUpdateMekuriState } from "./useUpdateMekuriState";
 
-/*===============================================
-type
-===============================================*/
-export type TRouting = {
-   path: string;
-   children: React.ReactNode;
-};
 export type TMode = "sync" | "wait";
-export type TRestore = "top" | "restore";
+export type TRestore = "top" | "restore" | "none";
+export type TTrigger = string | number;
 
-interface IDurationContext {
+export interface IMekuriState {
+   initialRender: boolean;
+   prevTrigger: TTrigger | null;
+   currentTrigger: TTrigger | null;
+   nextTrigger: TTrigger | null;
+   phase: "leave" | "enter" | null;
+   yPosBeforeLeave: number;
+}
+interface IDurationState {
    millisecond: number;
    second: number;
 }
-interface IMekuriContext {
-   millisecond: number;
-   routing: TRouting[];
+interface IConstantState {
    scrollRestoration: TRestore;
    mode: TMode;
-   router: string;
+}
+interface IMekuriContext {
+   trigger: TTrigger;
+   millisecond: number;
+   scrollRestoration: TRestore;
+   mode: TMode;
    children: React.ReactNode;
 }
-export interface IRouterState {
-   firstAccess?: boolean;
-   prev?: string | null;
-   current?: string | null;
-   next?: string | null;
-   phase?: "leave" | "enter" | null;
-   yPosBeforeLeave?: number;
-}
-interface IConstantState {
-   routing: TRouting[] | null;
-   scrollRestoration: TRestore | null;
-   mode: TMode | null;
-}
 
-/*===============================================
-constant
-===============================================*/
-const initialRouterState = {
-   firstAccess: true,
-   prev: null,
-   current: null,
-   next: null,
-   phase: null,
-   yPosBeforeLeave: 0,
-};
-
-const initialDurationState = {
+//create context
+const defaultDurationState: IDurationState = {
    millisecond: 0,
    second: 0,
 };
-
-const initialConstantState = {
-   routing: null,
-   scrollRestoration: null,
-   mode: null,
+const defaultMekuriState: IMekuriState = {
+   initialRender: false,
+   prevTrigger: null,
+   currentTrigger: null,
+   nextTrigger: null,
+   phase: null,
+   yPosBeforeLeave: 0,
 };
+const defaultConstantState: IConstantState = {
+   scrollRestoration: "top",
+   mode: "wait",
+};
+const DurationContext = createContext<IDurationState>(defaultDurationState);
+const MekuriStateContext = createContext<IMekuriState>(defaultMekuriState);
+const ConstantContext = createContext<IConstantState>(defaultConstantState);
 
-//create context
-const DurationContext = createContext<IDurationContext>(initialDurationState);
-const RouterContext = createContext<IRouterState>(initialRouterState);
-const ConstantContext = createContext<IConstantState>(initialConstantState);
-
+/**
+ * <Mekuri> should be wrapped in this <MekuriContext>. UseMekuriAnimation is available inside a context-wrapped component.
+ *
+ * @param trigger string | number When doing page transition animation, it is also possible to set pathname and other states to trigger
+ * @param millisecond number Set the wait time in milliseconds before removing from tree.
+ * @param scrollRestoration "top" | "restore" | "none" If you select none, scrollRestration does nothing.
+ * @param mode "wait" | "sync"
+ * @public
+ */
 export const MekuriContext = ({
-   millisecond,
-   routing,
-   scrollRestoration,
-   mode,
-   router,
+   trigger,
+   millisecond = 1000,
+   scrollRestoration = "top",
+   mode = "wait",
    children,
 }: IMekuriContext) => {
-   //error
-   if (routing.length === 0) {
-      throw new Error("routing length is empty");
-   }
    // duration state
    const [durationState] = useState({
       millisecond,
       second: millisecond / 1000,
    });
 
-   //constat state
+   // mekuri state
+   const [mekuriState, setMekuriState] = useState<IMekuriState>({
+      initialRender: true,
+      prevTrigger: null,
+      currentTrigger: trigger,
+      nextTrigger: null,
+      phase: null,
+      yPosBeforeLeave: 0,
+   });
+
+   // constat state
    const [constantState] = useState({
-      routing,
       scrollRestoration,
       mode,
    });
 
-   //router state
-   const [routerState, routerDispatch] = useReducer(
-      (prev: IRouterState, props: IRouterState) => ({
-         ...prev,
-         ...props,
-      }),
-      initialRouterState
-   );
-
-   useUpdateRouterState({
-      state: routerState,
-      dispatch: routerDispatch,
-      router: router,
+   // update mekuri state
+   useUpdateMekuriState({
+      trigger,
+      setMekuriState,
       millisecond,
-      routing,
    });
 
    return (
       <DurationContext.Provider value={durationState}>
          <ConstantContext.Provider value={constantState}>
-            <RouterContext.Provider value={routerState}>
+            <MekuriStateContext.Provider value={mekuriState}>
                {children}
-            </RouterContext.Provider>
+            </MekuriStateContext.Provider>
          </ConstantContext.Provider>
       </DurationContext.Provider>
    );
@@ -120,4 +108,4 @@ export const MekuriContext = ({
 
 export const useMekuriDuration = () => useContext(DurationContext);
 export const useConstantState = () => useContext(ConstantContext);
-export const useRouterState = () => useContext(RouterContext);
+export const useMekuriState = () => useContext(MekuriStateContext);
