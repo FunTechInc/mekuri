@@ -1,3 +1,4 @@
-export { MekuriLayout } from "./layouts/MekuriLayout.tsx";
-export { useMekuriAnimation } from "./hooks/useMekuriAnimation.ts";
-export { MekuriContext, useMekuriDuration } from "./context/MekuriContext.tsx";
+export { useMekuriAnimation } from "./hook/useMekuriAnimation";
+export { MekuriFreezer } from "./component/MekuriFreezer";
+export { Mekuri } from "./component/Mekuri";
+export { MekuriContext, useMekuriDuration } from "./context/MekuriContext";

@@ -10,21 +10,20 @@ export const PageTransitionAnimation = ({
    children: React.ReactNode;
 }) => {
    const ref = useRef(null);
-   const duration = useMekuriDuration();
+   const { second } = useMekuriDuration();
 
    useMekuriAnimation({
-      isReRender: false,
-      leave: () => {
+      onEveryLeave: () => {
          gsap.to(ref.current, {
             opacity: 0,
-            duration: duration.second,
+            duration: second,
             ease: "power3.out",
          });
       },
-      enter: () => {
+      onEveryEnter: () => {
          gsap.to(ref.current, {
             opacity: 1,
-            duration: duration.second,
+            duration: second,
             ease: "power3.out",
          });
       },

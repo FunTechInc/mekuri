@@ -1,0 +1,50 @@
+@use "@/css" as *;
+
+.wrapper {
+   position: fixed;
+   bottom: 0;
+   left: 0;
+   width: 32rem;
+   height: 32rem;
+   background-color: #fff;
+   border: 1px solid #333;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   flex-direction: column;
+}
+
+.title {
+   margin-bottom: 1.6rem;
+   font-size: 2rem;
+   text-align: center;
+}
+
+.titleWrapper {
+   border: 1px solid #333;
+   padding: 4rem 0;
+   position: relative;
+   overflow: hidden;
+}
+
+.titleAnimBlock {
+   width: 100%;
+   font-size: 4rem;
+   width: 100%;
+   background-color: #333;
+   color: #fff;
+   text-align: center;
+}
+
+.buttonWrapper {
+   display: flex;
+   justify-content: center;
+   margin-top: 1.6rem;
+   button {
+      font-size: 1.6rem;
+      padding: 1.2rem;
+      background-color: #333;
+      margin: 0 0.6rem;
+      color: #fff;
+   }
+}

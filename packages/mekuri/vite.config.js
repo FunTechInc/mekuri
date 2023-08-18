@@ -7,10 +7,9 @@ export default defineConfig({
       lib: {
          entry: {
             main: path.resolve(__dirname, "src/index.js"),
-            register: path.resolve(__dirname, "src/register"),
          },
          name: "mekuri",
-         fileName: "[name]",
+         fileName: "mekuri",
       },
       rollupOptions: {
          external: ["react"],

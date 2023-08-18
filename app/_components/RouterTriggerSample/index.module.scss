@@ -1,0 +1,15 @@
+@use "@/css" as *;
+
+.wrapper {
+   width: 24rem;
+   height: 24rem;
+   position: fixed;
+   top: 48px;
+   right: 8px;
+   border: 1px solid #333;
+   border-radius: 50%;
+   background-color: #fff;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}

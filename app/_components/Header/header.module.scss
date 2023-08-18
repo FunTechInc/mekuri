@@ -6,12 +6,13 @@
    display: flex;
    align-items: center;
    justify-content: space-between;
-   padding: 0 80px;
+   padding: 0 $spacing-8;
    position: fixed;
    z-index: 9999;
    width: 100vw;
    top: 0;
    left: 0;
+   background-color: #fff;
 }
 .link {
    font-size: 16px;

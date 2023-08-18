@@ -3,7 +3,7 @@
       "target": "es5",
       "lib": ["dom", "dom.iterable", "esnext"],
       "module": "esnext",
-      "moduleResolution": "nodenext",
+      "moduleResolution": "node",
       "allowJs": true,
       "allowSyntheticDefaultImports": true,
       "esModuleInterop": true,
@@ -17,8 +17,7 @@
       "rootDir": "./src",
       "declarationDir": "./types/",
       "jsx": "react-jsx",
-      "emitDeclarationOnly": true,
-      "allowImportingTsExtensions": true
+      "emitDeclarationOnly": true
    },
    "include": ["./src/**/*"]
 }
