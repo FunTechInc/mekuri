@@ -26,7 +26,7 @@ export const useUpdateMekuriState = ({
          return;
       }
       // get yPosBeforeLeave
-      const scrollYPos = document.documentElement.scrollTop;
+      const scrollYPos = window.scrollY || document.documentElement.scrollTop;
       // update state (leave)
       setMekuriState((state) => ({
          ...state,
