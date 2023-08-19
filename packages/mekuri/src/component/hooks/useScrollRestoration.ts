@@ -86,7 +86,6 @@ export const useScrollRestoration = ({
             isPopstate: isPopstate.current,
             pos: componentState.restorePos.pos,
          });
-
          window.scrollTo({ top: restorePosY });
          isPopstate.current = false;
       }

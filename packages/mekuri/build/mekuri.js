@@ -640,7 +640,7 @@ const _r = ({
       }));
       return;
     }
-    const h = document.documentElement.scrollTop;
+    const h = window.scrollY || document.documentElement.scrollTop;
     return a((d) => ({
       ...d,
       nextTrigger: n,
