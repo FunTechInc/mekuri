@@ -22,7 +22,7 @@ export const useUpdateComponent = ({
          nextChildren: children,
          restorePos: {
             key: mekuriState.currentTrigger || "",
-            pos: window.scrollY || document.documentElement.scrollTop || 0,
+            pos: mekuriState.yPosBeforeLeave,
          },
       });
    };
