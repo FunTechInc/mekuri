@@ -11,11 +11,11 @@ type TMekuriFreezer = {
  * import { LayoutRouterContext } from "next/dist/shared/lib/app-router-context";
  * import { usePathname } from "next/navigation";
  *
- * <MekuriLayout>
+ * <Mekuri>
  * 　 <MekuriFreezer key={pathname} routerContext={LayoutRouterContext}>
  * 　  {children}
  *    </MekuriFreezer>
- * </MekuriLayout>
+ * </Mekuri>
  * ```
  *
  * @param routerContext Import LayoutRouterContext from Next. LayoutRouterContext contains context about routing
