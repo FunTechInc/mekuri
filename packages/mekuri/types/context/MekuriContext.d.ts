@@ -1,6 +1,11 @@
 /// <reference types="react" />
 export type TMode = "sync" | "wait";
-export type TRestore = "top" | "restore" | "none";
+type TReatrationType = "top" | "restore";
+type TCustomRestore = {
+    scrollRestoration: TReatrationType;
+    onRestore: (pos: number) => void;
+};
+export type TRestore = TReatrationType | "none" | TCustomRestore;
 export type TTrigger = string | number;
 export interface IMekuriState {
     initialRender: boolean;
