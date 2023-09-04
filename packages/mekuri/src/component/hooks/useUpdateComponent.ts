@@ -20,10 +20,6 @@ export const useUpdateComponent = ({
       setComponentState({
          type: type,
          nextChildren: children,
-         restorePos: {
-            key: mekuriState.currentTrigger || "",
-            pos: mekuriState.yPosBeforeLeave,
-         },
       });
    };
    useEffect(() => {
@@ -39,6 +35,7 @@ export const useUpdateComponent = ({
       if (mekuriState.phase === "leave" && mode === "sync") {
          updateCurrentChildren("update");
       }
+
       // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [mekuriState]);
+   }, [mekuriState.phase]);
 };

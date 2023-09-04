@@ -1,9 +1,10 @@
 /// <reference types="react" />
 export type TMode = "sync" | "wait";
-type TReatrationType = "top" | "restore";
+export type TReatrationType = "top" | "restore";
 type TCustomRestore = {
     scrollRestoration: TReatrationType;
-    onRestore: (pos: number) => void;
+    onLeave?: (pos: number) => void;
+    onEnter?: (pos: number) => void;
 };
 export type TRestore = TReatrationType | "none" | TCustomRestore;
 export type TTrigger = string | number;

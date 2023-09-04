@@ -1,10 +1,14 @@
 import { useRef, useEffect, useCallback } from "react";
-import { TRestore, TTrigger } from "../../context/MekuriContext";
-import { TComponentState } from "../Mekuri";
+import {
+   IMekuriState,
+   TReatrationType,
+   TRestore,
+   TTrigger,
+} from "../../context/MekuriContext";
 
 interface IUseScrollRestoration {
    scrollRestoration: TRestore;
-   componentState: TComponentState;
+   mekuriState: IMekuriState;
 }
 interface IRestoreCache {
    backPosY: number;
@@ -38,8 +42,8 @@ const getYPosFromCache = ({
 };
 
 export const useScrollRestoration = ({
+   mekuriState,
    scrollRestoration,
-   componentState,
 }: IUseScrollRestoration) => {
    const isInitialRender = useRef(true);
    const isPopstate = useRef(false);
@@ -49,16 +53,16 @@ export const useScrollRestoration = ({
       keysArr: [],
    });
 
-   const getScrollPosY = () => {
+   const getScrollPosY = useCallback(() => {
       const restorePosY = getYPosFromCache({
          cache: restoreCache.current,
-         key: componentState.restorePos.key,
+         key: mekuriState.currentTrigger || "",
+         pos: mekuriState.yPosBeforeLeave,
          isPopstate: isPopstate.current,
-         pos: componentState.restorePos.pos,
       });
       isPopstate.current = false;
       return restorePosY;
-   };
+   }, [mekuriState.currentTrigger, mekuriState.yPosBeforeLeave]);
 
    useEffect(() => {
       // if scrollRestration is "none" do nothing
@@ -74,35 +78,58 @@ export const useScrollRestoration = ({
          window.addEventListener("popstate", () => {
             isPopstate.current = true;
          });
-
          //push first key
-         restoreCache.current.keysArr.push(componentState.restorePos.key);
-
+         restoreCache.current.keysArr.push(mekuriState.currentTrigger || "");
          isInitialRender.current = false;
          return;
       }
 
-      switch (scrollRestoration) {
-         case "top":
-            window.scrollTo({ top: 0 });
-            break;
-         case "restore":
-            window.scrollTo({ top: getScrollPosY() });
-            break;
-         default:
-            if (
-               typeof scrollRestoration === "object" &&
-               "scrollRestoration" in scrollRestoration
-            ) {
-               if (scrollRestoration.scrollRestoration === "top") {
-                  scrollRestoration.onRestore(0);
-               } else if (scrollRestoration.scrollRestoration === "restore") {
-                  scrollRestoration.onRestore(getScrollPosY());
+      const isObject =
+         typeof scrollRestoration === "object" &&
+         "scrollRestoration" in scrollRestoration;
+      const cunstomScrollRestore = (
+         type: TReatrationType,
+         event: (pos: number) => void
+      ) => {
+         if (type === "top") {
+            event(0);
+         } else if (type === "restore") {
+            event(getScrollPosY());
+         }
+      };
+
+      //leave phase
+      if (
+         mekuriState.phase === "leave" &&
+         isObject &&
+         scrollRestoration?.onLeave
+      ) {
+         cunstomScrollRestore(
+            scrollRestoration.scrollRestoration,
+            scrollRestoration.onLeave
+         );
+      }
+
+      //enter phase
+      if (mekuriState.phase === "enter") {
+         switch (scrollRestoration) {
+            case "top":
+               window.scrollTo({ top: 0 });
+               break;
+            case "restore":
+               window.scrollTo({ top: getScrollPosY() });
+               break;
+            default:
+               if (isObject && scrollRestoration?.onEnter) {
+                  cunstomScrollRestore(
+                     scrollRestoration.scrollRestoration,
+                     scrollRestoration.onEnter
+                  );
                }
-            }
-            break;
+               break;
+         }
       }
 
       // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [componentState.restorePos]);
+   }, [mekuriState.phase]);
 };

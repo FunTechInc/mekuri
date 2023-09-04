@@ -29,5 +29,5 @@ export const useRemoveComponent = ({
       }
 
       // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [mekuriState]);
+   }, [mekuriState.phase]);
 };

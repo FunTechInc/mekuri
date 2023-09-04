@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import { TTrigger } from "../context/MekuriContext";
 type TCallBackProp = {
     prevTrigger: TTrigger | null | undefined;
@@ -5,6 +6,7 @@ type TCallBackProp = {
     nextTrigger: TTrigger | null | undefined;
     yPosBeforeLeave: number;
     getHashPos: () => number | false;
+    intersectionObserver: (targetRef: React.RefObject<HTMLElement>, callback: (isIntersecting: boolean) => void) => void;
 };
 interface IProps {
     onOnce?: () => void;
