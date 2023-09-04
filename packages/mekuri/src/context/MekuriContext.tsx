@@ -62,9 +62,10 @@ const ConstantContext = createContext<IConstantState>(defaultConstantState);
  * @param trigger string | number When doing page transition animation, it is also possible to set pathname and other states to trigger
  * @param millisecond number Set the wait time in milliseconds before removing from tree.
  * @param scrollRestoration "top" | "restore" | "none" | {
-   scrollRestoration: TReatrationType;
-   onRestore: (pos: number) => void;
-} If you select none, scrollRestration does nothing. It is also possible to pass an object instead of a string. The onRestore function returns pos at the timing of scroll restration.
+   scrollRestoration: "top" | "restore";
+   onLeave?: (pos: number) => void;
+   onEnter?: (pos: number) => void;
+} If you select none, scrollRestration does nothing. It is also possible to pass an object instead of a string. The onLeave | onEnter function returns pos at the timing of leave or enter.
  * @param mode "wait" | "sync"
  * @public
  */
