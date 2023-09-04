@@ -33,6 +33,10 @@ interface IProps {
  *
  *  getHashPos => If # is attached to the URL when transitioning, the distance to that ID is returned.
  *
+ * intersectionObserver (
+      targetRef: React.RefObject<HTMLElement>,
+      callback: (isIntersecting: boolean) => void
+   ) => void
  *
  * ```jsx
  * const { second } = useMekuriDuration();
