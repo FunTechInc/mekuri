@@ -1,8 +1,7 @@
-import { TRestore } from "../../context/MekuriContext";
-import { TComponentState } from "../Mekuri";
+import { IMekuriState, TRestore } from "../../context/MekuriContext";
 interface IUseScrollRestoration {
     scrollRestoration: TRestore;
-    componentState: TComponentState;
+    mekuriState: IMekuriState;
 }
-export declare const useScrollRestoration: ({ scrollRestoration, componentState, }: IUseScrollRestoration) => void;
+export declare const useScrollRestoration: ({ mekuriState, scrollRestoration, }: IUseScrollRestoration) => void;
 export {};

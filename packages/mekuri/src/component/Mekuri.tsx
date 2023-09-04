@@ -8,30 +8,16 @@ import {
 import { useUpdateComponent } from "./hooks/useUpdateComponent";
 import { useRemoveComponent } from "./hooks/useRemoveComponent";
 import { useScrollRestoration } from "./hooks/useScrollRestoration";
-import {
-   useConstantState,
-   useMekuriState,
-   TTrigger,
-} from "../context/MekuriContext";
+import { useConstantState, useMekuriState } from "../context/MekuriContext";
 
-type TRestorePos = {
-   key: TTrigger;
-   pos: number;
-};
 export type TComponentState = {
    currentChildren: React.ReactNode | null;
    nextChildren: React.ReactNode | null;
-   restorePos: TRestorePos;
 };
-export type TActionType =
-   | "update"
-   | "update-unmount"
-   | "unmount-prev"
-   | "rapid-fire";
+export type TActionType = "update" | "update-unmount" | "unmount-prev";
 export type TAction = {
    type: TActionType;
    nextChildren?: React.ReactNode;
-   restorePos?: TRestorePos;
 };
 
 const updateComponent = (
@@ -44,7 +30,6 @@ const updateComponent = (
          return {
             ...state,
             nextChildren: action.nextChildren || null,
-            restorePos: action.restorePos!,
          };
       case "unmount-prev":
          return {
@@ -57,7 +42,6 @@ const updateComponent = (
          return {
             ...state,
             currentChildren: action.nextChildren || null,
-            restorePos: action.restorePos!,
          };
       default:
          throw new Error();
@@ -88,10 +72,6 @@ export const Mekuri = ({ children }: { children: React.ReactNode }) => {
    const [componentState, setComponentState] = useReducer(updateComponent, {
       currentChildren: filteredChildren,
       nextChildren: null,
-      restorePos: {
-         key: mekuriState.currentTrigger ?? "",
-         pos: 0,
-      },
    });
 
    // update component
@@ -110,7 +90,7 @@ export const Mekuri = ({ children }: { children: React.ReactNode }) => {
    });
 
    // scroll restoration
-   useScrollRestoration({ scrollRestoration, componentState });
+   useScrollRestoration({ mekuriState, scrollRestoration });
 
    return (
       <>
