@@ -17,13 +17,8 @@ export const intersectionObserverHandler: TIntersectionObserverHandler = (
          observer: IntersectionObserver
       ) => {
          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-               callback(true);
-               observer.unobserve(entry.target);
-            } else if (!entry.isIntersecting) {
-               callback(false);
-               observer.unobserve(entry.target);
-            }
+            callback(entry.isIntersecting);
+            observer.unobserve(entry.target);
          });
       },
       { rootMargin: "0px", threshold: 0 }
