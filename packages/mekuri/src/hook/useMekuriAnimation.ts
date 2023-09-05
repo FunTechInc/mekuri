@@ -4,50 +4,38 @@ import {
    useConstantState,
    useMekuriState,
 } from "../context/MekuriContext";
+import { TReturnHashPos, returnHashPos } from "./utils/returnHashPos";
+import {
+   TIntersectionObserverHandler,
+   intersectionObserverHandler,
+} from "./utils/intersectionObserverHandler";
 
 type TCallBackProp = {
    prevTrigger: TTrigger | null | undefined;
    currentTrigger: TTrigger | null | undefined;
    nextTrigger: TTrigger | null | undefined;
    yPosBeforeLeave: number;
-   getHashPos: () => number | false;
-   intersectionObserver: (
-      targetRef: React.RefObject<HTMLElement>,
-      callback: (isIntersecting: boolean) => void
-   ) => void;
+   getHashPos: TReturnHashPos;
+   intersectionObserver: TIntersectionObserverHandler;
 };
 
 interface IProps {
-   onOnce?: () => void;
-   onLeave?: (state: TCallBackProp) => void;
-   onEnter?: (state: TCallBackProp) => void;
-   onEveryLeave?: (state: TCallBackProp) => void;
-   onEveryEnter?: (state: TCallBackProp) => void;
+   onOnce?: (props: TCallBackProp) => void;
+   onLeave?: (props: TCallBackProp) => void;
+   onEnter?: (props: TCallBackProp) => void;
+   onEveryLeave?: (props: TCallBackProp) => void;
+   onEveryEnter?: (props: TCallBackProp) => void;
 }
-
-const returnHashPos = () => {
-   const hash = window.location.hash.substring(1);
-   if (!hash) {
-      return false;
-   }
-   const target = document.getElementById(hash);
-   if (!target) {
-      return false;
-   }
-   const scrollYPos = window.scrollY || document.documentElement.scrollTop;
-   const pos = target.getBoundingClientRect().top + scrollYPos;
-   return pos;
-};
 
 /**
  * A hook that can be used within <MekuriContext>. Animations can be added to monitor the mounting and unmounting of elements from the tree.
  * The execution timing differs between wait mode and sync mode. Within the context, the execution timing will correspond to the set mode.
  *
- * @param onOnce () => void; Called only once on first access and first rendering.
- * @param onLeave (state: TCallBackProp) => void;
- * @param onEnter (state: TCallBackProp) => void;
- * @param onEveryLeave (state: TCallBackProp) => void;
- * @param onEveryEnter (state: TCallBackProp) => void;
+ * @param onOnce (props: TCallBackProp) => void; Called only once on first access and first rendering.
+ * @param onLeave (props: TCallBackProp) => void;
+ * @param onEnter (props: TCallBackProp) => void;
+ * @param onEveryLeave (props: TCallBackProp) => void;
+ * @param onEveryEnter (props: TCallBackProp) => void;
  *
  * `CallBackProp`
  *
@@ -96,47 +84,25 @@ export const useMekuriAnimation = ({
    }, []);
 
    useEffect(() => {
-      if (mekuriState.initialRender) {
-         //prevent first access & call once event
-         if (isInitialRender.current) {
-            onOnce && onOnce();
-            isInitialRender.current = false;
-         }
-         return;
-      }
-
       // pass to the leave and enter callback
       const callBackProp: TCallBackProp = {
          prevTrigger: mekuriState.prevTrigger,
          currentTrigger: mekuriState.currentTrigger,
          nextTrigger: mekuriState.nextTrigger,
          yPosBeforeLeave: mekuriState.yPosBeforeLeave,
-         getHashPos: () => returnHashPos(),
-         intersectionObserver: (targetRef, callback) => {
-            const target = targetRef?.current;
-            if (!target) {
-               return;
-            }
-            const observer = new IntersectionObserver(
-               (
-                  entries: IntersectionObserverEntry[],
-                  observer: IntersectionObserver
-               ) => {
-                  entries.forEach((entry) => {
-                     if (entry.isIntersecting) {
-                        callback(true);
-                        observer.unobserve(entry.target);
-                     } else if (!entry.isIntersecting) {
-                        callback(false);
-                        observer.unobserve(entry.target);
-                     }
-                  });
-               },
-               { rootMargin: "0px", threshold: 0 }
-            );
-            observer.observe(target);
-         },
+         getHashPos: returnHashPos,
+         intersectionObserver: intersectionObserverHandler,
       };
+
+      // initial render
+      if (mekuriState.initialRender) {
+         //prevent first access & call once event
+         if (isInitialRender.current) {
+            onOnce && onOnce(callBackProp);
+            isInitialRender.current = false;
+         }
+         return;
+      }
 
       // leave phase
       if (mekuriState.phase === "leave") {
