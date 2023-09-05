@@ -1,29 +1,30 @@
-/// <reference types="react" />
 import { TTrigger } from "../context/MekuriContext";
+import { TReturnHashPos } from "./utils/returnHashPos";
+import { TIntersectionObserverHandler } from "./utils/intersectionObserverHandler";
 type TCallBackProp = {
     prevTrigger: TTrigger | null | undefined;
     currentTrigger: TTrigger | null | undefined;
     nextTrigger: TTrigger | null | undefined;
     yPosBeforeLeave: number;
-    getHashPos: () => number | false;
-    intersectionObserver: (targetRef: React.RefObject<HTMLElement>, callback: (isIntersecting: boolean) => void) => void;
+    getHashPos: TReturnHashPos;
+    intersectionObserver: TIntersectionObserverHandler;
 };
 interface IProps {
-    onOnce?: () => void;
-    onLeave?: (state: TCallBackProp) => void;
-    onEnter?: (state: TCallBackProp) => void;
-    onEveryLeave?: (state: TCallBackProp) => void;
-    onEveryEnter?: (state: TCallBackProp) => void;
+    onOnce?: (props: TCallBackProp) => void;
+    onLeave?: (props: TCallBackProp) => void;
+    onEnter?: (props: TCallBackProp) => void;
+    onEveryLeave?: (props: TCallBackProp) => void;
+    onEveryEnter?: (props: TCallBackProp) => void;
 }
 /**
  * A hook that can be used within <MekuriContext>. Animations can be added to monitor the mounting and unmounting of elements from the tree.
  * The execution timing differs between wait mode and sync mode. Within the context, the execution timing will correspond to the set mode.
  *
- * @param onOnce () => void; Called only once on first access and first rendering.
- * @param onLeave (state: TCallBackProp) => void;
- * @param onEnter (state: TCallBackProp) => void;
- * @param onEveryLeave (state: TCallBackProp) => void;
- * @param onEveryEnter (state: TCallBackProp) => void;
+ * @param onOnce (props: TCallBackProp) => void; Called only once on first access and first rendering.
+ * @param onLeave (props: TCallBackProp) => void;
+ * @param onEnter (props: TCallBackProp) => void;
+ * @param onEveryLeave (props: TCallBackProp) => void;
+ * @param onEveryEnter (props: TCallBackProp) => void;
  *
  * `CallBackProp`
  *
