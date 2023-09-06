@@ -1,6 +1,7 @@
 import { useRef, useEffect, useCallback } from "react";
 import {
    IMekuriState,
+   TPhase,
    TReatrationType,
    TRestore,
    TTrigger,
@@ -15,29 +16,39 @@ interface IRestoreCache {
    keysArr: TTrigger[];
 }
 interface IGetYPosFromCache {
+   isCacheUpdate: boolean;
+   offsetIndex: 1 | 2;
    cache: IRestoreCache;
    key: TTrigger;
    isPopstate: boolean;
    pos: number;
 }
 
+//control position cache
 const getYPosFromCache = ({
+   isCacheUpdate,
+   offsetIndex,
    cache,
    key,
    isPopstate,
    pos,
 }: IGetYPosFromCache) => {
-   // default transition
+   // not popstate
    if (isPopstate === false) {
-      cache.backPosY = pos;
-      cache.keysArr.push(key);
+      if (isCacheUpdate) {
+         cache.backPosY = pos;
+         cache.keysArr.push(key);
+      }
       return 0;
    }
-
    // popstate
    const yPos =
-      key === cache.keysArr[cache.keysArr.length - 2] ? cache.backPosY || 0 : 0;
-   cache.keysArr = [key];
+      key === cache.keysArr[cache.keysArr.length - offsetIndex]
+         ? cache.backPosY || 0
+         : 0;
+   if (isCacheUpdate) {
+      cache.keysArr = [key];
+   }
    return yPos;
 };
 
@@ -47,22 +58,48 @@ export const useScrollRestoration = ({
 }: IUseScrollRestoration) => {
    const isInitialRender = useRef(true);
    const isPopstate = useRef(false);
-
+   const isObject =
+      typeof scrollRestoration === "object" &&
+      "scrollRestoration" in scrollRestoration;
    const restoreCache = useRef<IRestoreCache>({
       backPosY: 0,
       keysArr: [],
    });
+   // flag for when to update cache
+   const isFragOnLeave =
+      isObject && !scrollRestoration.onEnter && scrollRestoration.onLeave;
+   const cacheUpdateFrag = useRef<TPhase>(isFragOnLeave ? "leave" : "enter");
 
-   const getScrollPosY = useCallback(() => {
-      const restorePosY = getYPosFromCache({
-         cache: restoreCache.current,
-         key: mekuriState.currentTrigger || "",
-         pos: mekuriState.yPosBeforeLeave,
-         isPopstate: isPopstate.current,
-      });
-      isPopstate.current = false;
-      return restorePosY;
-   }, [mekuriState.currentTrigger, mekuriState.yPosBeforeLeave]);
+   const getScrollPosY = useCallback(
+      (phase: TPhase) => {
+         const isUpdate = cacheUpdateFrag.current === phase;
+         const restorePosY = getYPosFromCache({
+            isCacheUpdate: isUpdate,
+            offsetIndex: phase === "enter" ? 2 : 1,
+            cache: restoreCache.current,
+            key: mekuriState.currentTrigger || "",
+            pos: mekuriState.yPosBeforeLeave,
+            isPopstate: isPopstate.current,
+         });
+         if (isUpdate) {
+            isPopstate.current = false;
+         }
+         return restorePosY;
+      },
+      [mekuriState.currentTrigger, mekuriState.yPosBeforeLeave, cacheUpdateFrag]
+   );
+
+   // sort callback events , top or restore
+   const sortCallbackEvent = useCallback(
+      (type: TReatrationType, phase: TPhase, event: (pos: number) => void) => {
+         if (type === "top") {
+            event(0);
+         } else if (type === "restore") {
+            event(getScrollPosY(phase));
+         }
+      },
+      [getScrollPosY]
+   );
 
    useEffect(() => {
       // if scrollRestration is "none" do nothing
@@ -84,28 +121,15 @@ export const useScrollRestoration = ({
          return;
       }
 
-      const isObject =
-         typeof scrollRestoration === "object" &&
-         "scrollRestoration" in scrollRestoration;
-      const cunstomScrollRestore = (
-         type: TReatrationType,
-         event: (pos: number) => void
-      ) => {
-         if (type === "top") {
-            event(0);
-         } else if (type === "restore") {
-            event(getScrollPosY());
-         }
-      };
-
       //leave phase
       if (
          mekuriState.phase === "leave" &&
          isObject &&
          scrollRestoration?.onLeave
       ) {
-         cunstomScrollRestore(
+         sortCallbackEvent(
             scrollRestoration.scrollRestoration,
+            mekuriState.phase,
             scrollRestoration.onLeave
          );
       }
@@ -117,12 +141,13 @@ export const useScrollRestoration = ({
                window.scrollTo({ top: 0 });
                break;
             case "restore":
-               window.scrollTo({ top: getScrollPosY() });
+               window.scrollTo({ top: getScrollPosY(mekuriState.phase) });
                break;
             default:
                if (isObject && scrollRestoration?.onEnter) {
-                  cunstomScrollRestore(
+                  sortCallbackEvent(
                      scrollRestoration.scrollRestoration,
+                     mekuriState.phase,
                      scrollRestoration.onEnter
                   );
                }

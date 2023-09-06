@@ -12,7 +12,12 @@ export const PageTransitionContext = ({
    return (
       <MekuriContext
          millisecond={600}
-         scrollRestoration={"restore"}
+         scrollRestoration={{
+            scrollRestoration: "restore",
+            onEnter: (pos) => {
+               window.scrollTo({ top: pos });
+            },
+         }}
          mode="wait"
          trigger={pathname}>
          {children}

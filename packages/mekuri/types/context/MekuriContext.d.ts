@@ -1,6 +1,7 @@
 /// <reference types="react" />
 export type TMode = "sync" | "wait";
 export type TReatrationType = "top" | "restore";
+export type TPhase = "leave" | "enter";
 type TCustomRestore = {
     scrollRestoration: TReatrationType;
     onLeave?: (pos: number) => void;
@@ -13,7 +14,7 @@ export interface IMekuriState {
     prevTrigger: TTrigger | null;
     currentTrigger: TTrigger | null;
     nextTrigger: TTrigger | null;
-    phase: "leave" | "enter" | null;
+    phase: TPhase | null;
     yPosBeforeLeave: number;
 }
 interface IDurationState {
