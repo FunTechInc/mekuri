@@ -902,6 +902,7 @@ export {
   Wr as Mekuri,
   Yr as MekuriContext,
   Mr as MekuriFreezer,
+  Or as intersectionObserverHandler,
   $r as useMekuriAnimation,
   Lr as useMekuriDuration
 };
