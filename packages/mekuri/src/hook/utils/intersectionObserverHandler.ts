@@ -3,6 +3,12 @@ export type TIntersectionObserverHandler = (
    callback: (isIntersecting: boolean) => void
 ) => void;
 
+/** 
+ * The second argument callback function receives the intersection judgment of the first argument ref.
+ * @param targetRef React.RefObject<HTMLElement>
+ * @param callback (isIntersecting: boolean) => void
+) => void;
+ */
 export const intersectionObserverHandler: TIntersectionObserverHandler = (
    targetRef,
    callback
