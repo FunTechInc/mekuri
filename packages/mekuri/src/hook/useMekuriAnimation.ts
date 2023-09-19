@@ -20,9 +20,10 @@ type TCallBackProp = {
 };
 
 interface IProps {
-   onOnce?: (props: TCallBackProp) => void;
+   onOnce?: (props: TCallBackProp, isInitialRender: boolean) => void;
    onLeave?: (props: TCallBackProp) => void;
    onEnter?: (props: TCallBackProp) => void;
+   onAfterSyncEnter?: (props: TCallBackProp) => void;
    onEveryLeave?: (props: TCallBackProp) => void;
    onEveryEnter?: (props: TCallBackProp) => void;
 }
@@ -31,9 +32,10 @@ interface IProps {
  * A hook that can be used within <MekuriContext>. Animations can be added to monitor the mounting and unmounting of elements from the tree.
  * The execution timing differs between wait mode and sync mode. Within the context, the execution timing will correspond to the set mode.
  *
- * @param onOnce (props: TCallBackProp) => void; Called only once on first access and first rendering.
+ * @param onOnce (props: TCallBackProp, isInitialRender:booleean) => void; It is called only once on the page that is accessed for the first time. The second argument is passed to determine whether this is the first rendering of the context. For example, for an element wrapped with Suspense, Once is executed, but the second argument returns false.
  * @param onLeave (props: TCallBackProp) => void;
  * @param onEnter (props: TCallBackProp) => void;
+ * @param onAfterSyncEnter (props: TCallBackProp) => void; onEnter in sync mode is called in leave phase. onAfterSyncEnter is called in the enter phase of sync mode.
  * @param onEveryLeave (props: TCallBackProp) => void;
  * @param onEveryEnter (props: TCallBackProp) => void;
  *
@@ -69,11 +71,11 @@ export const useMekuriAnimation = ({
    onOnce,
    onLeave,
    onEnter,
+   onAfterSyncEnter,
    onEveryLeave,
    onEveryEnter,
 }: IProps) => {
-   const isInitialRender = useRef(true);
-   const pathRef = useRef<string>(null!);
+   const pathRef = useRef<string>();
    const mekuriState = useMekuriState();
    const { mode } = useConstantState();
 
@@ -84,6 +86,8 @@ export const useMekuriAnimation = ({
    }, []);
 
    useEffect(() => {
+      // Whether there is a change in pathname when hooking the change in mekuriState.phase
+      const isCurrentPage = pathRef.current === location.pathname;
       // pass to the leave and enter callback
       const callBackProp: TCallBackProp = {
          prevTrigger: mekuriState.prevTrigger,
@@ -94,13 +98,9 @@ export const useMekuriAnimation = ({
          intersectionObserver: intersectionObserverHandler,
       };
 
-      // initial render
-      if (mekuriState.initialRender) {
-         //prevent first access & call once event
-         if (isInitialRender.current) {
-            onOnce && onOnce(callBackProp);
-            isInitialRender.current = false;
-         }
+      // initial phase
+      if (mekuriState.phase === null) {
+         onOnce && onOnce(callBackProp, mekuriState.initialRender);
          return;
       }
 
@@ -114,7 +114,7 @@ export const useMekuriAnimation = ({
          }
          // sync mode
          if (mode === "sync") {
-            if (pathRef.current === location.pathname) {
+            if (isCurrentPage) {
                onEnter &&
                   onEnter({
                      ...callBackProp,
@@ -132,8 +132,12 @@ export const useMekuriAnimation = ({
          //everyEnter
          onEveryEnter && onEveryEnter(callBackProp);
          // wait mode
-         if (pathRef.current === location.pathname && mode === "wait") {
+         if (mode === "wait" && isCurrentPage) {
             onEnter && onEnter(callBackProp);
+         }
+         // sync mode
+         if (mode === "sync") {
+            onAfterSyncEnter && onAfterSyncEnter(callBackProp);
          }
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps

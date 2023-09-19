@@ -23,6 +23,9 @@
    },
    "devDependencies": {
       "@funtech-inc/spice": "^1.1.22",
-      "next": "^13.4.19"
+      "install": "^0.13.0",
+      "next": "^13.4.19",
+      "npm": "^10.1.0",
+      "suspend-react": "^0.1.3"
    }
 }
