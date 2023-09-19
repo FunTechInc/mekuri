@@ -10,9 +10,10 @@ type TCallBackProp = {
     intersectionObserver: TIntersectionObserverHandler;
 };
 interface IProps {
-    onOnce?: (props: TCallBackProp) => void;
+    onOnce?: (props: TCallBackProp, isInitialRender: boolean) => void;
     onLeave?: (props: TCallBackProp) => void;
     onEnter?: (props: TCallBackProp) => void;
+    onAfterSyncEnter?: (props: TCallBackProp) => void;
     onEveryLeave?: (props: TCallBackProp) => void;
     onEveryEnter?: (props: TCallBackProp) => void;
 }
@@ -20,9 +21,10 @@ interface IProps {
  * A hook that can be used within <MekuriContext>. Animations can be added to monitor the mounting and unmounting of elements from the tree.
  * The execution timing differs between wait mode and sync mode. Within the context, the execution timing will correspond to the set mode.
  *
- * @param onOnce (props: TCallBackProp) => void; Called only once on first access and first rendering.
+ * @param onOnce (props: TCallBackProp, isInitialRender:booleean) => void; It is called only once on the page that is accessed for the first time. The second argument is passed to determine whether this is the first rendering of the context. For example, for an element wrapped with Suspense, Once is executed, but the second argument returns false.
  * @param onLeave (props: TCallBackProp) => void;
  * @param onEnter (props: TCallBackProp) => void;
+ * @param onAfterSyncEnter (props: TCallBackProp) => void; onEnter in sync mode is called in leave phase. onAfterSyncEnter is called in the enter phase of sync mode.
  * @param onEveryLeave (props: TCallBackProp) => void;
  * @param onEveryEnter (props: TCallBackProp) => void;
  *
@@ -54,5 +56,5 @@ interface IProps {
  *
  * @public
  */
-export declare const useMekuriAnimation: ({ onOnce, onLeave, onEnter, onEveryLeave, onEveryEnter, }: IProps) => void;
+export declare const useMekuriAnimation: ({ onOnce, onLeave, onEnter, onAfterSyncEnter, onEveryLeave, onEveryEnter, }: IProps) => void;
 export {};

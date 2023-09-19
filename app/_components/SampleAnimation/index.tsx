@@ -16,14 +16,16 @@ export const SampleAnimation = ({
    const ref = useRef(null);
    const { second } = useMekuriDuration();
    useMekuriAnimation({
-      onOnce: () => {
-         gsap.context(() => {
-            gsap.to("h1", {
-               opacity: 1,
-               duration: second,
-               ease: "power3.out",
-            });
-         }, ref.current!);
+      onOnce: (_, isInitial) => {
+         if (!isInitial) {
+            gsap.context(() => {
+               gsap.to("h1", {
+                  opacity: 1,
+                  duration: second,
+                  ease: "power3.out",
+               });
+            }, ref.current!);
+         }
       },
       onEnter: ({ intersectionObserver }) => {
          intersectionObserver(ref, (isIntersecting) => {
