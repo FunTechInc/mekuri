@@ -6,6 +6,7 @@ type TMekuriFreezer = {
 /**
  * For page transition animation, import LayoutRouterContext from next and set it to routerContext.
  * And don't forget to set key to pathname.
+ * { LayoutRouterContext } must be imported from "next/dist/shared/lib/app-router-context.shared-runtime" for Next.js 13.5 and later.
  *
  * ```jsx
  * import { LayoutRouterContext } from "next/dist/shared/lib/app-router-context";
