@@ -1,6 +1,6 @@
 import { Trigger } from "../context/MekuriContext";
-import { ReturnHashPos } from "./utils/returnHashPos";
-import { TIntersectionObserverHandler } from "./utils/intersectionObserverHandler";
+import { ReturnHashPosReturn } from "./utils/returnHashPos";
+import { IntersectionObserverHandler } from "./utils/intersectionObserverHandler";
 type CallBackProps = {
     prevTrigger: Trigger | null | undefined;
     currentTrigger: Trigger | null | undefined;
@@ -8,15 +8,15 @@ type CallBackProps = {
     /** Returns the Y position before leaving the page */
     yPosBeforeLeave: number;
     /** If # is attached to the URL when transitioning, the distance to that ID is returned. */
-    getHashPos: ReturnHashPos;
+    getHashPos: ReturnHashPosReturn;
     /** intersectionObserver (
        targetRef: React.RefObject<HTMLElement>,
        callback: (isIntersecting: boolean) => void
     ) => void
   * */
-    intersectionObserver: TIntersectionObserverHandler;
+    intersectionObserver: IntersectionObserverHandler;
 };
-type UseMekuriAnimation = {
+type UseMekuriAnimationProps = {
     onOnce?: (props: CallBackProps) => void;
     onLeave?: (props: CallBackProps) => void;
     onEnter?: (props: CallBackProps) => void;
@@ -37,5 +37,5 @@ type UseMekuriAnimation = {
  * ```
  *
  */
-export declare const useMekuriAnimation: ({ onOnce, onLeave, onEnter, onAfterSyncEnter, onEveryLeave, onEveryEnter, }: UseMekuriAnimation) => void;
+export declare const useMekuriAnimation: ({ onOnce, onLeave, onEnter, onAfterSyncEnter, onEveryLeave, onEveryEnter, }: UseMekuriAnimationProps) => void;
 export {};
