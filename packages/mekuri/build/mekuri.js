@@ -844,13 +844,9 @@ const Rr = ({
         }
     }
   }, [n.phase]);
-};
-function Fr(n) {
-  return mr.toArray(n).filter(
-    Er
-  );
-}
-const $r = ({ children: n }) => {
+}, Fr = (n) => mr.toArray(n).filter(
+  Er
+), $r = ({ children: n }) => {
   const { scrollRestoration: a, mode: i } = Ie(), c = Ye(), p = Fr(n), [d, g] = yr(
     (m, u) => {
       switch (u.type) {

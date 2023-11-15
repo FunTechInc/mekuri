@@ -21,11 +21,11 @@ export type Action = {
 };
 
 /** Filter out any children that aren't ReactElements. */
-function onlyElements(children: ReactNode): ReactElement<any>[] {
+const onlyElements = (children: ReactNode): ReactElement<any>[] => {
    return Children.toArray(children).filter(
       isValidElement
    ) as ReactElement<any>[];
-}
+};
 
 /**
  * Monitors changes to the trigger set in the context and controls mount and unmount of <Mekuri> child elements.
