@@ -1,6 +1,6 @@
-export type TReturnHashPos = () => number | false;
+export type ReturnHashPos = () => number | false;
 
-export const returnHashPos: TReturnHashPos = () => {
+export const returnHashPos: ReturnHashPos = () => {
    const hash = window.location.hash.substring(1);
    if (!hash) {
       return false;

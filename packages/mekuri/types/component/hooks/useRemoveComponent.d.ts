@@ -1,10 +1,10 @@
 import { Dispatch } from "react";
-import { IMekuriState, TMode } from "../../context/MekuriContext";
-import { TAction } from "../Mekuri";
-interface IUseRemoveComponent {
-    mekuriState: IMekuriState;
-    mode: TMode;
-    setComponentState: Dispatch<TAction>;
-}
-export declare const useRemoveComponent: ({ mekuriState, mode, setComponentState, }: IUseRemoveComponent) => void;
+import { MekuriState, Mode } from "../../context/MekuriContext";
+import { Action } from "../Mekuri";
+type UseRemoveComponent = {
+    mekuriState: MekuriState;
+    mode: Mode;
+    setComponentState: Dispatch<Action>;
+};
+export declare const useRemoveComponent: ({ mekuriState, mode, setComponentState, }: UseRemoveComponent) => void;
 export {};

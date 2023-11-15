@@ -1,10 +1,5 @@
 import { useContext, useRef } from "react";
 
-type TMekuriFreezer = {
-   children: React.ReactNode;
-   routerContext: React.Context<any>;
-};
-
 /**
  * For page transition animation, import LayoutRouterContext from next and set it to routerContext.
  * And don't forget to set key to pathname.
@@ -23,9 +18,14 @@ type TMekuriFreezer = {
  *
  * @param routerContext Import LayoutRouterContext from Next. LayoutRouterContext contains context about routing
  *
- * @public
  */
-export const MekuriFreezer = ({ routerContext, children }: TMekuriFreezer) => {
+export const MekuriFreezer = ({
+   routerContext,
+   children,
+}: {
+   children: React.ReactNode;
+   routerContext: React.Context<any>;
+}) => {
    const context = useContext(routerContext);
    const frozen = useRef(context).current;
 

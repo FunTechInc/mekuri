@@ -1,30 +1,29 @@
 import { useRef, useEffect, useCallback } from "react";
 import {
-   IMekuriState,
-   TPhase,
-   TReatrationType,
-   TRestore,
-   TTrigger,
+   MekuriState,
+   Phase,
+   ReatrationType,
+   ScrollRestration,
+   Trigger,
 } from "../../context/MekuriContext";
 
-interface IUseScrollRestoration {
-   scrollRestoration: TRestore;
-   mekuriState: IMekuriState;
-}
-interface IRestoreCache {
+type UseScrollRestoration = {
+   scrollRestoration: ScrollRestration;
+   mekuriState: MekuriState;
+};
+type RestoreCache = {
    backPosY: number;
-   keysArr: TTrigger[];
-}
-interface IGetYPosFromCache {
+   keysArr: Trigger[];
+};
+type GetYPosFromCache = {
    isCacheUpdate: boolean;
    offsetIndex: 1 | 2;
-   cache: IRestoreCache;
-   key: TTrigger;
+   cache: RestoreCache;
+   key: Trigger;
    isPopstate: boolean;
    pos: number;
-}
+};
 
-//control position cache
 const getYPosFromCache = ({
    isCacheUpdate,
    offsetIndex,
@@ -32,8 +31,7 @@ const getYPosFromCache = ({
    key,
    isPopstate,
    pos,
-}: IGetYPosFromCache) => {
-   // not popstate
+}: GetYPosFromCache) => {
    if (isPopstate === false) {
       if (isCacheUpdate) {
          cache.backPosY = pos;
@@ -41,7 +39,6 @@ const getYPosFromCache = ({
       }
       return 0;
    }
-   // popstate
    const yPos =
       key === cache.keysArr[cache.keysArr.length - offsetIndex]
          ? cache.backPosY || 0
@@ -55,23 +52,27 @@ const getYPosFromCache = ({
 export const useScrollRestoration = ({
    mekuriState,
    scrollRestoration,
-}: IUseScrollRestoration) => {
+}: UseScrollRestoration) => {
    const isInitialRender = useRef(true);
    const isPopstate = useRef(false);
-   const isObject =
+   // Whether scrollRestoration is in custom mode
+   const isCustomRestration =
       typeof scrollRestoration === "object" &&
       "scrollRestoration" in scrollRestoration;
-   const restoreCache = useRef<IRestoreCache>({
+
+   const restoreCache = useRef<RestoreCache>({
       backPosY: 0,
       keysArr: [],
    });
-   // flag for when to update cache
+
    const isFragOnLeave =
-      isObject && !scrollRestoration.onEnter && scrollRestoration.onLeave;
-   const cacheUpdateFrag = useRef<TPhase>(isFragOnLeave ? "leave" : "enter");
+      isCustomRestration &&
+      !scrollRestoration.onEnter &&
+      scrollRestoration.onLeave;
+   const cacheUpdateFrag = useRef<Phase>(isFragOnLeave ? "leave" : "enter");
 
    const getScrollPosY = useCallback(
-      (phase: TPhase) => {
+      (phase: Phase) => {
          const isUpdate = cacheUpdateFrag.current === phase;
          const restorePosY = getYPosFromCache({
             isCacheUpdate: isUpdate,
@@ -89,9 +90,8 @@ export const useScrollRestoration = ({
       [mekuriState.currentTrigger, mekuriState.yPosBeforeLeave, cacheUpdateFrag]
    );
 
-   // sort callback events , top or restore
    const sortCallbackEvent = useCallback(
-      (type: TReatrationType, phase: TPhase, event: (pos: number) => void) => {
+      (type: ReatrationType, phase: Phase, event: (pos: number) => void) => {
          if (type === "top") {
             event(0);
          } else if (type === "restore") {
@@ -102,12 +102,10 @@ export const useScrollRestoration = ({
    );
 
    useEffect(() => {
-      // if scrollRestration is "none" do nothing
       if (scrollRestoration === "none") {
          return;
       }
 
-      //initial render
       if (isInitialRender.current) {
          if (window.history.scrollRestoration === "auto") {
             window.history.scrollRestoration = "manual";
@@ -115,16 +113,17 @@ export const useScrollRestoration = ({
          window.addEventListener("popstate", () => {
             isPopstate.current = true;
          });
+
          //push first key
          restoreCache.current.keysArr.push(mekuriState.currentTrigger || "");
          isInitialRender.current = false;
+
          return;
       }
 
-      //leave phase
       if (
          mekuriState.phase === "leave" &&
-         isObject &&
+         isCustomRestration &&
          scrollRestoration?.onLeave
       ) {
          sortCallbackEvent(
@@ -134,7 +133,6 @@ export const useScrollRestoration = ({
          );
       }
 
-      //enter phase
       if (mekuriState.phase === "enter") {
          switch (scrollRestoration) {
             case "top":
@@ -144,7 +142,7 @@ export const useScrollRestoration = ({
                window.scrollTo({ top: getScrollPosY(mekuriState.phase) });
                break;
             default:
-               if (isObject && scrollRestoration?.onEnter) {
+               if (isCustomRestration && scrollRestoration?.onEnter) {
                   sortCallbackEvent(
                      scrollRestoration.scrollRestoration,
                      mekuriState.phase,

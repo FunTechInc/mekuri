@@ -1,37 +1,37 @@
 /// <reference types="react" />
-export type TMode = "sync" | "wait";
-export type TReatrationType = "top" | "restore";
-export type TPhase = "leave" | "enter";
-type TCustomRestore = {
-    scrollRestoration: TReatrationType;
+export type Mode = "sync" | "wait";
+export type Phase = "leave" | "enter";
+export type ReatrationType = "top" | "restore";
+export type Trigger = string | number;
+/** Manually do scroll restration with onLeave or onEnter */
+type CustomRestration = {
+    scrollRestoration: ReatrationType;
     onLeave?: (pos: number) => void;
     onEnter?: (pos: number) => void;
 };
-export type TRestore = TReatrationType | "none" | TCustomRestore;
-export type TTrigger = string | number;
-export interface IMekuriState {
-    initialRender: boolean;
-    prevTrigger: TTrigger | null;
-    currentTrigger: TTrigger | null;
-    nextTrigger: TTrigger | null;
-    phase: TPhase | null;
+export type ScrollRestration = ReatrationType | "none" | CustomRestration;
+export type MekuriState = {
+    prevTrigger: Trigger | null;
+    currentTrigger: Trigger | null;
+    nextTrigger: Trigger | null;
+    phase: Trigger | null;
     yPosBeforeLeave: number;
-}
-interface IDurationState {
+};
+type DurationState = {
     millisecond: number;
     second: number;
-}
-interface IConstantState {
-    scrollRestoration: TRestore;
-    mode: TMode;
-}
-interface IMekuriContext {
-    trigger: TTrigger;
+};
+type ConstantState = {
+    scrollRestoration: ScrollRestration;
+    mode: Mode;
+};
+type MekuriContext = {
+    trigger: Trigger;
     millisecond: number;
-    scrollRestoration: TRestore;
-    mode: TMode;
+    scrollRestoration: ScrollRestration;
+    mode: Mode;
     children: React.ReactNode;
-}
+};
 /**
  * <Mekuri> should be wrapped in this <MekuriContext>. UseMekuriAnimation is available inside a context-wrapped component.
  *
@@ -45,8 +45,8 @@ interface IMekuriContext {
  * @param mode "wait" | "sync"
  * @public
  */
-export declare const MekuriContext: ({ trigger, millisecond, scrollRestoration, mode, children, }: IMekuriContext) => import("react/jsx-runtime").JSX.Element;
-export declare const useMekuriDuration: () => IDurationState;
-export declare const useConstantState: () => IConstantState;
-export declare const useMekuriState: () => IMekuriState;
+export declare const MekuriContext: ({ trigger, millisecond, scrollRestoration, mode, children, }: MekuriContext) => import("react/jsx-runtime").JSX.Element;
+export declare const useMekuriDuration: () => DurationState;
+export declare const useConstantState: () => ConstantState;
+export declare const useMekuriState: () => MekuriState;
 export {};

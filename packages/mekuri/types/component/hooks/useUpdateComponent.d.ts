@@ -1,11 +1,11 @@
 import { Dispatch } from "react";
-import { IMekuriState, TMode } from "../../context/MekuriContext";
-import { TAction } from "../Mekuri";
-interface IUseUpdateComponent {
-    mekuriState: IMekuriState;
-    mode: TMode;
+import { MekuriState, Mode } from "../../context/MekuriContext";
+import { Action } from "../Mekuri";
+type UseUpdateComponent = {
+    mekuriState: MekuriState;
+    mode: Mode;
     children: React.ReactNode;
-    setComponentState: Dispatch<TAction>;
-}
-export declare const useUpdateComponent: ({ mekuriState, mode, children, setComponentState, }: IUseUpdateComponent) => void;
+    setComponentState: Dispatch<Action>;
+};
+export declare const useUpdateComponent: ({ mekuriState, mode, children, setComponentState, }: UseUpdateComponent) => void;
 export {};

@@ -22,10 +22,10 @@ export const MainLayout = async ({
                <PageTransitionAnimation>
                   <PageTransitionLayout>{children}</PageTransitionLayout>
                </PageTransitionAnimation>
-               <RouterTriggerSample />
+               {/* <RouterTriggerSample /> */}
             </PageTransitionContext>
          </main>
-         <StateTriggerSample />
+         {/* <StateTriggerSample /> */}
          <Footer />
       </MainWrapper>
    );

@@ -1,37 +1,38 @@
 import { useRef, useEffect, Dispatch } from "react";
-import { IMekuriState, TMode } from "../../context/MekuriContext";
-import { TAction, TActionType } from "../Mekuri";
+import { MekuriState, Mode } from "../../context/MekuriContext";
+import { Action, ActionType } from "../Mekuri";
 
-interface IUseUpdateComponent {
-   mekuriState: IMekuriState;
-   mode: TMode;
+type UseUpdateComponent = {
+   mekuriState: MekuriState;
+   mode: Mode;
    children: React.ReactNode;
-   setComponentState: Dispatch<TAction>;
-}
+   setComponentState: Dispatch<Action>;
+};
 
 export const useUpdateComponent = ({
    mekuriState,
    mode,
    children,
    setComponentState,
-}: IUseUpdateComponent) => {
+}: UseUpdateComponent) => {
    const isInitialRender = useRef(true);
-   const updateCurrentChildren = (type: TActionType) => {
+   const updateCurrentChildren = (type: ActionType) => {
       setComponentState({
          type: type,
          nextChildren: children,
       });
    };
+
    useEffect(() => {
       if (isInitialRender.current) {
          isInitialRender.current = false;
          return;
       }
-      // wait mode
+
       if (mekuriState.phase === "enter" && mode === "wait") {
-         updateCurrentChildren("update-unmount");
+         updateCurrentChildren("update-and-unmount");
       }
-      // sync mode
+
       if (mekuriState.phase === "leave" && mode === "sync") {
          updateCurrentChildren("update");
       }

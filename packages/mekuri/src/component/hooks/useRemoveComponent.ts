@@ -1,18 +1,18 @@
 import { Dispatch, useEffect, useRef } from "react";
-import { IMekuriState, TMode } from "../../context/MekuriContext";
-import { TAction } from "../Mekuri";
+import { MekuriState, Mode } from "../../context/MekuriContext";
+import { Action } from "../Mekuri";
 
-interface IUseRemoveComponent {
-   mekuriState: IMekuriState;
-   mode: TMode;
-   setComponentState: Dispatch<TAction>;
-}
+type UseRemoveComponent = {
+   mekuriState: MekuriState;
+   mode: Mode;
+   setComponentState: Dispatch<Action>;
+};
 
 export const useRemoveComponent = ({
    mekuriState,
    mode,
    setComponentState,
-}: IUseRemoveComponent) => {
+}: UseRemoveComponent) => {
    const isInitialRender = useRef(true);
 
    useEffect(() => {
@@ -21,7 +21,6 @@ export const useRemoveComponent = ({
          return;
       }
 
-      // sync mode
       if (mekuriState.phase === "enter" && mode === "sync") {
          setComponentState({
             type: "unmount-prev",

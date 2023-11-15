@@ -1,2 +1,2 @@
-export type TReturnHashPos = () => number | false;
-export declare const returnHashPos: TReturnHashPos;
+export type ReturnHashPos = () => number | false;
+export declare const returnHashPos: ReturnHashPos;

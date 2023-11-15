@@ -10,44 +10,17 @@ import { useRemoveComponent } from "./hooks/useRemoveComponent";
 import { useScrollRestoration } from "./hooks/useScrollRestoration";
 import { useConstantState, useMekuriState } from "../context/MekuriContext";
 
-export type TComponentState = {
+export type ComponentState = {
    currentChildren: React.ReactNode | null;
    nextChildren: React.ReactNode | null;
 };
-export type TActionType = "update" | "update-unmount" | "unmount-prev";
-export type TAction = {
-   type: TActionType;
+export type ActionType = "update" | "update-and-unmount" | "unmount-prev";
+export type Action = {
+   type: ActionType;
    nextChildren?: React.ReactNode;
 };
 
-const updateComponent = (
-   state: TComponentState,
-   action: TAction
-): TComponentState => {
-   switch (action.type) {
-      // sync mode
-      case "update":
-         return {
-            ...state,
-            nextChildren: action.nextChildren || null,
-         };
-      case "unmount-prev":
-         return {
-            ...state,
-            currentChildren: state.nextChildren || null,
-            nextChildren: null,
-         };
-      // wait mode
-      case "update-unmount":
-         return {
-            ...state,
-            currentChildren: action.nextChildren || null,
-         };
-      default:
-         throw new Error();
-   }
-};
-
+/** Filter out any children that aren't ReactElements. */
 function onlyElements(children: ReactNode): ReactElement<any>[] {
    return Children.toArray(children).filter(
       isValidElement
@@ -57,24 +30,42 @@ function onlyElements(children: ReactNode): ReactElement<any>[] {
 /**
  * Monitors changes to the trigger set in the context and controls mount and unmount of <Mekuri> child elements.
  * Place <MekuriFreezer> in the first child element when using at page transition.
- *
- * @public
  */
 export const Mekuri = ({ children }: { children: React.ReactNode }) => {
-   // Filter out any children that aren't ReactElements.
-   const filteredChildren = onlyElements(children);
-
-   // get state from context
    const { scrollRestoration, mode } = useConstantState();
    const mekuriState = useMekuriState();
 
-   // set component state
-   const [componentState, setComponentState] = useReducer(updateComponent, {
-      currentChildren: filteredChildren,
-      nextChildren: null,
-   });
+   const filteredChildren = onlyElements(children);
 
-   // update component
+   const [componentState, setComponentState] = useReducer(
+      (state: ComponentState, action: Action): ComponentState => {
+         switch (action.type) {
+            case "update":
+               return {
+                  ...state,
+                  nextChildren: action.nextChildren || null,
+               };
+            case "unmount-prev":
+               return {
+                  ...state,
+                  currentChildren: state.nextChildren || null,
+                  nextChildren: null,
+               };
+            case "update-and-unmount":
+               return {
+                  ...state,
+                  currentChildren: action.nextChildren || null,
+               };
+            default:
+               throw new Error();
+         }
+      },
+      {
+         currentChildren: filteredChildren,
+         nextChildren: null,
+      }
+   );
+
    useUpdateComponent({
       mekuriState,
       mode,
@@ -82,14 +73,12 @@ export const Mekuri = ({ children }: { children: React.ReactNode }) => {
       setComponentState,
    });
 
-   // remove component
    useRemoveComponent({
       mekuriState,
       mode,
       setComponentState,
    });
 
-   // scroll restoration
    useScrollRestoration({ mekuriState, scrollRestoration });
 
    return (
