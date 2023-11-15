@@ -1,4 +1,4 @@
-export type TIntersectionObserverHandler = (
+export type IntersectionObserverHandler = (
    targetRef: React.RefObject<HTMLElement>,
    callback: (isIntersecting: boolean) => void
 ) => void;
@@ -9,7 +9,7 @@ export type TIntersectionObserverHandler = (
  * @param callback (isIntersecting: boolean) => void
 ) => void;
  */
-export const intersectionObserverHandler: TIntersectionObserverHandler = (
+export const intersectionObserverHandler: IntersectionObserverHandler = (
    targetRef,
    callback
 ) => {

@@ -4,9 +4,9 @@ import {
    useConstantState,
    useMekuriState,
 } from "../context/MekuriContext";
-import { ReturnHashPos, returnHashPos } from "./utils/returnHashPos";
+import { ReturnHashPosReturn, returnHashPos } from "./utils/returnHashPos";
 import {
-   TIntersectionObserverHandler,
+   IntersectionObserverHandler,
    intersectionObserverHandler,
 } from "./utils/intersectionObserverHandler";
 
@@ -17,16 +17,16 @@ type CallBackProps = {
    /** Returns the Y position before leaving the page */
    yPosBeforeLeave: number;
    /** If # is attached to the URL when transitioning, the distance to that ID is returned. */
-   getHashPos: ReturnHashPos;
+   getHashPos: ReturnHashPosReturn;
    /** intersectionObserver (
       targetRef: React.RefObject<HTMLElement>,
       callback: (isIntersecting: boolean) => void
    ) => void
  * */
-   intersectionObserver: TIntersectionObserverHandler;
+   intersectionObserver: IntersectionObserverHandler;
 };
 
-type UseMekuriAnimation = {
+type UseMekuriAnimationProps = {
    onOnce?: (props: CallBackProps) => void;
    onLeave?: (props: CallBackProps) => void;
    onEnter?: (props: CallBackProps) => void;
@@ -55,7 +55,7 @@ export const useMekuriAnimation = ({
    onAfterSyncEnter,
    onEveryLeave,
    onEveryEnter,
-}: UseMekuriAnimation) => {
+}: UseMekuriAnimationProps) => {
    const isOnceCalled = useRef(false);
    const pathRef = useRef<string>();
    const mekuriState = useMekuriState();

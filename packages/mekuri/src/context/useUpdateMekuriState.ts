@@ -1,17 +1,17 @@
 import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { MekuriState, Trigger } from "./MekuriContext";
 
-interface IUseUpdateMekuriState {
+type UseUpdateMekuriStateProps = {
    trigger: Trigger;
    setMekuriState: Dispatch<SetStateAction<MekuriState>>;
    millisecond: number;
-}
+};
 
 export const useUpdateMekuriState = ({
    trigger,
    setMekuriState,
    millisecond,
-}: IUseUpdateMekuriState) => {
+}: UseUpdateMekuriStateProps) => {
    const triggerRef = useRef(trigger);
    const timeoutID = useRef<NodeJS.Timeout | number>(0);
 
