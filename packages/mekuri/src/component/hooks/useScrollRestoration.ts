@@ -114,7 +114,7 @@ export const useScrollRestoration = ({
             isPopstate.current = true;
          });
 
-         //push first key
+         // push first key
          restoreCache.current.keysArr.push(mekuriState.currentTrigger || "");
          isInitialRender.current = false;
 
