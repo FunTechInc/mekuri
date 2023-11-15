@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction } from "react";
-import { IMekuriState, TTrigger } from "./MekuriContext";
+import { MekuriState, Trigger } from "./MekuriContext";
 interface IUseUpdateMekuriState {
-    trigger: TTrigger;
-    setMekuriState: Dispatch<SetStateAction<IMekuriState>>;
+    trigger: Trigger;
+    setMekuriState: Dispatch<SetStateAction<MekuriState>>;
     millisecond: number;
 }
 export declare const useUpdateMekuriState: ({ trigger, setMekuriState, millisecond, }: IUseUpdateMekuriState) => void;

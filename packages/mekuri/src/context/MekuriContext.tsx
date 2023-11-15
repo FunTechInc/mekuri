@@ -1,61 +1,60 @@
 import { createContext, useContext, useState } from "react";
 import { useUpdateMekuriState } from "./useUpdateMekuriState";
 
-export type TMode = "sync" | "wait";
-export type TReatrationType = "top" | "restore";
-export type TPhase = "leave" | "enter";
-type TCustomRestore = {
-   scrollRestoration: TReatrationType;
+export type Mode = "sync" | "wait";
+export type Phase = "leave" | "enter";
+export type ReatrationType = "top" | "restore";
+export type Trigger = string | number;
+
+/** Manually do scroll restration with onLeave or onEnter */
+type CustomRestration = {
+   scrollRestoration: ReatrationType;
    onLeave?: (pos: number) => void;
    onEnter?: (pos: number) => void;
 };
-export type TRestore = TReatrationType | "none" | TCustomRestore;
-export type TTrigger = string | number;
+export type ScrollRestration = ReatrationType | "none" | CustomRestration;
 
-export interface IMekuriState {
-   initialRender: boolean;
-   prevTrigger: TTrigger | null;
-   currentTrigger: TTrigger | null;
-   nextTrigger: TTrigger | null;
-   phase: TPhase | null;
+export type MekuriState = {
+   prevTrigger: Trigger | null;
+   currentTrigger: Trigger | null;
+   nextTrigger: Trigger | null;
+   phase: Trigger | null;
    yPosBeforeLeave: number;
-}
-interface IDurationState {
+};
+type DurationState = {
    millisecond: number;
    second: number;
-}
-interface IConstantState {
-   scrollRestoration: TRestore;
-   mode: TMode;
-}
-interface IMekuriContext {
-   trigger: TTrigger;
+};
+type ConstantState = {
+   scrollRestoration: ScrollRestration;
+   mode: Mode;
+};
+type MekuriContext = {
+   trigger: Trigger;
    millisecond: number;
-   scrollRestoration: TRestore;
-   mode: TMode;
+   scrollRestoration: ScrollRestration;
+   mode: Mode;
    children: React.ReactNode;
-}
+};
 
-//create context
-const defaultDurationState: IDurationState = {
+const defaultDurationState: DurationState = {
    millisecond: 0,
    second: 0,
 };
-const defaultMekuriState: IMekuriState = {
-   initialRender: false,
+const defaultMekuriState: MekuriState = {
    prevTrigger: null,
    currentTrigger: null,
    nextTrigger: null,
    phase: null,
    yPosBeforeLeave: 0,
 };
-const defaultConstantState: IConstantState = {
+const defaultConstantState: ConstantState = {
    scrollRestoration: "top",
    mode: "wait",
 };
-const DurationContext = createContext<IDurationState>(defaultDurationState);
-const MekuriStateContext = createContext<IMekuriState>(defaultMekuriState);
-const ConstantContext = createContext<IConstantState>(defaultConstantState);
+const DurationContext = createContext<DurationState>(defaultDurationState);
+const MekuriStateContext = createContext<MekuriState>(defaultMekuriState);
+const ConstantContext = createContext<ConstantState>(defaultConstantState);
 
 /**
  * <Mekuri> should be wrapped in this <MekuriContext>. UseMekuriAnimation is available inside a context-wrapped component.
@@ -76,16 +75,18 @@ export const MekuriContext = ({
    scrollRestoration = "top",
    mode = "wait",
    children,
-}: IMekuriContext) => {
-   // duration state
+}: MekuriContext) => {
+   const [constantState] = useState({
+      scrollRestoration,
+      mode,
+   });
+
    const [durationState] = useState({
       millisecond,
       second: millisecond / 1000,
    });
 
-   // mekuri state
-   const [mekuriState, setMekuriState] = useState<IMekuriState>({
-      initialRender: true,
+   const [mekuriState, setMekuriState] = useState<MekuriState>({
       prevTrigger: null,
       currentTrigger: trigger,
       nextTrigger: null,
@@ -93,13 +94,6 @@ export const MekuriContext = ({
       yPosBeforeLeave: 0,
    });
 
-   // constat state
-   const [constantState] = useState({
-      scrollRestoration,
-      mode,
-   });
-
-   // update mekuri state
    useUpdateMekuriState({
       trigger,
       setMekuriState,

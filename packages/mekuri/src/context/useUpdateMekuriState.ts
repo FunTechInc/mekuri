@@ -1,9 +1,9 @@
 import { Dispatch, SetStateAction, useEffect, useRef } from "react";
-import { IMekuriState, TTrigger } from "./MekuriContext";
+import { MekuriState, Trigger } from "./MekuriContext";
 
 interface IUseUpdateMekuriState {
-   trigger: TTrigger;
-   setMekuriState: Dispatch<SetStateAction<IMekuriState>>;
+   trigger: Trigger;
+   setMekuriState: Dispatch<SetStateAction<MekuriState>>;
    millisecond: number;
 }
 
@@ -12,40 +12,32 @@ export const useUpdateMekuriState = ({
    setMekuriState,
    millisecond,
 }: IUseUpdateMekuriState) => {
-   const isInitialRender = useRef(true);
+   const triggerRef = useRef(trigger);
    const timeoutID = useRef<NodeJS.Timeout | number>(0);
 
    useEffect(() => {
-      // initial render
-      if (isInitialRender.current) {
-         isInitialRender.current = false;
-         setMekuriState((state) => ({
-            ...state,
-            initialRender: false,
-         }));
-         return;
-      }
-      // get yPosBeforeLeave
-      const scrollYPos = window.scrollY || document.documentElement.scrollTop;
-      // update state (leave)
-      setMekuriState((state) => ({
-         ...state,
-         nextTrigger: trigger,
-         phase: "leave",
-         yPosBeforeLeave: scrollYPos,
-      }));
-      timeoutID.current = setTimeout(() => {
-         // update state (enter)
-         setMekuriState((state) => ({
-            ...state,
-            prevTrigger: state.currentTrigger,
-            currentTrigger: trigger,
-            nextTrigger: trigger,
-            phase: "enter",
-         }));
-      }, millisecond);
+      if (triggerRef.current !== trigger) {
+         triggerRef.current = trigger;
 
-      // ClearTimeout when transition is interrupted
+         setMekuriState((state) => ({
+            ...state,
+            nextTrigger: trigger,
+            phase: "leave",
+            yPosBeforeLeave:
+               window.scrollY || document.documentElement.scrollTop,
+         }));
+
+         timeoutID.current = setTimeout(() => {
+            setMekuriState((state) => ({
+               ...state,
+               prevTrigger: state.currentTrigger,
+               currentTrigger: trigger,
+               nextTrigger: trigger,
+               phase: "enter",
+            }));
+         }, millisecond);
+      }
+
       return () => {
          clearTimeout(timeoutID.current);
       };
