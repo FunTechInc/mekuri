@@ -737,11 +737,11 @@ const Rr = ({
     }) : a && a(h))), u.phase === "enter" && (d && d(h), R === "wait" && b && i && i(h), R === "sync" && c && c(h));
   }, [u]);
 }, Mr = ({
-  routerContext: n,
-  children: a
+  children: n,
+  routerContext: a
 }) => {
-  const i = q(n), c = P(i).current;
-  return /* @__PURE__ */ F.jsx(n.Provider, { value: c, children: a });
+  const i = q(a), c = P(i).current;
+  return /* @__PURE__ */ F.jsx(a.Provider, { value: c, children: n });
 }, Sr = ({
   mekuriState: n,
   mode: a,

@@ -1,10 +1,12 @@
+/// <reference types="react" />
+type MekuriFreezerProps = {
+    children: React.ReactNode;
+    /** `LayoutRouterContext` must be imported from `"next/dist/shared/lib/app-router-context.shared-runtime"` for Next.js ^13.5 */
+    routerContext: React.Context<any>;
+};
 /**
- * For page transition animation, import LayoutRouterContext from next and set it to routerContext.
- * And don't forget to set key to pathname.
- * { LayoutRouterContext } must be imported from "next/dist/shared/lib/app-router-context.shared-runtime" for Next.js 13.5 and later.
- *
  * ```jsx
- * import { LayoutRouterContext } from "next/dist/shared/lib/app-router-context";
+ * import { LayoutRouterContext } from "next/dist/shared/lib/app-router-context.shared-runtime";
  * import { usePathname } from "next/navigation";
  *
  * <Mekuri>
@@ -13,11 +15,6 @@
  *    </MekuriFreezer>
  * </Mekuri>
  * ```
- *
- * @param routerContext Import LayoutRouterContext from Next. LayoutRouterContext contains context about routing
- *
  */
-export declare const MekuriFreezer: ({ routerContext, children, }: {
-    children: React.ReactNode;
-    routerContext: React.Context<any>;
-}) => import("react/jsx-runtime").JSX.Element;
+export declare const MekuriFreezer: ({ children, routerContext, }: MekuriFreezerProps) => import("react/jsx-runtime").JSX.Element;
+export {};
