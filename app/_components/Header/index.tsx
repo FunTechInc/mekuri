@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { useMekuriTrigger } from "@/packages/mekuri/src";
+import { memo } from "react";
 import s from "./header.module.scss";
 
 const LINKS = [
@@ -22,7 +24,7 @@ const LINKS = [
    },
 ];
 
-export const Header = () => {
+const HeaderContent = memo(({ trigger }: { trigger: string }) => {
    return (
       <header className={s.wrapper}>
          <nav className={s.linkWrapper}>
@@ -36,4 +38,12 @@ export const Header = () => {
          </nav>
       </header>
    );
-};
+});
+HeaderContent.displayName = "HeaderContent";
+
+export const Header = memo(() => {
+   const trigger = useMekuriTrigger("enter");
+   return <HeaderContent trigger={trigger ? trigger.toString() : ""} />;
+});
+
+Header.displayName = "Header";
