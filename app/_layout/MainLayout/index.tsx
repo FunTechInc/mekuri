@@ -16,15 +16,15 @@ export const MainLayout = async ({
 }) => {
    return (
       <MainWrapper>
-         <Header />
-         <main>
-            <PageTransitionContext>
+         <PageTransitionContext>
+            <Header />
+            <main>
                <PageTransitionAnimation>
                   <PageTransitionLayout>{children}</PageTransitionLayout>
                </PageTransitionAnimation>
                {/* <RouterTriggerSample /> */}
-            </PageTransitionContext>
-         </main>
+            </main>
+         </PageTransitionContext>
          {/* <StateTriggerSample /> */}
          <Footer />
       </MainWrapper>

@@ -14,7 +14,7 @@ export type MekuriState = {
     prevTrigger: Trigger | null;
     currentTrigger: Trigger | null;
     nextTrigger: Trigger | null;
-    phase: Trigger | null;
+    phase: Phase | null;
     yPosBeforeLeave: number;
 };
 type DurationState = {
