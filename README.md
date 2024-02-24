@@ -1,8 +1,13 @@
-# (hidden)mekuri
+# mekuri
 
 ![mekuri](public/app-header.jpg)
 
-(hidden)mekuri is a package for page transition animation in Next.js. It supports both 'wait' and 'sync' modes, as well as popstate (scroll position preservation during popstate). Since animations can be set on a per-component basis, you can implement them flexibly using animation libraries such as GSAP.
+mekuri is a package for page transition animations for React, supporting both `wait` and `sync` modes, as well as `popstate` (scroll position preservation during popstate).
+
+Animations can be customised for each component using the `useMekuriAnimation` hook, allowing for flexible implementation using animation libraries such as GSAP.
+
+Next.js `Pages Router` as well as `App Router` are supported. However, the `App Router` page transitions use a slightly special method, so if you want a stable implementation, the `Pages Router` is recommended.
+[Pages Router demo](https://github.com/FunTechInc/mekuri-demo-pages)
 
 ```bash
 $ npm i @funtech-inc/mekuri
@@ -68,6 +73,7 @@ export const PageTransitionLayout = ({
 
 Since the key cannot be obtained by changing children during app router page transition, it is necessary to import LayoutRouterContext from next and pass the context to `MekuriFreezer`.
 
+For more information on `App Router` page transition animations, see the following issue.
 [See this issue](https://github.com/vercel/next.js/issues/49279#issuecomment-1675782002)
 
 ## useMekuriAnimation
