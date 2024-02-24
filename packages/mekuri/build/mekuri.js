@@ -662,17 +662,17 @@ const Rr = ({
   mode: "wait"
 }, Fe = te(Cr), Ae = te(wr), Ie = te(Pr), Ir = ({
   trigger: n,
-  millisecond: a = 1e3,
-  scrollRestoration: i = "top",
-  mode: u = "wait",
-  children: d
+  children: a,
+  millisecond: i = 1e3,
+  scrollRestoration: u = "restore",
+  mode: d = "wait"
 }) => {
   const [v] = ee({
-    scrollRestoration: i,
-    mode: u
+    scrollRestoration: u,
+    mode: d
   }), [h] = ee({
-    millisecond: a,
-    second: a / 1e3
+    millisecond: i,
+    second: i / 1e3
   }), [m, s] = ee({
     prevTrigger: null,
     currentTrigger: n,
@@ -683,8 +683,8 @@ const Rr = ({
   return Rr({
     trigger: n,
     setMekuriState: s,
-    millisecond: a
-  }), /* @__PURE__ */ F.jsx(Fe.Provider, { value: h, children: /* @__PURE__ */ F.jsx(Ie.Provider, { value: v, children: /* @__PURE__ */ F.jsx(Ae.Provider, { value: m, children: d }) }) });
+    millisecond: i
+  }), /* @__PURE__ */ F.jsx(Fe.Provider, { value: h, children: /* @__PURE__ */ F.jsx(Ie.Provider, { value: v, children: /* @__PURE__ */ F.jsx(Ae.Provider, { value: m, children: a }) }) });
 }, Yr = () => q(Fe), Ye = () => q(Ie), ne = () => q(Ae), xr = () => {
   const n = window.location.hash.substring(1);
   if (!n)

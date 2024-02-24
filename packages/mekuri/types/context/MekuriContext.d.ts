@@ -26,24 +26,24 @@ type ConstantState = {
     mode: Mode;
 };
 type MekuriContext = {
-    /** @param trigger string | number When doing page transition animation, it is also possible to set pathname and other states to trigger */
+    /** When doing page transition animation, it is also possible to set pathname and other states to trigger */
     trigger: Trigger;
-    /** @param millisecond number Set the wait time in milliseconds before removing from tree. */
-    millisecond: number;
+    children: React.ReactNode;
+    /** Set the wait time in milliseconds before removing from tree. , default : 1000 */
+    millisecond?: number;
     /** @param scrollRestoration "top" | "restore" | "none" | {
     scrollRestoration: "top" | "restore";
     onLeave?: (pos: number) => void;
     onEnter?: (pos: number) => void;
- } If you select none, scrollRestration does nothing. It is also possible to pass an object instead of a string. The onLeave | onEnter function returns pos at the timing of leave or enter. */
-    scrollRestoration: ScrollRestration;
-    /** @param mode "wait" | "sync" */
-    mode: Mode;
-    children: React.ReactNode;
+ } If you select none, scrollRestration does nothing. It is also possible to pass an object instead of a string. The onLeave | onEnter function returns pos at the timing of leave or enter. , default : "restore" */
+    scrollRestoration?: ScrollRestration;
+    /** "wait" | "sync" , default : "wait"*/
+    mode?: Mode;
 };
 /**
  * <Mekuri> should be wrapped in this <MekuriContext>. useMekuriAnimation is available inside a context-wrapped component.
  */
-export declare const MekuriContext: ({ trigger, millisecond, scrollRestoration, mode, children, }: MekuriContext) => import("react/jsx-runtime").JSX.Element;
+export declare const MekuriContext: ({ trigger, children, millisecond, scrollRestoration, mode, }: MekuriContext) => import("react/jsx-runtime").JSX.Element;
 export declare const useMekuriDuration: () => DurationState;
 export declare const useConstantState: () => ConstantState;
 export declare const useMekuriState: () => MekuriState;
