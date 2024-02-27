@@ -1,6 +1,6 @@
 # mekuri
 
-![mekuri](public/app-header.jpg)
+![mekuri](public/app-head.jpg)
 
 mekuri is a package for page transition animations for React, supporting both `wait` and `sync` modes, as well as `popstate` (scroll position preservation during popstate).
 
