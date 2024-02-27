@@ -36,15 +36,15 @@ export default function App({ Component, pageProps }: AppProps) {
 
 ## MekuriContext
 
-全体を wrap する context です。`trigger`にコンテンツを切り替えるための`state`を設定してください。ページ遷移として利用する場合は`pathname`を使うことができます。
+The context to wrap the whole thing in. Set the `trigger` to a `state` to switch content. You can use `pathname` if you want to use it as a page transition.
 
 ## Mekuri
 
-`Mekuri`コンポーネントで wrap することで children の unmount を遅延させることができます。
+Unmounting of children can be delayed by wrapping them in a `Mekuri` component.
 
 ## useMekuriAnimation
 
-`MekuriContext`内で呼び出すことができるフックです。コールバックには、`onOnce`, `onLeave`, `onEnter`, `onAfterSyncEnter`, `onEveryLeave`, `onEveryEnter` があります。
+Hooks that can be called within `MekuriContext`. Callbacks include `onOnce`, `onLeave`, `onEnter`, `onAfterSyncEnter`, `onEveryLeave` and `onEveryEnter`.
 
 ```tsx
 const MekuriAnimation = ({ children }: { children: React.ReactNode }) => {
@@ -68,7 +68,7 @@ const MekuriAnimation = ({ children }: { children: React.ReactNode }) => {
 
 ## useMekuriDuration
 
-`MekuriContext`で設定した`duration`を受け取ることが可能です。
+It is possible to receive the `duration` set in the `MekuriContext`.
 
 ```tsx
 const { millisecond, second } = useMekuriDuration();
