@@ -1,6 +1,6 @@
-import { useRef, useEffect, Dispatch } from "react";
+import { Dispatch, useState } from "react";
 import { MekuriState, Mode } from "../../context/MekuriContext";
-import { Action, ActionType } from "../Mekuri";
+import { Action } from "../Mekuri";
 
 type UseUpdateComponent = {
    mekuriState: MekuriState;
@@ -15,28 +15,20 @@ export const useUpdateComponent = ({
    children,
    setComponentState,
 }: UseUpdateComponent) => {
-   const isInitialRender = useRef(true);
-   const updateCurrentChildren = (type: ActionType) => {
-      setComponentState({
-         type: type,
-         nextChildren: children,
-      });
-   };
-
-   useEffect(() => {
-      if (isInitialRender.current) {
-         isInitialRender.current = false;
-         return;
-      }
-
+   const [prevPhase, setPrevPhase] = useState(mekuriState.phase);
+   if (prevPhase !== mekuriState.phase) {
+      setPrevPhase(mekuriState.phase);
       if (mekuriState.phase === "enter" && mode === "wait") {
-         updateCurrentChildren("update-and-unmount");
+         setComponentState({
+            type: "update-and-unmount",
+            nextChildren: children,
+         });
       }
-
       if (mekuriState.phase === "leave" && mode === "sync") {
-         updateCurrentChildren("update");
+         setComponentState({
+            type: "update",
+            nextChildren: children,
+         });
       }
-
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [mekuriState.phase]);
+   }
 };
