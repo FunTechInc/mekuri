@@ -1,4 +1,4 @@
-import { Dispatch, useEffect, useRef } from "react";
+import { Dispatch, useState } from "react";
 import { MekuriState, Mode } from "../../context/MekuriContext";
 import { Action } from "../Mekuri";
 
@@ -13,20 +13,15 @@ export const useRemoveComponent = ({
    mode,
    setComponentState,
 }: UseRemoveComponent) => {
-   const isInitialRender = useRef(true);
-
-   useEffect(() => {
-      if (isInitialRender.current) {
-         isInitialRender.current = false;
-         return;
-      }
-
-      if (mekuriState.phase === "enter" && mode === "sync") {
-         setComponentState({
-            type: "unmount-prev",
-         });
-      }
-
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [mekuriState.phase]);
+   const [prevPhase, setPrevPhase] = useState(mekuriState.phase);
+   if (
+      mekuriState.phase !== prevPhase &&
+      mekuriState.phase === "enter" &&
+      mode === "sync"
+   ) {
+      setPrevPhase(mekuriState.phase);
+      setComponentState({
+         type: "unmount-prev",
+      });
+   }
 };
