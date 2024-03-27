@@ -1,7 +1,7 @@
 import { Trigger } from "../context/MekuriContext";
 import { ReturnHashPosReturn } from "./utils/returnHashPos";
-import { IntersectionObserverHandler } from "./utils/intersectionObserverHandler";
-type CallBackProps = {
+import { HandleIntersectionObserver } from "./utils/useIntersectionObserver";
+export type MekuriCallBackProps = {
     prevTrigger: Trigger | null | undefined;
     currentTrigger: Trigger | null | undefined;
     nextTrigger: Trigger | null | undefined;
@@ -14,16 +14,18 @@ type CallBackProps = {
        callback: (isIntersecting: boolean) => void
     ) => void
   * */
-    intersectionObserver: IntersectionObserverHandler;
+    intersectionObserver: HandleIntersectionObserver;
+    /** mekuri renders based on timeout. Therefore, there are cases where the next component is rendered before the chunked Stylesheet updated by Next.js is loaded. onStylesheetLoaded ensures that functions are executed after the Stylesheet is loaded. onStylesheetLoaded ensures that the function is executed after the Stylesheet is loaded */
+    onStylesheetLoaded: (callback: () => void) => void;
 };
 type UseMekuriAnimationProps = {
-    onOnce?: (props: CallBackProps) => void;
-    onLeave?: (props: CallBackProps) => void;
-    onEnter?: (props: CallBackProps) => void;
+    onOnce?: (props: MekuriCallBackProps) => void;
+    onLeave?: (props: MekuriCallBackProps) => void;
+    onEnter?: (props: MekuriCallBackProps) => void;
     /** (props: CallBackProp) => void; onEnter in sync mode is called in leave phase. onAfterSyncEnter is called in the enter phase of sync mode. */
-    onAfterSyncEnter?: (props: CallBackProps) => void;
-    onEveryLeave?: (props: CallBackProps) => void;
-    onEveryEnter?: (props: CallBackProps) => void;
+    onAfterSyncEnter?: (props: MekuriCallBackProps) => void;
+    onEveryLeave?: (props: MekuriCallBackProps) => void;
+    onEveryEnter?: (props: MekuriCallBackProps) => void;
 };
 /**
  * A hook that can be used within <MekuriContext>. Animations can be added to monitor the mounting and unmounting of elements from the tree.

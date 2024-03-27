@@ -2,7 +2,7 @@
 
 ![mekuri](public/app-head.jpg)
 
-mekuri is a package for page transition animations for React, supporting both `wait` and `sync` modes, as well as `popstate` (scroll position preservation during popstate).
+mekuri is a package for page transition animations for React, supporting both `wait` and `sync` modes, as well as `popstate` (and scroll position restoration!).
 
 Animations can be customised for each component using the `useMekuriAnimation` hook, allowing for flexible implementation using animation libraries such as GSAP.
 
@@ -51,18 +51,40 @@ const MekuriAnimation = ({ children }: { children: React.ReactNode }) => {
    const ref = useRef<HTMLDivElement>(null);
    const { contextSafe } = useGSAP({ scope: ref });
    useMekuriAnimation({
-      onEveryEnter: contextSafe(() => {
+      onEveryEnter: contextSafe((props: MekuriCallBackProps) => {
          gsap.to(ref.current, {
             opacity: 1,
          });
       }),
-      onEveryLeave: contextSafe(() => {
+      onEveryLeave: contextSafe((props: MekuriCallBackProps) => {
          gsap.to(ref.current, {
             opacity: 0,
          });
       }),
    });
    return <div ref={ref}>{children}</div>;
+};
+```
+
+Each callback has `MekuriCallBackProps` as an argument.
+
+```ts
+type MekuriCallBackProps = {
+   prevTrigger: Trigger | null | undefined;
+   currentTrigger: Trigger | null | undefined;
+   nextTrigger: Trigger | null | undefined;
+   /** Returns the Y position before leaving the page */
+   yPosBeforeLeave: number;
+   /** If # is attached to the URL when transitioning, the distance to that ID is returned. */
+   getHashPos: ReturnHashPosReturn;
+   /** intersectionObserver (
+      targetRef: React.RefObject<HTMLElement>,
+      callback: (isIntersecting: boolean) => void
+   ) => void
+ * */
+   intersectionObserver: HandleIntersectionObserver;
+   /** mekuri renders based on timeout. Therefore, there are cases where the next component is rendered before the chunked Stylesheet updated by Next.js is loaded. onStylesheetLoaded ensures that functions are executed after the Stylesheet is loaded. onStylesheetLoaded ensures that the function is executed after the Stylesheet is loaded */
+   onStylesheetLoaded: (callback: () => void) => void;
 };
 ```
 
