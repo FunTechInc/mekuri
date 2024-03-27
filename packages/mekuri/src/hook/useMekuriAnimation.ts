@@ -6,10 +6,10 @@ import {
 } from "../context/MekuriContext";
 import { ReturnHashPosReturn, returnHashPos } from "./utils/returnHashPos";
 import {
-   useIntersectionObserver,
+   intersectionObserver,
    HandleIntersectionObserver,
-} from "./utils/useIntersectionObserver";
-import { useOnStylesheetLoaded } from "./utils/useOnStylesheetLoaded";
+} from "./utils/intersectionObserver";
+import { onStylesheetLoaded } from "./utils/onStylesheetLoaded";
 
 export type MekuriCallBackProps = {
    prevTrigger: Trigger | null | undefined;
@@ -63,8 +63,6 @@ export const useMekuriAnimation = ({
    const pathRef = useRef<string>();
    const mekuriState = useMekuriState();
    const { mode } = useConstantState();
-   const onStylesheetLoaded = useOnStylesheetLoaded();
-   const intersectionObserver = useIntersectionObserver();
 
    useEffect(() => {
       // Differentiate the calling of leave and enter by comparing the location.pathname at the time of render and the execution time of the state's subscribe function

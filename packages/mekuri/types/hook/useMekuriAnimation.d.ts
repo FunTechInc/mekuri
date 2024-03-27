@@ -1,6 +1,6 @@
 import { Trigger } from "../context/MekuriContext";
 import { ReturnHashPosReturn } from "./utils/returnHashPos";
-import { HandleIntersectionObserver } from "./utils/useIntersectionObserver";
+import { HandleIntersectionObserver } from "./utils/intersectionObserver";
 export type MekuriCallBackProps = {
     prevTrigger: Trigger | null | undefined;
     currentTrigger: Trigger | null | undefined;
