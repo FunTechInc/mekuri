@@ -15,6 +15,7 @@ export const SampleAnimation = ({
 }) => {
    const ref = useRef(null);
    const { second } = useMekuriDuration();
+
    useMekuriAnimation({
       onOnce: () => {
          gsap.context(() => {

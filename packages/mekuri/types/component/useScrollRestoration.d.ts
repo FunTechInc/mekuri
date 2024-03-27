@@ -1,4 +1,4 @@
-import { MekuriState, ScrollRestration } from "../../context/MekuriContext";
+import { MekuriState, ScrollRestration } from "../context/MekuriContext";
 type UseScrollRestoration = {
     scrollRestoration: ScrollRestration;
     mekuriState: MekuriState;

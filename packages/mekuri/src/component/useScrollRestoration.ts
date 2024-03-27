@@ -5,7 +5,7 @@ import {
    ReatrationType,
    ScrollRestration,
    Trigger,
-} from "../../context/MekuriContext";
+} from "../context/MekuriContext";
 
 type UseScrollRestoration = {
    scrollRestoration: ScrollRestration;

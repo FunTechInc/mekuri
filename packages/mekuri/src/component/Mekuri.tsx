@@ -4,19 +4,18 @@ import {
    ReactElement,
    Children,
    isValidElement,
+   useState,
 } from "react";
-import { useUpdateComponent } from "./hooks/useUpdateComponent";
-import { useRemoveComponent } from "./hooks/useRemoveComponent";
-import { useScrollRestoration } from "./hooks/useScrollRestoration";
+import { useScrollRestoration } from "./useScrollRestoration";
 import { useConstantState, useMekuriState } from "../context/MekuriContext";
 
-export type ComponentState = {
+type ComponentState = {
    currentChildren: React.ReactNode | null;
    nextChildren: React.ReactNode | null;
 };
-export type ActionType = "update" | "update-and-unmount" | "unmount-prev";
-export type Action = {
-   type: ActionType;
+
+type Action = {
+   type: "leave-sync" | "enter-wait" | "enter-sync";
    nextChildren?: React.ReactNode;
 };
 
@@ -29,7 +28,7 @@ const onlyElements = (children: ReactNode): ReactElement<any>[] => {
 
 /**
  * Monitors changes to the trigger set in the context and controls mount and unmount of <Mekuri> child elements.
- * Place <MekuriFreezer> in the first child element when using at page transition.
+ * When used in page transitions with the App Router, place <MekuriFreezer> as the first child element.
  */
 export const Mekuri = ({ children }: { children: React.ReactNode }) => {
    const { scrollRestoration, mode } = useConstantState();
@@ -40,21 +39,21 @@ export const Mekuri = ({ children }: { children: React.ReactNode }) => {
    const [componentState, setComponentState] = useReducer(
       (state: ComponentState, action: Action): ComponentState => {
          switch (action.type) {
-            case "update":
+            case "leave-sync":
                return {
                   ...state,
                   nextChildren: action.nextChildren || null,
                };
-            case "unmount-prev":
+            case "enter-wait":
+               return {
+                  ...state,
+                  currentChildren: action.nextChildren || null,
+               };
+            case "enter-sync":
                return {
                   ...state,
                   currentChildren: state.nextChildren || null,
                   nextChildren: null,
-               };
-            case "update-and-unmount":
-               return {
-                  ...state,
-                  currentChildren: action.nextChildren || null,
                };
             default:
                throw new Error();
@@ -66,18 +65,32 @@ export const Mekuri = ({ children }: { children: React.ReactNode }) => {
       }
    );
 
-   useUpdateComponent({
-      mekuriState,
-      mode,
-      children: filteredChildren,
-      setComponentState,
-   });
+   const [prevPhase, setPrevPhase] = useState(mekuriState.phase);
 
-   useRemoveComponent({
-      mekuriState,
-      mode,
-      setComponentState,
-   });
+   if (prevPhase !== mekuriState.phase) {
+      setPrevPhase(mekuriState.phase);
+      if (mekuriState.phase === "leave") {
+         if (mode === "sync") {
+            setComponentState({
+               type: "leave-sync",
+               nextChildren: filteredChildren,
+            });
+         }
+      }
+      if (mekuriState.phase === "enter") {
+         if (mode === "wait") {
+            setComponentState({
+               type: "enter-wait",
+               nextChildren: filteredChildren,
+            });
+         }
+         if (mode === "sync") {
+            setComponentState({
+               type: "enter-sync",
+            });
+         }
+      }
+   }
 
    useScrollRestoration({ mekuriState, scrollRestoration });
 
