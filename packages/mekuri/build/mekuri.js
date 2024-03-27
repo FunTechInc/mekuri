@@ -746,7 +746,7 @@ const Rr = ({
       yPosBeforeLeave: c.yPosBeforeLeave,
       getHashPos: xr,
       intersectionObserver: Sr,
-      onStylesheetLoaded: kr
+      onStylesheetLoad: kr
     };
     if (!y.current && c.phase === null) {
       n && n(g), y.current = !0;

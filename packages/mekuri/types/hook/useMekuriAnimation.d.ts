@@ -15,8 +15,8 @@ export type MekuriCallBackProps = {
     ) => void
   * */
     intersectionObserver: HandleIntersectionObserver;
-    /** mekuri renders based on timeout. Therefore, there are cases where the next component is rendered before the chunked Stylesheet updated by Next.js is loaded. onStylesheetLoaded ensures that functions are executed after the Stylesheet is loaded. onStylesheetLoaded ensures that the function is executed after the Stylesheet is loaded */
-    onStylesheetLoaded: (callback: () => void) => void;
+    /** mekuri renders based on timeout. Therefore, there are cases where the next component is rendered before the chunked Stylesheet updated by Next.js is loaded. onStylesheetLoad ensures that functions are executed after the Stylesheet is loaded. onStylesheetLoad ensures that the function is executed after the Stylesheet is loaded */
+    onStylesheetLoad: (callback: () => void) => void;
 };
 type UseMekuriAnimationProps = {
     onOnce?: (props: MekuriCallBackProps) => void;

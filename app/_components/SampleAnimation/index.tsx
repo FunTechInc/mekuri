@@ -26,8 +26,8 @@ export const SampleAnimation = ({
             });
          }, ref.current!);
       },
-      onEnter: ({ intersectionObserver, onStylesheetLoaded }) => {
-         onStylesheetLoaded(() => {
+      onEnter: ({ intersectionObserver, onStylesheetLoad }) => {
+         onStylesheetLoad(() => {
             gsap.context(() => {
                gsap.fromTo(
                   "h1",

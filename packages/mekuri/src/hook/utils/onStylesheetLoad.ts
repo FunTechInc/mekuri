@@ -5,7 +5,7 @@ const isStylesheetLoaded = (url: string) => {
    });
 };
 
-export const onStylesheetLoaded = (callback: () => void) => {
+export const onStylesheetLoad = (callback: () => void) => {
    const pathname = location.pathname;
 
    const stylesheets = document.querySelectorAll(
