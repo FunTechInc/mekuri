@@ -707,7 +707,7 @@ const Rr = ({
     { rootMargin: "0px", threshold: 0 }
   ).observe(i);
 }, Or = (n) => Array.from(document.styleSheets).some((a) => a.href ? a.href.split("?")[0] === n.split("?")[0] : !1), kr = (n) => {
-  const a = location.pathname, i = document.querySelectorAll(
+  const a = location.pathname, i = document.head.querySelectorAll(
     'link[rel="stylesheet"]'
   );
   let s = i.length;
