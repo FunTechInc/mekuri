@@ -8,7 +8,7 @@ const isStylesheetLoaded = (url: string) => {
 export const onStylesheetLoad = (callback: () => void) => {
    const pathname = location.pathname;
 
-   const stylesheets = document.querySelectorAll(
+   const stylesheets = document.head.querySelectorAll(
       'link[rel="stylesheet"]'
    ) as NodeListOf<HTMLLinkElement>;
 
