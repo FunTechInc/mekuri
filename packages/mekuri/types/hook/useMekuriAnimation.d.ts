@@ -1,7 +1,7 @@
 import { Trigger } from "../context/MekuriContext";
 import { ReturnHashPosReturn } from "./utils/returnHashPos";
 import { HandleIntersectionObserver } from "./utils/intersectionObserver";
-export type MekuriCallBackProps = {
+export type MekuriCallbackProps = {
     prevTrigger: Trigger | null | undefined;
     currentTrigger: Trigger | null | undefined;
     nextTrigger: Trigger | null | undefined;
@@ -19,13 +19,13 @@ export type MekuriCallBackProps = {
     onStylesheetLoad: (callback: () => void) => void;
 };
 type UseMekuriAnimationProps = {
-    onOnce?: (props: MekuriCallBackProps) => void;
-    onLeave?: (props: MekuriCallBackProps) => void;
-    onEnter?: (props: MekuriCallBackProps) => void;
+    onOnce?: (props: MekuriCallbackProps) => void;
+    onLeave?: (props: MekuriCallbackProps) => void;
+    onEnter?: (props: MekuriCallbackProps) => void;
     /** (props: CallBackProp) => void; onEnter in sync mode is called in leave phase. onAfterSyncEnter is called in the enter phase of sync mode. */
-    onAfterSyncEnter?: (props: MekuriCallBackProps) => void;
-    onEveryLeave?: (props: MekuriCallBackProps) => void;
-    onEveryEnter?: (props: MekuriCallBackProps) => void;
+    onAfterSyncEnter?: (props: MekuriCallbackProps) => void;
+    onEveryLeave?: (props: MekuriCallbackProps) => void;
+    onEveryEnter?: (props: MekuriCallbackProps) => void;
 };
 /**
  * A hook that can be used within <MekuriContext>. Animations can be added to monitor the mounting and unmounting of elements from the tree.
