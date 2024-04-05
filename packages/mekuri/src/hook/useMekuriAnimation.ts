@@ -11,7 +11,7 @@ import {
 } from "./utils/intersectionObserver";
 import { onStylesheetLoad } from "./utils/onStylesheetLoad";
 
-export type MekuriCallBackProps = {
+export type MekuriCallbackProps = {
    prevTrigger: Trigger | null | undefined;
    currentTrigger: Trigger | null | undefined;
    nextTrigger: Trigger | null | undefined;
@@ -30,13 +30,13 @@ export type MekuriCallBackProps = {
 };
 
 type UseMekuriAnimationProps = {
-   onOnce?: (props: MekuriCallBackProps) => void;
-   onLeave?: (props: MekuriCallBackProps) => void;
-   onEnter?: (props: MekuriCallBackProps) => void;
+   onOnce?: (props: MekuriCallbackProps) => void;
+   onLeave?: (props: MekuriCallbackProps) => void;
+   onEnter?: (props: MekuriCallbackProps) => void;
    /** (props: CallBackProp) => void; onEnter in sync mode is called in leave phase. onAfterSyncEnter is called in the enter phase of sync mode. */
-   onAfterSyncEnter?: (props: MekuriCallBackProps) => void;
-   onEveryLeave?: (props: MekuriCallBackProps) => void;
-   onEveryEnter?: (props: MekuriCallBackProps) => void;
+   onAfterSyncEnter?: (props: MekuriCallbackProps) => void;
+   onEveryLeave?: (props: MekuriCallbackProps) => void;
+   onEveryEnter?: (props: MekuriCallbackProps) => void;
 };
 
 /**
@@ -74,7 +74,7 @@ export const useMekuriAnimation = ({
       // Whether there is a change in pathname when hooking the change in mekuriState.phase
       const isCurrentPage = pathRef.current === location.pathname;
 
-      const callBackProps: MekuriCallBackProps = {
+      const callBackProps: MekuriCallbackProps = {
          prevTrigger: mekuriState.prevTrigger,
          currentTrigger: mekuriState.currentTrigger,
          nextTrigger: mekuriState.nextTrigger,

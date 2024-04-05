@@ -1,4 +1,5 @@
 "use client";
+
 import { MekuriFreezer, Mekuri } from "@/packages/mekuri/src";
 // import { LayoutRouterContext } from "next/dist/shared/lib/app-router-context";
 // Next.js ^13.5.2

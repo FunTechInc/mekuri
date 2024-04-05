@@ -6,9 +6,9 @@ mekuri is a package for page transition animations for React, supporting both `w
 
 Animations can be customised for each component using the `useMekuriAnimation` hook, allowing for flexible implementation using animation libraries such as GSAP.
 
-Next.js `Pages Router` as well as `App Router` are supported. However, the `App Router` page transitions use a slightly special method, so if you want a stable implementation, the `Pages Router` is recommended.
+It also works with frameworks such as Next.js and Remix. Integration into Next.js `App Router` is also supported. However, the `App Router` page transitions use a slightly special method, so if you want a stable implementation, the `Pages Router` is recommended.
 
-[Pages Router demo](https://github.com/FunTechInc/mekuri-demo-pages)
+[Next.js Pages Router demo](https://github.com/FunTechInc/mekuri-demo-pages)
 
 ```bash
 $ npm i @funtech-inc/mekuri
@@ -20,16 +20,13 @@ $ npm i @funtech-inc/mekuri
 export default function App({ Component, pageProps }: AppProps) {
    const { pathname } = useRouter();
    return (
-      <>
-         <MekuriContext trigger={pathname}>
-            <Header />
-            <MekuriAnimation>
-               <Mekuri>
-                  <Component key={pathname} {...pageProps} />
-               </Mekuri>
-            </MekuriAnimation>
-         </MekuriContext>
-      </>
+      <MekuriContext trigger={pathname}>
+         <SomeAnimationComponent>
+            <Mekuri>
+               <Component key={pathname} {...pageProps} />
+            </Mekuri>
+         </SomeAnimationComponent>
+      </MekuriContext>
    );
 }
 ```
@@ -49,27 +46,26 @@ Hooks that can be called within `MekuriContext`. Callbacks include `onOnce`, `on
 ```tsx
 const MekuriAnimation = ({ children }: { children: React.ReactNode }) => {
    const ref = useRef<HTMLDivElement>(null);
-   const { contextSafe } = useGSAP({ scope: ref });
    useMekuriAnimation({
-      onEveryEnter: contextSafe((props: MekuriCallBackProps) => {
-         gsap.to(ref.current, {
-            opacity: 1,
-         });
-      }),
-      onEveryLeave: contextSafe((props: MekuriCallBackProps) => {
+      onEveryLeave: (props: MekuriCallbackProps) => {
          gsap.to(ref.current, {
             opacity: 0,
          });
-      }),
+      },
+      onEveryEnter: (props: MekuriCallbackProps) => {
+         gsap.to(ref.current, {
+            opacity: 1,
+         });
+      },
    });
    return <div ref={ref}>{children}</div>;
 };
 ```
 
-Each callback has `MekuriCallBackProps` as an argument.
+Each callback has `MekuriCallbackProps` as an argument.
 
 ```ts
-type MekuriCallBackProps = {
+export type MekuriCallbackProps = {
    prevTrigger: Trigger | null | undefined;
    currentTrigger: Trigger | null | undefined;
    nextTrigger: Trigger | null | undefined;
@@ -135,4 +131,30 @@ export const PageTransitionLayout = ({
       </Mekuri>
    );
 };
+```
+
+# integrate with Remix
+
+```tsx
+export default function App() {
+   const location = useLocation();
+   const outlet = useOutlet();
+   return (
+      <html lang="en" className="h-full">
+         <head></head>
+         <body className="h-full">
+            <MekuriContext trigger={location.pathname}>
+               <SomeAnimationComponent>
+                  <Mekuri>
+                     <div key={location.pathname}>{outlet}</div>
+                  </Mekuri>
+               </SomeAnimationComponent>
+            </MekuriContext>
+            <ScrollRestoration />
+            <Scripts />
+            <LiveReload />
+         </body>
+      </html>
+   );
+}
 ```
