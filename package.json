@@ -9,20 +9,22 @@
       "lint": "next lint"
    },
    "dependencies": {
+      "@studio-freight/lenis": "^1.0.42",
       "@types/node": "20.2.5",
       "@types/react": "^18.2.14",
       "@types/react-dom": "^18.2.6",
       "eslint": "8.41.0",
       "eslint-config-next": "13.4.4",
-      "gsap": "^3.11.5",
+      "gsap": "^3.12.5",
       "react": "18.2.0",
       "react-dom": "18.2.0",
       "sass": "^1.63.3",
       "the-new-css-reset": "^1.8.4",
-      "typescript": "^5.1.6"
+      "typescript": "^5.1.6",
+      "zustand": "^4.5.2"
    },
    "devDependencies": {
-      "@funtech-inc/spice": "^1.1.22",
+      "@funtech-inc/spice": "^1.2.0",
       "install": "^0.13.0",
       "next": "^14.1.4",
       "npm": "^10.1.0",

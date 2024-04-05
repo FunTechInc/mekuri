@@ -50,6 +50,10 @@ body {
    color: $color-txt;
    letter-spacing: $letter-spacing-base;
    line-height: $leading-none;
+   transition: opacity #{$duration / 3 + "s"} ease-in-out;
+   .ff_en {
+      letter-spacing: $letter-spacing-base;
+   }
 }
 
 html {
@@ -71,6 +75,11 @@ html {
    @else if $designRoot==3 {
       font-size: var(--mobile-root);
    }
+}
+
+//set opacity to 1 after font is loaded
+html.fonts-loaded body {
+   opacity: 1 !important;
 }
 
 /*===============================================
@@ -97,22 +106,72 @@ select {
 }
 
 /*===============================================
+br
+===============================================*/
+br {
+   &.lg {
+      @include mq(md) {
+         display: none;
+      }
+   }
+   &.lgmd {
+      @include mq(sm) {
+         display: none;
+      }
+   }
+   &.mdsm {
+      display: none;
+      @include mq(md) {
+         display: block;
+      }
+   }
+   &.md {
+      display: none;
+      @include mq(md) {
+         display: block;
+      }
+      @include mq(sm) {
+         display: none;
+      }
+   }
+   &.sm {
+      display: none;
+      @include mq(sm) {
+         display: block;
+      }
+   }
+}
+
+/*===============================================
 lenis
 ===============================================*/
-html {
-   &.lenis {
-      height: auto;
-   }
-   &.lenis.lenis-smooth {
-      scroll-behavior: auto;
-   }
-   &.lenis.lenis-smooth [data-lenis-prevent] {
-      overscroll-behavior: contain;
-   }
-   &.lenis.lenis-stopped {
-      overflow: hidden;
-   }
-   &.lenis.lenis-scrolling iframe {
-      pointer-events: none;
+html.lenis,
+html.lenis body {
+   height: auto;
+}
+
+.lenis.lenis-smooth {
+   scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+   overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+   overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+   pointer-events: none;
+}
+
+/*===============================================
+mekuri
+===============================================*/
+html.mekuri-transitioning {
+   cursor: wait !important;
+   & * {
+      pointer-events: none !important;
    }
 }

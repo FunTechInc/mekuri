@@ -14,7 +14,9 @@ export const PageTransitionLayout = ({
    const pathname = usePathname();
    return (
       <Mekuri>
-         <MekuriFreezer key={pathname} routerContext={LayoutRouterContext}>
+         <MekuriFreezer
+            key={`${pathname + performance.now()}`}
+            routerContext={LayoutRouterContext}>
             {children}
          </MekuriFreezer>
       </Mekuri>

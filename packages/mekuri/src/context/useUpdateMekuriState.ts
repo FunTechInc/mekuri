@@ -7,27 +7,46 @@ type UseUpdateMekuriStateProps = {
    millisecond: number;
 };
 
+const CLASSNAME = "mekuri-transitioning";
+
 export const useUpdateMekuriState = ({
    trigger,
    setMekuriState,
    millisecond,
 }: UseUpdateMekuriStateProps) => {
    const triggerRef = useRef(trigger);
-   const timeoutID = useRef<NodeJS.Timeout | number>(0);
+   const isPopstate = useRef(false);
 
    useEffect(() => {
+      window.addEventListener("popstate", () => {
+         if (document.documentElement.classList.contains(CLASSNAME)) {
+            // If a popstate is executed during transition, execute forward
+            window.history.forward();
+         } else {
+            isPopstate.current = true;
+         }
+      });
+   }, []);
+
+   useEffect(() => {
+      let timeoutID: NodeJS.Timeout | number;
+
       if (triggerRef.current !== trigger) {
          triggerRef.current = trigger;
 
          setMekuriState((state) => ({
             ...state,
             nextTrigger: trigger,
-            phase: "leave",
             yPosBeforeLeave:
                window.scrollY || document.documentElement.scrollTop,
+            phase: "leave",
+            isPopstate: isPopstate.current,
          }));
+         document.documentElement.classList.add(CLASSNAME);
 
-         timeoutID.current = setTimeout(() => {
+         timeoutID = setTimeout(() => {
+            document.documentElement.classList.remove(CLASSNAME);
+
             setMekuriState((state) => ({
                ...state,
                prevTrigger: state.currentTrigger,
@@ -35,11 +54,13 @@ export const useUpdateMekuriState = ({
                nextTrigger: trigger,
                phase: "enter",
             }));
+
+            isPopstate.current = false;
          }, millisecond);
       }
 
       return () => {
-         clearTimeout(timeoutID.current);
+         clearTimeout(timeoutID);
       };
    }, [trigger, millisecond, setMekuriState]);
 };

@@ -1,49 +1,56 @@
 "use client";
 
 import Link from "next/link";
-import { useMekuriTrigger } from "@/packages/mekuri/src";
-import { memo } from "react";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { LINKS } from "@/app/constants";
 import s from "./header.module.scss";
 
-const LINKS = [
-   {
-      href: "/",
-      title: "home",
-   },
-   {
-      href: "/page1",
-      title: "page1",
-   },
-   {
-      href: "/page2",
-      title: "page2",
-   },
-   {
-      href: "/page3",
-      title: "page3",
-   },
-];
+const LinkButton = () => {
+   const pathname = usePathname();
+   return LINKS.map((li, i) => {
+      const isActive = li.href === pathname;
+      return (
+         <li key={i}>
+            <Link
+               className={s.link}
+               href={li.href}
+               scroll={false}
+               style={
+                  isActive
+                     ? { backgroundColor: `${li.color}`, color: "white" }
+                     : {}
+               }>
+               {li.title}
+               {isActive && li.emoji}
+            </Link>
+         </li>
+      );
+   });
+};
 
-const HeaderContent = memo(({ trigger }: { trigger: string }) => {
+export const Header = () => {
    return (
       <header className={s.wrapper}>
+         <div className={s.logoContainer}>
+            <h1 className={s.logo}>
+               mekuri <span>📕 Page transition animation for React</span>
+            </h1>
+            <a
+               className={s.github}
+               href="https://github.com/FunTechInc/mekuri"
+               target="_blank">
+               <Image
+                  src={"/github-logo.svg"}
+                  width={16}
+                  height={16}
+                  alt="GitHub"
+               />
+            </a>
+         </div>
          <nav className={s.linkWrapper}>
-            {LINKS.map((li, i) => (
-               <li key={i}>
-                  <Link className={s.link} href={li.href} scroll={false}>
-                     {li.title}
-                  </Link>
-               </li>
-            ))}
+            <LinkButton />
          </nav>
       </header>
    );
-});
-HeaderContent.displayName = "HeaderContent";
-
-export const Header = memo(() => {
-   const trigger = useMekuriTrigger("enter");
-   return <HeaderContent trigger={trigger ? trigger.toString() : ""} />;
-});
-
-Header.displayName = "Header";
+};

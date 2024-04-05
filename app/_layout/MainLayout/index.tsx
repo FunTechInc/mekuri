@@ -1,13 +1,6 @@
-import { MainWrapper } from "./MainWrapper";
 import { Header } from "@/app/_components/Header";
-import { Footer } from "@/app/_components/Footer";
-import {
-   PageTransitionAnimation,
-   PageTransitionContext,
-   PageTransitionLayout,
-} from "../PageTransition";
-import { StateTriggerSample } from "@/app/_components/StateTriggerSample";
-import { RouterTriggerSample } from "@/app/_components/RouterTriggerSample";
+import { PageTransitionContext, PageTransitionLayout } from "../PageTransition";
+import { MainWrapper } from "./MainWrapper";
 
 export const MainLayout = async ({
    children,
@@ -19,14 +12,9 @@ export const MainLayout = async ({
          <PageTransitionContext>
             <Header />
             <main>
-               <PageTransitionAnimation>
-                  <PageTransitionLayout>{children}</PageTransitionLayout>
-               </PageTransitionAnimation>
-               <RouterTriggerSample />
+               <PageTransitionLayout>{children}</PageTransitionLayout>
             </main>
          </PageTransitionContext>
-         <StateTriggerSample />
-         <Footer />
       </MainWrapper>
    );
 };

@@ -15,14 +15,16 @@ export type MekuriCallbackProps = {
     ) => void
   * */
     intersectionObserver: HandleIntersectionObserver;
-    /** mekuri renders based on timeout. Therefore, there are cases where the next component is rendered before the chunked Stylesheet updated by Next.js is loaded. onStylesheetLoad ensures that functions are executed after the Stylesheet is loaded. onStylesheetLoad ensures that the function is executed after the Stylesheet is loaded */
+    /** mekuri renders based on timeout. Therefore, there are cases where the next component is rendered before the chunked Stylesheet updated by Next.js is loaded. `onStylesheetLoad` ensures that functions are executed after the Stylesheet is loaded. `onStylesheetLoad` ensures that the function is executed after the Stylesheet is loaded */
     onStylesheetLoad: (callback: () => void) => void;
+    /**  Whether the transition is by popstate */
+    isPopstate: boolean;
 };
-type UseMekuriAnimationProps = {
+type UseMekuriProps = {
     onOnce?: (props: MekuriCallbackProps) => void;
     onLeave?: (props: MekuriCallbackProps) => void;
     onEnter?: (props: MekuriCallbackProps) => void;
-    /** (props: CallBackProp) => void; onEnter in sync mode is called in leave phase. onAfterSyncEnter is called in the enter phase of sync mode. */
+    /** (props: MekuriCallbackProps) => void; `onEnter` in sync mode is called in leave phase. `onAfterSyncEnter` is called in the enter phase of sync mode. */
     onAfterSyncEnter?: (props: MekuriCallbackProps) => void;
     onEveryLeave?: (props: MekuriCallbackProps) => void;
     onEveryEnter?: (props: MekuriCallbackProps) => void;
@@ -33,11 +35,11 @@ type UseMekuriAnimationProps = {
  *
  * ```jsx
  * const { second } = useMekuriDuration();
- * useMekuriAnimation({
+ * useMekuri({
  * 　　// callback here
  * });
  * ```
  *
  */
-export declare const useMekuriAnimation: ({ onOnce, onLeave, onEnter, onAfterSyncEnter, onEveryLeave, onEveryEnter, }: UseMekuriAnimationProps) => void;
+export declare const useMekuri: ({ onOnce, onLeave, onEnter, onAfterSyncEnter, onEveryLeave, onEveryEnter, }: UseMekuriProps) => void;
 export {};

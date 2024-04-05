@@ -15,14 +15,14 @@ import "@/css/global.scss";
 import type { Metadata } from "next";
 const metadata: Metadata = {
    title: {
-      default: "(hidden)mekuri | FunTech",
+      default: "mekuri | FunTech",
       template: "%s | FunTech",
    },
    description:
-      "(hidden)mekuri is a package for page transition animation in Next.js. It supports both 'wait' and 'sync' modes, as well as popstate (scroll position preservation during popstate). Since animations can be set on a per-component basis, you can implement them flexibly using animation libraries such as GSAP.",
+      "mekuri is a package for page transition animations for React, supporting both wait and sync modes, as well as popstate (and scroll position restoration!).",
    twitter: {
       card: "summary_large_image",
-      title: "(hidden)sauce | FunTech",
+      title: "mekuri | FunTech",
       creator: "@funtech_inc",
       siteId: "@funtech_inc",
    },
@@ -30,7 +30,7 @@ const metadata: Metadata = {
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
    return (
-      <html lang="ja">
+      <html lang="en">
          <body className={lato.className}>
             <MainLayout>{children}</MainLayout>
          </body>

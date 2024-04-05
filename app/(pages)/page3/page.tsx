@@ -1,23 +1,25 @@
-import { SampleLayout } from "@/app/_layout/SampleLayout";
 import type { Metadata } from "next";
+import { SampleCoitainer } from "@/app/_components/SampleCoitainer";
 import { SampleAnimation } from "@/app/_components/SampleAnimation";
-import s from "./style.module.scss";
+import { LINKS } from "@/app/constants";
 
 const metadata: Metadata = {
-   title: "sample",
-   description: "samplesamplesamplesamplesamplesamplesamplesample",
+   title: "page3",
+   description: "page3page3page3page3page3page3page3",
 };
 
 const Sample = () => {
    return (
-      <SampleLayout className={s.wrapper}>
-         <SampleAnimation dir="y">
-            <h1>PAGE3</h1>
-            <h1>PAGE3</h1>
-            <h1>PAGE3</h1>
-            <h1>PAGE3</h1>
+      <SampleCoitainer
+         style={{
+            backgroundColor: LINKS[3].color,
+         }}>
+         <SampleAnimation>
+            {[...Array(10)].map((_, i) => (
+               <div key={i}>{LINKS[3].emoji}</div>
+            ))}
          </SampleAnimation>
-      </SampleLayout>
+      </SampleCoitainer>
    );
 };
 
