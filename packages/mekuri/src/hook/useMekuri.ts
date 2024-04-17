@@ -25,15 +25,17 @@ export type MekuriCallbackProps = {
    ) => void
  * */
    intersectionObserver: HandleIntersectionObserver;
-   /** mekuri renders based on timeout. Therefore, there are cases where the next component is rendered before the chunked Stylesheet updated by Next.js is loaded. onStylesheetLoad ensures that functions are executed after the Stylesheet is loaded. onStylesheetLoad ensures that the function is executed after the Stylesheet is loaded */
+   /** mekuri renders based on timeout. Therefore, there are cases where the next component is rendered before the chunked Stylesheet updated by Next.js is loaded. `onStylesheetLoad` ensures that functions are executed after the Stylesheet is loaded. `onStylesheetLoad` ensures that the function is executed after the Stylesheet is loaded */
    onStylesheetLoad: (callback: () => void) => void;
+   /**  Whether the transition is by popstate */
+   isPopstate: boolean;
 };
 
-type UseMekuriAnimationProps = {
+type UseMekuriProps = {
    onOnce?: (props: MekuriCallbackProps) => void;
    onLeave?: (props: MekuriCallbackProps) => void;
    onEnter?: (props: MekuriCallbackProps) => void;
-   /** (props: CallBackProp) => void; onEnter in sync mode is called in leave phase. onAfterSyncEnter is called in the enter phase of sync mode. */
+   /** (props: MekuriCallbackProps) => void; `onEnter` in sync mode is called in leave phase. `onAfterSyncEnter` is called in the enter phase of sync mode. */
    onAfterSyncEnter?: (props: MekuriCallbackProps) => void;
    onEveryLeave?: (props: MekuriCallbackProps) => void;
    onEveryEnter?: (props: MekuriCallbackProps) => void;
@@ -45,24 +47,24 @@ type UseMekuriAnimationProps = {
  *
  * ```jsx
  * const { second } = useMekuriDuration();
- * useMekuriAnimation({
+ * useMekuri({
  * 　　// callback here
  * });
  * ```
  *
  */
-export const useMekuriAnimation = ({
+export const useMekuri = ({
    onOnce,
    onLeave,
    onEnter,
    onAfterSyncEnter,
    onEveryLeave,
    onEveryEnter,
-}: UseMekuriAnimationProps) => {
+}: UseMekuriProps) => {
    const isOnceCalled = useRef(false);
    const pathRef = useRef<string>();
    const mekuriState = useMekuriState();
-   const { mode } = useConstantState();
+   const { mode, waitOnPopstate } = useConstantState();
 
    useEffect(() => {
       // Differentiate the calling of leave and enter by comparing the location.pathname at the time of render and the execution time of the state's subscribe function
@@ -82,6 +84,7 @@ export const useMekuriAnimation = ({
          getHashPos: returnHashPos,
          intersectionObserver,
          onStylesheetLoad,
+         isPopstate: mekuriState.isPopstate,
       };
 
       if (!isOnceCalled.current && mekuriState.phase === null) {
@@ -90,13 +93,16 @@ export const useMekuriAnimation = ({
          return;
       }
 
+      // *** leave ***
       if (mekuriState.phase === "leave") {
          onEveryLeave && onEveryLeave(callBackProps);
 
+         // *** wait ***
          if (mode === "wait") {
             onLeave && onLeave(callBackProps);
          }
 
+         // *** sync ***
          if (mode === "sync") {
             if (isCurrentPage) {
                onEnter &&
@@ -111,14 +117,20 @@ export const useMekuriAnimation = ({
          }
       }
 
+      // *** enter ***
       if (mekuriState.phase === "enter") {
          onEveryEnter && onEveryEnter(callBackProps);
 
+         // *** wait ***
          if (mode === "wait" && isCurrentPage) {
             onEnter && onEnter(callBackProps);
          }
 
+         // *** sync ***
          if (mode === "sync") {
+            if (isCurrentPage && waitOnPopstate && mekuriState.isPopstate) {
+               onEnter && onEnter(callBackProps);
+            }
             onAfterSyncEnter && onAfterSyncEnter(callBackProps);
          }
       }

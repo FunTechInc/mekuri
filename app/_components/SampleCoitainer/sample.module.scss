@@ -1,0 +1,17 @@
+@use "@/css" as *;
+
+.sample {
+   display: flex;
+   padding: $spacing-8;
+   min-height: 100svh;
+   width: 100%;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   border-radius: $spacing-4 $spacing-4 0 0;
+   margin-top: $spacing-10;
+   @include mq(md) {
+      margin-top: $spacing-12;
+      padding: $spacing-4 $spacing-1;
+   }
+}

@@ -27,6 +27,11 @@ $unit: inherit;
 }
 
 /*===============================================
+duration
+===============================================*/
+$duration: 0.45;
+
+/*===============================================
 spacing
 ===============================================*/
 $spacing-0: if($designRoot==1, 0, 0);
@@ -59,6 +64,15 @@ $r-3-2: 66.66%;
 $r-4-3: 75%;
 
 /*===============================================
+inner
+===============================================*/
+
+$inner-wide: 136rem;
+$inner-narrow: 96rem;
+$inner-middle: 128rem;
+$inner-padding: $spacing-3;
+
+/*===============================================
 font
 ===============================================*/
 //font size
@@ -84,7 +98,7 @@ $leading-loose: 2 !default;
 $leading-x-loose: 2.2 !default;
 
 // letter-spacing
-$letter-spacing-base: 0.05em !default;
+$letter-spacing-base: 0em !default;
 
 /*===============================================
 color
@@ -97,9 +111,10 @@ $color-facebook: #3b5998;
 $color-insta: #e1306c;
 $FunTech: #c34e00;
 //colorRegulation
-$color-txt: #333333;
-$color-key: #333333;
-$color-bg: #ffffff;
+$color-txt: #322c2b;
+$color-key: #322c2b;
+$color-bg: #cee6f3;
+$color-grey: #fefaf6;
 
 /*===============================================
 Media Query
@@ -158,41 +173,25 @@ Line Height Crop
 /*===============================================
 transition
 ===============================================*/
-@mixin transition($duration: all 0.6s) {
-   transition: $duration;
-   @include my-cubic-bezier01();
+@mixin transition($dur: all #{$duration + "s"}) {
+   transition: $dur;
+   @include easing-quart();
 }
 
 /*===============================================
-my cubic bezier
+easing
 ===============================================*/
-@mixin my-cubic-bezier01 {
-   //ease out系
-   transition-timing-function: cubic-bezier(0.2, 1.05, 0.7, 0.95);
+@mixin easing-quad {
+   //"power1" in GSAP
+   transition-timing-function: cubic-bezier(0.5, 1, 0.89, 1);
 }
-
-@mixin cubic-backOut {
-   transition-timing-function: cubic-bezier(0.28, 0.8, 0.36, 1.81);
+@mixin easing-cubic {
+   //"power2" in GSAP
+   transition-timing-function: cubic-bezier(0.33, 1, 0.68, 1);
 }
-
-@mixin cubic-backIn {
-   transition-timing-function: cubic-bezier(0.59, -0.82, 0.79, 0.39);
-}
-
-@mixin cubic-bezier01 {
-   transition-timing-function: cubic-bezier(0.26, 0.06, 0, 1);
-}
-
-@mixin cubic-bezier02 {
-   transition-timing-function: cubic-bezier(0.18, 0.06, 0.23, 1);
-}
-
-@mixin cubic-bezier03 {
-   transition-timing-function: cubic-bezier(0.43, 0.05, 0.17, 1);
-}
-
-@mixin cubic-bezier04 {
-   transition-timing-function: cubic-bezier(0.55, 0.05, 0.22, 0.99);
+@mixin easing-quart {
+   //"power3" in GSAP
+   transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 /*===============================================

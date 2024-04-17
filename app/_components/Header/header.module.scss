@@ -1,34 +1,70 @@
 @use "@/css" as *;
 
 .wrapper {
-   border-bottom: 1px solid $color-key;
-   height: 40px;
    display: flex;
    align-items: center;
    justify-content: space-between;
-   padding: 0 $spacing-8;
+   padding: $spacing-1 $spacing-4;
    position: fixed;
    z-index: 9999;
    width: 100vw;
    top: 0;
    left: 0;
-   background-color: #fff;
-}
-.link {
-   font-size: 16px;
-   color: $color-key;
-   @include hover {
-      opacity: 0.6;
+   color: $color-txt;
+   @include mq(md) {
+      flex-direction: column;
+      gap: $spacing-1;
+      padding: $spacing-1 $spacing-1;
    }
-   body[data-spice-rendered] & {
-      @include transition;
-      transition-property: opacity;
+}
+
+.logoContainer {
+   display: flex;
+   align-items: center;
+   gap: $spacing-1;
+   @include mq(sm) {
+      gap: $spacing-mini;
+   }
+}
+.logo {
+   font-size: 2.4rem;
+   font-weight: 800;
+   span {
+      font-size: 1.2rem;
+   }
+}
+.github {
+   width: $spacing-2;
+   @include transition;
+   transition-property: opacity;
+   @include hover {
+      opacity: 0.64;
    }
 }
 
 .linkWrapper {
    display: flex;
-   li {
-      margin: 0 8px;
+   gap: $spacing-1;
+   @include mq(sm) {
+      gap: $spacing-half;
+   }
+}
+
+.link {
+   font-size: 1.4rem;
+   font-weight: bold;
+   background-color: $color-grey;
+   padding: $spacing-mini $spacing-1;
+   border-radius: 100svh;
+   @include hover {
+      opacity: 0.64;
+   }
+   body[data-spice-rendered] & {
+      @include transition;
+      transition-property: opacity;
+   }
+   @include mq(sm) {
+      padding: $spacing-mini;
+      font-size: 1.2rem;
    }
 }

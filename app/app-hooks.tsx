@@ -1,10 +1,11 @@
 "use client";
 
 import { useStarter } from "@funtech-inc/spice";
+import { useLenisRegister } from "@/app/_hooks/useLenis";
 
 export const AppHooks = () => {
+   useLenisRegister();
    useStarter({
-      // reloadThresholds: [960, 560],
       isFixViewportForSmall: true,
       areYouFun: true,
    });

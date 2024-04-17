@@ -5,6 +5,7 @@ import {
    Children,
    isValidElement,
    useState,
+   useMemo,
 } from "react";
 import { useScrollRestoration } from "./useScrollRestoration";
 import { useConstantState, useMekuriState } from "../context/MekuriContext";
@@ -31,10 +32,12 @@ const onlyElements = (children: ReactNode): ReactElement<any>[] => {
  * When used in page transitions with the App Router, place <MekuriFreezer> as the first child element.
  */
 export const Mekuri = ({ children }: { children: React.ReactNode }) => {
-   const { scrollRestoration, mode } = useConstantState();
+   const { scrollRestoration, mode, waitOnPopstate } = useConstantState();
    const mekuriState = useMekuriState();
 
-   const filteredChildren = onlyElements(children);
+   useScrollRestoration({ mekuriState, scrollRestoration });
+
+   const filteredChildren = useMemo(() => onlyElements(children), [children]);
 
    const [componentState, setComponentState] = useReducer(
       (state: ComponentState, action: Action): ComponentState => {
@@ -66,33 +69,47 @@ export const Mekuri = ({ children }: { children: React.ReactNode }) => {
    );
 
    const [prevPhase, setPrevPhase] = useState(mekuriState.phase);
+   // Whether to transition in sync mode when popstate
+   const isSyncOnPopstate = !waitOnPopstate || !mekuriState.isPopstate;
 
    if (prevPhase !== mekuriState.phase) {
       setPrevPhase(mekuriState.phase);
+      // *** leave ***
       if (mekuriState.phase === "leave") {
+         // *** sync ***
          if (mode === "sync") {
-            setComponentState({
-               type: "leave-sync",
-               nextChildren: filteredChildren,
-            });
+            if (isSyncOnPopstate) {
+               setComponentState({
+                  type: "leave-sync",
+                  nextChildren: filteredChildren,
+               });
+            }
          }
       }
+      // *** enter ***
       if (mekuriState.phase === "enter") {
+         // *** wait ***
          if (mode === "wait") {
             setComponentState({
                type: "enter-wait",
                nextChildren: filteredChildren,
             });
          }
+         // *** sync ***
          if (mode === "sync") {
-            setComponentState({
-               type: "enter-sync",
-            });
+            if (isSyncOnPopstate) {
+               setComponentState({
+                  type: "enter-sync",
+               });
+            } else {
+               setComponentState({
+                  type: "enter-wait",
+                  nextChildren: filteredChildren,
+               });
+            }
          }
       }
    }
-
-   useScrollRestoration({ mekuriState, scrollRestoration });
 
    return (
       <>

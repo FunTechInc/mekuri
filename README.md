@@ -14,6 +14,15 @@ It also works with frameworks such as Next.js and Remix. Integration into Next.j
 $ npm i @funtech-inc/mekuri
 ```
 
+### Features 😊
+
+-  Support for `wait` and `sync` modes.
+-  Support for `scroll restoration` in popstate
+-  When in `sync` mode, routing is possible in `wait` mode when in popstate.
+-  Supports `Next.js` and `Remix`. Can also integrate with `Next App Router`.
+-  `useMekuri` hook for each component.
+-  Integration into inertial scrolling libraries such as [lenis](https://github.com/darkroomengineering/lenis) is also possible.
+
 # Usage
 
 ```tsx
@@ -23,7 +32,10 @@ export default function App({ Component, pageProps }: AppProps) {
       <MekuriContext trigger={pathname}>
          <SomeAnimationComponent>
             <Mekuri>
-               <Component key={pathname} {...pageProps} />
+               <Component
+                  key={`${pathname + performance.now()}`}
+                  {...pageProps}
+               />
             </Mekuri>
          </SomeAnimationComponent>
       </MekuriContext>
@@ -39,20 +51,24 @@ The context to wrap the whole thing in. Set the `trigger` to a `state` to switch
 
 Unmounting of children can be delayed by wrapping them in a `Mekuri` component.
 
-## useMekuriAnimation
+## useMekuri
 
 Hooks that can be called within `MekuriContext`. Callbacks include `onOnce`, `onLeave`, `onEnter`, `onAfterSyncEnter`, `onEveryLeave` and `onEveryEnter`.
 
 ```tsx
-const MekuriAnimation = ({ children }: { children: React.ReactNode }) => {
+const SomeAnimationComponent = ({
+   children,
+}: {
+   children: React.ReactNode;
+}) => {
    const ref = useRef<HTMLDivElement>(null);
-   useMekuriAnimation({
-      onEveryLeave: (props: MekuriCallbackProps) => {
+   useMekuri({
+      onLeave: (props: MekuriCallbackProps) => {
          gsap.to(ref.current, {
             opacity: 0,
          });
       },
-      onEveryEnter: (props: MekuriCallbackProps) => {
+      onEnter: (props: MekuriCallbackProps) => {
          gsap.to(ref.current, {
             opacity: 1,
          });
@@ -65,7 +81,7 @@ const MekuriAnimation = ({ children }: { children: React.ReactNode }) => {
 Each callback has `MekuriCallbackProps` as an argument.
 
 ```ts
-export type MekuriCallbackProps = {
+type MekuriCallbackProps = {
    prevTrigger: Trigger | null | undefined;
    currentTrigger: Trigger | null | undefined;
    nextTrigger: Trigger | null | undefined;
@@ -79,8 +95,10 @@ export type MekuriCallbackProps = {
    ) => void
  * */
    intersectionObserver: HandleIntersectionObserver;
-   /** mekuri renders based on timeout. Therefore, there are cases where the next component is rendered before the chunked Stylesheet updated by Next.js is loaded. onStylesheetLoad ensures that functions are executed after the Stylesheet is loaded. onStylesheetLoad ensures that the function is executed after the Stylesheet is loaded */
+   /** mekuri renders based on timeout. Therefore, there are cases where the next component is rendered before the chunked Stylesheet updated by Next.js is loaded. `onStylesheetLoad` ensures that functions are executed after the Stylesheet is loaded. `onStylesheetLoad` ensures that the function is executed after the Stylesheet is loaded */
    onStylesheetLoad: (callback: () => void) => void;
+   /**  Whether the transition is by popstate */
+   isPopstate: boolean;
 };
 ```
 
@@ -125,7 +143,9 @@ export const PageTransitionLayout = ({
    const pathname = usePathname();
    return (
       <Mekuri>
-         <MekuriFreezer key={pathname} routerContext={LayoutRouterContext}>
+         <MekuriFreezer
+            key={`${pathname + performance.now()}`}
+            routerContext={LayoutRouterContext}>
             {children}
          </MekuriFreezer>
       </Mekuri>

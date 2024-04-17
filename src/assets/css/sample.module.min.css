@@ -1,3 +1,17 @@
-.sample{display:flex;padding:50vh;width:100%;justify-content:center;align-items:center;flex-direction:column}.sample h1{font-size:10rem;color:#fff}
+/* Error: Can't find stylesheet to import.
+ *   ,
+ * 1 | @use "@/css" as *;
+ *   | ^^^^^^^^^^^^^^^^^
+ *   '
+ *   app/_components/SampleCoitainer/sample.module.scss 1:1  root stylesheet */
 
-/*# sourceMappingURL=sample.module.min.css.map */
+body::before {
+  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
+      "Droid Sans Mono", monospace, monospace;
+  white-space: pre;
+  display: block;
+  padding: 1em;
+  margin-bottom: 1em;
+  border-bottom: 2px solid black;
+  content: "Error: Can't find stylesheet to import.\a   \2577 \a 1 \2502  @use \"@/css\" as *;\a   \2502  ^^^^^^^^^^^^^^^^^\a   \2575 \a   app/_components/SampleCoitainer/sample.module.scss 1:1  root stylesheet";
+}

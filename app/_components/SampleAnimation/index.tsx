@@ -1,6 +1,6 @@
 "use client";
 
-import { useMekuriAnimation, useMekuriDuration } from "@/packages/mekuri/src";
+import { useMekuri, useMekuriDuration } from "@/packages/mekuri/src";
 import { useRef } from "react";
 import { gsap } from "gsap";
 
@@ -8,92 +8,46 @@ import s from "./index.module.scss";
 
 export const SampleAnimation = ({
    children,
-   dir,
 }: {
    children: React.ReactNode;
-   dir: "x" | "y";
 }) => {
    const ref = useRef(null);
    const { second } = useMekuriDuration();
 
-   useMekuriAnimation({
-      onOnce: () => {
+   useMekuri({
+      onLeave: ({ isPopstate }) => {
          gsap.context(() => {
-            gsap.to("h1", {
-               opacity: 1,
+            gsap.to("div", {
+               y: isPopstate ? "2vw" : "4vw",
+               opacity: isPopstate ? 0 : 1,
                duration: second,
-               ease: "power3.out",
+               ease: isPopstate ? "power3.out" : "power3.out",
+               stagger: 0.04,
             });
-         }, ref.current!);
+         }, ref);
       },
-      onEnter: ({ intersectionObserver, onStylesheetLoad }) => {
+      onEnter: ({ onStylesheetLoad }) => {
+         gsap.context(() => {
+            gsap.set("div", {
+               opacity: 0,
+               y: "4vw",
+            });
+         }, ref);
+         // onStylesheetLoad is a function that is called when the stylesheet is loaded.
          onStylesheetLoad(() => {
             gsap.context(() => {
-               gsap.fromTo(
-                  "h1",
-                  {
-                     opacity: 0,
-                     y: dir === "y" ? 24 : 0,
-                     x: dir === "x" ? 24 : 0,
-                  },
-                  {
-                     opacity: 1,
-                     y: 0,
-                     x: 0,
-                     duration: second,
-                     ease: "power3.out",
-                     stagger: {
-                        each: 0.02,
-                     },
-                  }
-               );
-            }, ref.current!);
+               gsap.to("div", {
+                  opacity: 1,
+                  y: 0,
+                  duration: second,
+                  ease: "back.out(8)",
+                  stagger: 0.04,
+               });
+            }, ref);
          });
-         // intersectionObserver(ref, (isIntersecting) => {
-         //    if (isIntersecting) {
-         //       gsap.context(() => {
-         //          gsap.fromTo(
-         //             "h1",
-         //             {
-         //                opacity: 0,
-         //                y: dir === "y" ? 24 : 0,
-         //                x: dir === "x" ? 24 : 0,
-         //             },
-         //             {
-         //                opacity: 1,
-         //                y: 0,
-         //                x: 0,
-         //                duration: second,
-         //                ease: "power3.out",
-         //                stagger: {
-         //                   each: 0.02,
-         //                },
-         //             }
-         //          );
-         //       }, ref.current!);
-         //    } else {
-         //       gsap.context(() => {
-         //          gsap.set("h1", {
-         //             opacity: 1,
-         //          });
-         //       }, ref.current!);
-         //    }
-         // });
-      },
-      onLeave: () => {
-         gsap.context(() => {
-            gsap.to("h1", {
-               y: dir === "y" ? -24 : 0,
-               x: dir === "x" ? -24 : 0,
-               duration: second,
-               ease: "power3.out",
-               stagger: {
-                  each: 0.02,
-               },
-            });
-         }, ref.current!);
       },
    });
+
    return (
       <div ref={ref} className={s.wrapper}>
          {children}
