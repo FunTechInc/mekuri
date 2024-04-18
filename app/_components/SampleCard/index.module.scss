@@ -1,0 +1,14 @@
+@use "@/css" as *;
+
+.card {
+   cursor: pointer;
+   @include transition;
+   transition-property: scale;
+   @include hover {
+      scale: 0.96;
+   }
+}
+
+.funkun {
+   width: $spacing-8;
+}

@@ -34,7 +34,7 @@ export const Header = () => {
       <header className={s.wrapper}>
          <div className={s.logoContainer}>
             <h1 className={s.logo}>
-               mekuri <span>📕 Page transition animation for React</span>
+               mekuri 📕<span>Page transition animation for React</span>
             </h1>
             <a
                className={s.github}

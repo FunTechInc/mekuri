@@ -60,7 +60,7 @@ export const SampleCoitainer = ({
                {
                   y: 0,
                   duration: second,
-                  ease: "back.inOut(1.8)",
+                  ease: "back.inOut(1.2)",
                }
             );
          }

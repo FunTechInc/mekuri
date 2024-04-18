@@ -15,14 +15,11 @@ export const PageTransitionContext = ({
    const lenisRef = useRef<Lenis>();
    const lenis = useLenis((s) => s.lenis);
    if (lenis) lenisRef.current = lenis;
-   const handleLenis = useCallback((pos: number, isStart: boolean) => {
+   const handleLenis = useCallback((pos: number) => {
       lenisRef.current?.scrollTo(pos, {
          immediate: true,
          force: true,
          lock: true,
-         onComplete: () => {
-            isStart && lenisRef.current?.start();
-         },
       });
    }, []);
    return (
@@ -31,16 +28,13 @@ export const PageTransitionContext = ({
          scrollRestoration={{
             scrollRestoration: "restore",
             onLeave: (pos, isPopstate) => {
-               lenisRef.current?.stop();
                if (!isPopstate) {
-                  handleLenis(pos, false);
+                  handleLenis(pos);
                }
             },
             onEnter: (pos, isPopstate) => {
                if (isPopstate) {
-                  handleLenis(pos, true);
-               } else {
-                  lenisRef.current?.start();
+                  handleLenis(pos);
                }
             },
          }}
