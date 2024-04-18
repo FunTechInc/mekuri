@@ -18,14 +18,18 @@ export const useUpdateMekuriState = ({
    const isPopstate = useRef(false);
 
    useEffect(() => {
-      window.addEventListener("popstate", () => {
+      const handlePopstate = () => {
          if (document.documentElement.classList.contains(CLASSNAME)) {
             // If a popstate is executed during transition, execute forward
             window.history.forward();
          } else {
             isPopstate.current = true;
          }
-      });
+      };
+      window.addEventListener("popstate", handlePopstate);
+      return () => {
+         window.removeEventListener("popstate", handlePopstate);
+      };
    }, []);
 
    useEffect(() => {

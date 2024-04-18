@@ -1,6 +1,7 @@
 import { SampleCoitainer } from "@/app/_components/SampleCoitainer";
 import { SampleAnimation } from "@/app/_components/SampleAnimation";
 import { LINKS } from "@/app/constants";
+import { SampleCard } from "@/app/_components/SampleCard";
 
 const HomeContent = () => {
    return (
@@ -10,7 +11,7 @@ const HomeContent = () => {
          }}>
          <SampleAnimation>
             {[...Array(10)].map((_, i) => (
-               <div key={i}>{LINKS[0].emoji}</div>
+               <SampleCard key={i}>{LINKS[0].emoji}</SampleCard>
             ))}
          </SampleAnimation>
       </SampleCoitainer>

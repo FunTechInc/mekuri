@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { SampleCoitainer } from "@/app/_components/SampleCoitainer";
 import { SampleAnimation } from "@/app/_components/SampleAnimation";
 import { LINKS } from "@/app/constants";
+import { SampleCard } from "@/app/_components/SampleCard";
 
 const metadata: Metadata = {
    title: "page1",
@@ -16,7 +17,7 @@ const Sample = () => {
          }}>
          <SampleAnimation>
             {[...Array(10)].map((_, i) => (
-               <div key={i}>{LINKS[1].emoji}</div>
+               <SampleCard key={i}>{LINKS[1].emoji}</SampleCard>
             ))}
          </SampleAnimation>
       </SampleCoitainer>

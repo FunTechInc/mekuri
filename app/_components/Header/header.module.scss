@@ -4,6 +4,7 @@
    display: flex;
    align-items: center;
    justify-content: space-between;
+   gap: $spacing-1;
    padding: $spacing-1 $spacing-4;
    position: fixed;
    z-index: 9999;
@@ -13,8 +14,7 @@
    color: $color-txt;
    @include mq(md) {
       flex-direction: column;
-      gap: $spacing-1;
-      padding: $spacing-1 $spacing-1;
+      padding: $spacing-1;
    }
 }
 
@@ -22,19 +22,18 @@
    display: flex;
    align-items: center;
    gap: $spacing-1;
-   @include mq(sm) {
-      gap: $spacing-mini;
-   }
 }
 .logo {
    font-size: 2.4rem;
    font-weight: 800;
    span {
+      display: block;
       font-size: 1.2rem;
+      margin-top: 0.4rem;
    }
 }
 .github {
-   width: $spacing-2;
+   width: $spacing-3;
    @include transition;
    transition-property: opacity;
    @include hover {

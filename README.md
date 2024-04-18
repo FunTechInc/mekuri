@@ -2,24 +2,25 @@
 
 ![mekuri](public/app-head.jpg)
 
-mekuri is a package for page transition animations for React, supporting both `wait` and `sync` modes, as well as `popstate` (and scroll position restoration!).
+`Mekuri` is a React package for page transition animations with `wait` and `sync` modes, supporting `popstate` and `scroll restoration`.
 
-Animations can be customised for each component using the `useMekuriAnimation` hook, allowing for flexible implementation using animation libraries such as GSAP.
-
-It also works with frameworks such as Next.js and Remix. Integration into Next.js `App Router` is also supported. However, the `App Router` page transitions use a slightly special method, so if you want a stable implementation, the `Pages Router` is recommended.
-
-[Next.js Pages Router demo](https://github.com/FunTechInc/mekuri-demo-pages)
+Customize animations per component with the `useMekuri` hook and use with libraries like `GSAP`. It integrates with Next.js and Remix; can also be integrated with Next.js `App Router`, but for stable operation it is recommended to use Pages Router rather than App Router.[Next.js Pages Router demo](https://github.com/FunTechInc/mekuri-demo-pages)
 
 ```bash
 $ npm i @funtech-inc/mekuri
 ```
 
-### Features 😊
+<p align="middle">
+  <a href="https://mekuri.vercel.app/"><img src="public/mekuri-desktop.gif" width="400"/></a>
+  <a href="https://mekuri.vercel.app/"><img src="public/mekuri-mobile.gif" width="400"/></a>
+</p>
+
+### Features 📕
 
 -  Support for `wait` and `sync` modes.
--  Support for `scroll restoration` in popstate
+-  Support for `scrollRestoration` in popstate.
 -  When in `sync` mode, routing is possible in `wait` mode when in popstate.
--  Supports `Next.js` and `Remix`. Can also integrate with `Next App Router`.
+-  Supports frameworks such as `Next.js` and `Remix`. Can also integrate with `Next.js App Router`.
 -  `useMekuri` hook for each component.
 -  Integration into inertial scrolling libraries such as [lenis](https://github.com/darkroomengineering/lenis) is also possible.
 
@@ -112,7 +113,7 @@ const { millisecond, second } = useMekuriDuration();
 
 ## useMekuriTrigger
 
-`phase` : "enter" | "leave" , Specify the phase to subscribe to trigger updates
+`phase` : `enter` | `leave` , Specify the phase to subscribe to trigger updates
 
 ```tsx
 const trigger = useMekuriTrigger(phase);
