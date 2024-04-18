@@ -2,7 +2,7 @@
 
 ![mekuri](public/app-head.jpg)
 
-`Mekuri` is a React package for page transition animations with `wait` and `sync` modes, supporting `popstate` and `scroll restoration`.
+`mekuri` is React package for page transition animations with `wait` and `sync` modes, supporting `popstate` and `scroll restoration`.
 
 Customize animations per component with the `useMekuri` hook and use with libraries like `GSAP`. It integrates with Next.js and Remix; can also be integrated with Next.js `App Router`, but for stable operation it is recommended to use Pages Router rather than App Router.[Next.js Pages Router demo](https://github.com/FunTechInc/mekuri-demo-pages)
 
@@ -22,7 +22,7 @@ $ npm i @funtech-inc/mekuri
 -  When in `sync` mode, routing is possible in `wait` mode when in popstate.
 -  Supports frameworks such as `Next.js` and `Remix`. Can also integrate with `Next.js App Router`.
 -  `useMekuri` hook for each component.
--  Integration into inertial scrolling libraries such as [lenis](https://github.com/darkroomengineering/lenis) is also possible.
+-  Integration into smooth scrolling libraries such as [lenis](https://github.com/darkroomengineering/lenis) is also possible.
 
 # Usage
 
