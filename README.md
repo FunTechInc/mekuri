@@ -17,8 +17,8 @@ $ npm i @funtech-inc/mekuri
 
 ### Features 📕
 
--  Support for `wait` and `sync` modes.
--  Support for `scrollRestoration` in popstate.
+-  `wait` and `sync` modes
+-  `scrollRestoration` in popstate.
 -  When in `sync` mode, routing is possible in `wait` mode when in popstate.
 -  Supports frameworks such as `Next.js` and `Remix`. Can also integrate with `Next.js App Router`.
 -  `useMekuri` hook for each component.
