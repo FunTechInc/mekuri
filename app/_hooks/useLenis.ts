@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import Lenis from "@studio-freight/lenis";
+import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { create } from "zustand";
@@ -23,10 +23,6 @@ export const useLenisRegister = () => {
       lenis.current = new Lenis({
          duration: 1.2,
          easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-         smoothWheel: true,
-         infinite: false,
-         syncTouch: false,
-         // syncTouchLerp: 0.05,
       });
       setLenis(lenis.current);
 
