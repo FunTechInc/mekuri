@@ -51,6 +51,7 @@ body {
    letter-spacing: $letter-spacing-base;
    line-height: $leading-none;
    transition: opacity #{$duration / 3 + "s"} ease-in-out;
+   overflow-x: hidden;
    .ff_en {
       letter-spacing: $letter-spacing-base;
    }

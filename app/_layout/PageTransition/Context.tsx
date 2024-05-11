@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import { MekuriContext } from "@/packages/mekuri/src";
 import { useCallback, useRef } from "react";
-import Lenis from "@studio-freight/lenis";
+import Lenis from "lenis";
 import { useLenis } from "@/app/_hooks/useLenis";
 
 export const PageTransitionContext = ({
