@@ -12,11 +12,12 @@ export default defineConfig({
          fileName: "mekuri",
       },
       rollupOptions: {
-         external: ["react"],
+         external: ["react", "react-dom"],
          output: {
             dir: "./build",
             globals: {
                react: "React",
+               "react-dom": "ReactDOM",
             },
          },
       },

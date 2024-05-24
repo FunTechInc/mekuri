@@ -1,6 +1,6 @@
 {
    "name": "@funtech-inc/mekuri",
-   "version": "3.2.1",
+   "version": "3.2.2",
    "description": "📕 Page transition animation for React",
    "main": "./build/mekuri.umd.cjs",
    "module": "./build/mekuri.js",
@@ -34,7 +34,7 @@
    ],
    "peerDependencies": {
       "react": "^18.2.0",
-      "react-dom": "^18.2.0"
+      "react-dom": ">=18.0"
    },
    "devDependencies": {
       "typescript": "^5.1.3",
